@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsUI.FormCommands
 {
-    public interface IWinFormCommand<T>
+    public interface ICommand
     {
-        T Execute();
+        void Execute();
     }
 }

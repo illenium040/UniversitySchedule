@@ -8,30 +8,22 @@ namespace WindowsFormsUI.UserMainForm
 {
     partial class UserForm
     {
-        private async Task VisualizeGridView(Action gridAction)
+        private void VisualizeGridView(Action gridAction)
         {
-            dataLoadStatePanel.Visible = true;
-            timetableGridView.Visible = false;
-            await Task.Run(() => {
-                timetableGridView.Invoke(() =>
-                {
-                    timetableGridView.Rows.Clear();
-                    timetableGridView.Columns.Clear();
-                    timetableGridView.Refresh();
-                });
-                try
-                {
-                    gridAction();
-                }
-                catch
-                {
-
-                }
-
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = true);
+            timetableGridView.Invoke(() =>
+            {
+                timetableGridView.Visible = false;
+                timetableGridView.Rows.Clear();
+                timetableGridView.Columns.Clear();
             });
-            timetableGridView.Update();
-            dataLoadStatePanel.Visible = false;
-            timetableGridView.Visible = true;
+            gridAction();
+            timetableGridView.Invoke(() =>
+            {
+                timetableGridView.Visible = true;
+                timetableGridView.Update();
+            });
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = false);
         }
     }
 }

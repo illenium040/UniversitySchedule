@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Resources;
 using WindowsFormsUI.FormCommands;
+using WindowsFormsUI.FormCommands.Receivers;
 
 namespace WindowsFormsUI.UserMainForm
 {
@@ -44,28 +45,28 @@ namespace WindowsFormsUI.UserMainForm
 
         private async void ShowTeachersTimetable(object sender, EventArgs e)
         {
-            await _actionProxy.InvokeTask(VisualizeGridView(ShowTeacherTimetable));
+            await _actionProxy.InvokeAsync(()=> VisualizeGridView(ShowTeacherTimetable));
         }
 
         private async void ShowTeachers(object sender, EventArgs e)
         {
-            await _actionProxy.InvokeTask(VisualizeGridView(ShowTeacherInfo));
+            await _actionProxy.InvokeAsync(() => VisualizeGridView(ShowTeacherInfo));
         }
 
         private async void ShowPlan(object sender, EventArgs e)
         {
-            await _actionProxy.InvokeTask(VisualizeGridView(ShowTimetablePlan));
+            await _actionProxy.InvokeAsync(() => VisualizeGridView(ShowTimetablePlan));
         }
 
         private async void ShowView(object sender, EventArgs e)
         {
-            await _actionProxy.InvokeTask(VisualizeGridView(ShowTimetable));
+            await _actionProxy.InvokeAsync(() => VisualizeGridView(ShowTimetable));
         }
 
         private async void UserForm_Load(object sender, EventArgs e)
         {
             await LoadDataAsync();
-            _gridCommandInvoker = new DataGridViewCommandInvoker();
+            _gridCommandInvoker = new CommandInvoker<DataGridViewCommand>();
             _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView, _timetableView);
         }
 

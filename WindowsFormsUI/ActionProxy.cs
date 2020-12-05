@@ -22,11 +22,11 @@ namespace WindowsFormsUI
             _semaphore.Release();
         }
 
-        public async Task InvokeTask(Task task, bool cancelActionIfBusy = true)
+        public async Task InvokeAsync(Action task, bool cancelActionIfBusy = true)
         {
             if (cancelActionIfBusy && _semaphore.CurrentCount == 0) return;
             await _semaphore.WaitAsync();
-            await task;
+            await Task.Run(task);
             _semaphore.Release();
         }
     }

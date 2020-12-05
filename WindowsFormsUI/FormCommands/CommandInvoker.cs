@@ -4,18 +4,19 @@ using System.Text;
 
 namespace WindowsFormsUI.FormCommands
 {
-    public class DataGridViewCommandInvoker
+    public class CommandInvoker<TCommand>
+        where TCommand : ICommand
     {
-        private DataGridViewCommand _command;
-        public DataGridViewCommandInvoker SetCommand(DataGridViewCommand command)
+        private TCommand _command;
+        public CommandInvoker<TCommand> SetCommand(TCommand command)
         {
             _command = command;
             return this;
         }
-
-        public void Run()
+        public CommandInvoker<TCommand> Run()
         {
             _command.Execute();
+            return this;
         }
     }
 }
