@@ -20,6 +20,10 @@ namespace WindowsFormsUI.UserMainForm
             timetableGridView.RowHeadersVisible = false;
             timetableGridView.BackgroundColor = this.BackColor;
 
+            timetableGridView.AllowUserToAddRows = false;
+            timetableGridView.AllowUserToDeleteRows = false;
+            timetableGridView.AllowUserToOrderColumns = false;
+
         }
 
         private void AddPictureBoxSettings()

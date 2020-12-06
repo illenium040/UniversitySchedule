@@ -28,7 +28,12 @@ namespace WindowsFormsUI
             _gridView.Invoke(() =>
             {
                 foreach (var header in columnHeaders)
-                    _gridView.AddColumn(header, header);
+                    _gridView.Columns.Add(new DataGridViewTextBoxColumn
+                    {
+                        HeaderText = header,
+                        Name = header,
+                        SortMode = DataGridViewColumnSortMode.NotSortable
+                    });
             });
             
             return this;
@@ -89,17 +94,23 @@ namespace WindowsFormsUI
             return this;
         }
 
+
+        //TODO: use max height and max width to resize cells
         public GridVisualizer Resize()
         {
             _gridView.Invoke(() =>
             {
-                for (int i = 0; i < _gridView.Columns.Count; i++)
-                    _gridView.Columns[i].Width = _gridView.Columns[i].GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
+                var maxHeight = _gridView.Rows.AsEnumearble()
+                .Max(row => row.GetPreferredHeight(row.Index, DataGridViewAutoSizeRowMode.AllCells, true)) / 2;
+                var maxWidth = _gridView.Columns.AsEnumearble()
+                .Max(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true)) / 3;
                 for (int i = 0; i < _gridView.Rows.Count; i++)
-                    _gridView.Rows[i].Height = _gridView.Rows[i].GetPreferredHeight(i, DataGridViewAutoSizeRowMode.AllCells, true);
+                    _gridView.Rows[i].Height = maxHeight;
+                for (int i = 0; i < _gridView.Columns.Count; i++)
+                    _gridView.Columns[i].Width = maxWidth;
+                
             });
             return this;
         }
-
     }
 }

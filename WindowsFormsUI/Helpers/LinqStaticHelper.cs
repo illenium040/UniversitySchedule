@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace WindowsFormsUI
 {
@@ -24,6 +25,18 @@ namespace WindowsFormsUI
         public static void EnumerableTo2DArray<T>(this IEnumerable<IEnumerable<T>> enumearble, Action<T[][]> action)
         {
             action(enumearble.Select(x => x.ToArray()).ToArray());
+        }
+
+        public static IEnumerable<DataGridViewRow> AsEnumearble(this DataGridViewRowCollection dataGridView)
+        {
+            foreach (DataGridViewRow row in dataGridView)
+                yield return row;
+        }
+
+        public static IEnumerable<DataGridViewColumn> AsEnumearble(this DataGridViewColumnCollection dataGridView)
+        {
+            foreach (DataGridViewColumn row in dataGridView)
+                yield return row;
         }
     }
 }
