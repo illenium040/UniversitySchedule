@@ -20,5 +20,10 @@ namespace WindowsFormsUI
                 action(list);
             return list;
         }
+
+        public static void EnumerableTo2DArray<T>(this IEnumerable<IEnumerable<T>> enumearble, Action<T[][]> action)
+        {
+            action(enumearble.Select(x => x.ToArray()).ToArray());
+        }
     }
 }

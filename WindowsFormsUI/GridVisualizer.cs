@@ -40,24 +40,34 @@ namespace WindowsFormsUI
             return this;
         }
 
+        public GridVisualizer AddRowsByColumn(Func<IEnumerable<IEnumerable<object>>> valuesFunc)
+        {
+            AddRowsByColumn(valuesFunc());
+            return this;
+        }
+
         public GridVisualizer AddRowsByColumn(IEnumerable<IEnumerable<object>> values)
         {
             if (values.Count() == 0) return this;
             _gridView.Invoke(() =>
             {
-                _gridView.AddRow(values.Max(x => x.Count()));
-                for (int i = 0; i < values.Count(); i++)
+                values.EnumerableTo2DArray(x =>
                 {
-                    for (int j = 0; j < values.ElementAt(i).Count(); j++)
-                        _gridView[i, j].Value = values.ElementAt(i).ElementAt(j);
-                }
+                    _gridView.AddRow(x.Max(x => x.Count()));
+                    for (int i = 0; i < x.Length; i++)
+                    {
+                        for (int j = 0; j < x[i].Length; j++)
+                            _gridView[i, j].Value = x[i][j];
+                    }
+                });
             });
             return this;
         }
 
-        public GridVisualizer AddRowsByColumn(Func<IEnumerable<IEnumerable<object>>> valuesFunc)
+
+        public GridVisualizer AddRowsByRow(Func<IEnumerable<IEnumerable<object>>> valuesFunc)
         {
-            AddRowsByColumn(valuesFunc());
+            AddRowsByRow(valuesFunc());
             return this;
         }
 
@@ -65,20 +75,31 @@ namespace WindowsFormsUI
         {
             _gridView.Invoke(() =>
             {
-                for (int i = 0; i < values.Count(); i++)
+                values.EnumerableTo2DArray(x =>
                 {
-                    _gridView.AddRow();
-                    for (int j = 0; j < values.ElementAt(i).Count(); j++)
-                        _gridView[j, i].Value = values.ElementAt(i).ElementAt(j);
-                }
+                    for (int i = 0; i < x.Length; i++)
+                    {
+                        _gridView.AddRow();
+                        for (int j = 0; j < x[i].Length; j++)
+                            _gridView[j, i].Value = x[i][j];
+                    }
+                });
+                
             });
             return this;
         }
 
-        public GridVisualizer AddRowsByRow(Func<IEnumerable<IEnumerable<object>>> valuesFunc)
+        public GridVisualizer Resize()
         {
-            AddRowsByRow(valuesFunc());
+            _gridView.Invoke(() =>
+            {
+                for (int i = 0; i < _gridView.Columns.Count; i++)
+                    _gridView.Columns[i].Width = _gridView.Columns[i].GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
+                for (int i = 0; i < _gridView.Rows.Count; i++)
+                    _gridView.Rows[i].Height = _gridView.Rows[i].GetPreferredHeight(i, DataGridViewAutoSizeRowMode.AllCells, true);
+            });
             return this;
         }
+
     }
 }
