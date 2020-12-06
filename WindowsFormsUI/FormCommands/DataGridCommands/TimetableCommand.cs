@@ -26,7 +26,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
                 ? view.TimetableView.Select(x => x.GroupId).Distinct().OrderBy(x => x).ToList()
                 : new List<int>() { _group.Id };
 
-            var visualizer = new GridVisualizer(Receiver.GridView)
+            GridVisualizer
                 .AddSettings(new GridVisualizerSettings())
                 .AddColumns(() => groupsId.Select(x => x.ToString()))
                 .AddRowsByColumn(() => groupsId
@@ -39,6 +39,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
                         .ToList())));
 
             AppendDaysOfWeek(view);
+            GridVisualizer.Resize();
         }
     }
 }

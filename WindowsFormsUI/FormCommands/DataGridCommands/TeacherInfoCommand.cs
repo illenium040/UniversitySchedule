@@ -25,10 +25,11 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
             var teachers = _teacher is null
                 ? Receiver.ViewData.TeacherSubject.GetNamedTeachers()
                 : Receiver.ViewData.TeacherSubject.GetByTeacher(_teacher.Id).Select(x => x.Teacher).Distinct().ToList();
-            new GridVisualizer(Receiver.GridView)
+            GridVisualizer
                 .AddColumns(teachers.Select(t => $"{t.ShortFirstname} {t.Lastname}"))
                 .AddRowsByColumn(teachers.Select(t =>
-                    t.TeacherSubject.Select(x => x.Subject).Distinct().Select(x => x.FullName)));
+                    t.TeacherSubject.Select(x => x.Subject).Distinct().Select(x => x.FullName)))
+                .Resize();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
             var view = Receiver.ViewData.TimetableView.GetLastUpdated();
             var timetable = view.TimetableView.Where(x => x.TeacherId == _teacher.Id).ToList();
 
-            var visualizer = new GridVisualizer(Receiver.GridView)
+            GridVisualizer
                 .AddColumns(timetable.OrderBy(x => x.GroupId).Select(x => x.GroupId.ToString()).Distinct())
                 .AddRowsByColumn(() =>
                 timetable.OrderBy(x => x.GroupId).Select(x => x.GroupId).Distinct()
@@ -36,6 +36,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
                         .ToList())));
 
             AppendDaysOfWeek(view);
+            GridVisualizer.Resize();
         }
     }
 }

@@ -13,9 +13,11 @@ namespace WindowsFormsUI.FormCommands
     public abstract class DataGridViewCommand : ICommand
     {
         protected DataGridViewCommandReceiver Receiver;
+        protected GridVisualizer GridVisualizer;
         public DataGridViewCommand(DataGridViewCommandReceiver receiver)
         {
             Receiver = receiver;
+            GridVisualizer = new GridVisualizer(receiver.GridView);
         }
 
         protected void AppendDaysOfWeek(TimetableViewInfo view)

@@ -22,14 +22,15 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
             if (_specialty is null) return;
             var specialtyPlanInfo = Receiver.ViewData.PlansInformation.GetPlanInformationBySpecialty(_specialty.Id);
 
-            new GridVisualizer(Receiver.GridView)
+            GridVisualizer
                 .AddSettings(new GridVisualizerSettings())
                 .AddColumns(new List<string> { "Код", "Предмет" }
                             .AppendWithIndex(specialtyPlanInfo.HourPlans.First().SemestersCount, i => $"Семестр {i + 1}"))
                 .AddRowsByRow(() => specialtyPlanInfo.HourPlans.OrderByDescending(x => x[0])
                         .Select(x => new List<object> { x.Code, x.Subject.FullName }
                                 .AppendWithIndex(x.SemestersCount, i => x[i].Value).ToList())
-                        .ToList());
+                        .ToList())
+                .Resize();
         }
     }
 }
