@@ -7,7 +7,6 @@ namespace WindowsFormsUI
 {
     public class GridVisualizerSettings
     {
-        public DataGridViewAutoSizeRowsMode AutoSizeRowsMode { get; set; }
-        public DataGridViewAutoSizeColumnsMode AutoSizeColumnsMode { get; set; }
+        
     }
 }

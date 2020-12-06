@@ -185,7 +185,7 @@
             this.groupsLoadStateText.Name = "groupsLoadStateText";
             this.groupsLoadStateText.Size = new System.Drawing.Size(154, 42);
             this.groupsLoadStateText.TabIndex = 2;
-            this.groupsLoadStateText.Text = "Загружаем список специальностей и групп...";
+            this.groupsLoadStateText.Text = "Загружаем необходимые данные...";
             this.groupsLoadStateText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // preDataLoaderPictureBox

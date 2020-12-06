@@ -66,8 +66,6 @@ namespace WindowsFormsUI.UserMainForm
         private async void UserForm_Load(object sender, EventArgs e)
         {
             await LoadDataAsync();
-            _gridCommandInvoker = new CommandInvoker<DataGridViewCommand>();
-            _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView, _timetableView);
         }
 
         private void UserForm_FormClosing(object sender, FormClosingEventArgs e)

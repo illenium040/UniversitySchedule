@@ -20,8 +20,6 @@ namespace WindowsFormsUI.UserMainForm
             timetableGridView.RowHeadersVisible = false;
             timetableGridView.BackgroundColor = this.BackColor;
 
-            timetableGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            timetableGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         private void AddPictureBoxSettings()

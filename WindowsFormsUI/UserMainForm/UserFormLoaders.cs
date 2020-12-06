@@ -57,9 +57,13 @@ namespace WindowsFormsUI.UserMainForm
                 new SpecialtyContext(),
                 new PlanContext(),
                 new TimetableViewContext()));
+
+            _gridCommandInvoker = new CommandInvoker<DataGridViewCommand>();
+            _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView, _timetableView);
+
             await InitSpecialtiesAndGroups();
-            dataLoadStateText.Text = "Загружаем список преподавателей";
             await InitTeachers();
+
             preDataLoaderPanel.Visible = false;
         }
 
@@ -89,7 +93,6 @@ namespace WindowsFormsUI.UserMainForm
                     teacherList.Invoke(() => teacherList.Items.Add(new TeacherWrapper(teacher)));
                     timetableTeacherList.Invoke(() => timetableTeacherList.Items.Add(new TeacherWrapper(teacher)));
                 }
-                
             });
             btnShowTeachers.Enabled = true;
             btnTimetableTeacher.Enabled = true;
