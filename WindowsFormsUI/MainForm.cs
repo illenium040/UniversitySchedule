@@ -71,7 +71,5 @@ namespace WindowsFormsUI
 
             _userForm.Show();
         }
-
-        
     }
 }

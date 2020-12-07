@@ -25,6 +25,12 @@ namespace WindowsFormsUI.UserMainForm
 
         private ITimetableViewData _timetableView;
 
+        private TimetableViewInfo _viewInfoInstance;
+        private TimetableViewInfo _viewInfo
+        {
+            get { return _viewInfoInstance ?? _timetableView.TimetableView.GetLastUpdated(); }
+        }
+
         public UserForm(MainForm form, User user)
         {
             InitializeComponent();
@@ -43,12 +49,18 @@ namespace WindowsFormsUI.UserMainForm
 
         }
 
+        public UserForm AddTimetableViewInfo(TimetableViewInfo viewInfo)
+        {
+            _viewInfoInstance = viewInfo;
+            return this;
+        }
+
         private async void ShowTeachersTimetable(object sender, EventArgs e)
         {
             await _actionProxy.InvokeAsync(()=> VisualizeGridView(ShowTeacherTimetable));
         }
 
-        private async void ShowTeachers(object sender, EventArgs e)
+        public async void ShowTeachers(object sender, EventArgs e)
         {
             await _actionProxy.InvokeAsync(() => VisualizeGridView(ShowTeacherInfo));
         }
@@ -65,7 +77,7 @@ namespace WindowsFormsUI.UserMainForm
 
         private async void UserForm_Load(object sender, EventArgs e)
         {
-            await LoadDataAsync();
+            await InitDataAsync();
         }
 
         private void UserForm_FormClosing(object sender, FormClosingEventArgs e)

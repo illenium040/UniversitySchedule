@@ -24,11 +24,6 @@ namespace WindowsFormsUI
             grid.Invoke(action, grid);
         }
 
-        public static void AddColumn(this DataGridView grid, string name, string header, int? colWidth = 100)
-        {
-            grid.Columns[grid.Columns.Add(name, header)].Width = colWidth.HasValue ? colWidth.Value : 100;
-        }
-
         public static void ChangeWidthFromDock(this DataGridView grid, DockStyle dock)
         {
             grid.Dock = dock;

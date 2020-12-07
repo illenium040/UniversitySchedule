@@ -24,14 +24,17 @@ namespace WindowsFormsUI.UserMainForm
         private void ShowTimetable()
         {
             _gridCommandInvoker.SetCommand(new TimetableCommand(
-                groupsList.GetSelectedItem<GroupWrapper>()?.Group, _gridCommandReceiver))
+                groupsList.GetSelectedItem<GroupWrapper>()?.Group,
+                _viewInfo,
+                _gridCommandReceiver))
                 .Run();
         }
 
         private void ShowTimetablePlan()
         {
             _gridCommandInvoker.SetCommand(new TimetablePlanCommand(
-                specialtyList.GetSelectedItem<SpecialtyWrapper>()?.Specialty, _gridCommandReceiver))
+                specialtyList.GetSelectedItem<SpecialtyWrapper>()?.Specialty,
+                _gridCommandReceiver))
                 .Run();
         }
 
@@ -45,11 +48,13 @@ namespace WindowsFormsUI.UserMainForm
         private void ShowTeacherTimetable()
         {
             _gridCommandInvoker.SetCommand(new TeacherTimetableCommand(
-                timetableTeacherList.GetSelectedItem<TeacherWrapper>()?.Teacher, _gridCommandReceiver))
+                timetableTeacherList.GetSelectedItem<TeacherWrapper>()?.Teacher,
+                _viewInfo,
+                _gridCommandReceiver))
                 .Run();
         }
 
-        private async Task LoadDataAsync()
+        private async Task InitDataAsync()
         {
             _timetableView = await Task.Run(() =>
              new TimetableViewData(

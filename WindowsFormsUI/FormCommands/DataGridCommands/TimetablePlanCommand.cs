@@ -12,7 +12,8 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
     public class TimetablePlanCommand : DataGridViewCommand
     {
         private Specialty _specialty;
-        public TimetablePlanCommand(Specialty specialty, DataGridViewCommandReceiver receiver) : base(receiver)
+        public TimetablePlanCommand(Specialty specialty,
+            DataGridViewCommandReceiver receiver) : base(receiver)
         {
             _specialty = specialty;
         }

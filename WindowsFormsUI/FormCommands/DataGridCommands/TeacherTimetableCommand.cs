@@ -12,30 +12,32 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
     public class TeacherTimetableCommand : DataGridViewCommand
     {
         private Teacher _teacher;
-        public TeacherTimetableCommand(Teacher teacher, DataGridViewCommandReceiver receiver) : base(receiver)
+        private TimetableViewInfo _viewInfo;
+        public TeacherTimetableCommand(Teacher teacher, TimetableViewInfo viewInfo,
+            DataGridViewCommandReceiver receiver) : base(receiver)
         {
             _teacher = teacher;
+            _viewInfo = viewInfo;
         }
 
         public override void Execute()
         {
             if (_teacher is null) return;
-            var view = Receiver.ViewData.TimetableView.GetLastUpdated();
-            var timetable = view.TimetableView.Where(x => x.TeacherId == _teacher.Id).ToList();
-
+            var timetable = _viewInfo.TimetableView.Where(x => x.TeacherId == _teacher.Id).ToList();
+            if (timetable.Count == 0) return;
             GridVisualizer
                 .AddColumns(timetable.OrderBy(x => x.GroupId).Select(x => x.GroupId.ToString()).Distinct())
                 .AddRowsByColumn(() =>
                 timetable.OrderBy(x => x.GroupId).Select(x => x.GroupId).Distinct()
                     .Select(gId => timetable.Where(tv => tv.GroupId == gId).OrderBy(x => x.GroupId))
                     .Select(tViewList =>
-                        Enumerable.Repeat<object>(null, view.Days * view.Hours).ToList()
+                        Enumerable.Repeat<object>(null, _viewInfo.Days * _viewInfo.Hours).ToList()
                         .ForEachInList(x => tViewList
-                            .Select(tView => x[tView.Day * view.Hours + tView.Hour]
+                            .Select(tView => x[tView.Day * _viewInfo.Hours + tView.Hour]
                             = $"{tView.Subject.FullName} \r\n {tView.Teacher.ShortFirstname} {tView.Teacher.Lastname}")
                         .ToList())));
 
-            AppendDaysOfWeek(view);
+            AppendDaysOfWeek(_viewInfo);
             GridVisualizer.Resize();
         }
     }
