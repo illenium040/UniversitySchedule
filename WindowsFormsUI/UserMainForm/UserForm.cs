@@ -19,8 +19,7 @@ namespace WindowsFormsUI.UserMainForm
 {
     public partial class UserForm : Form
     {
-        private readonly MainForm _mainForm;
-        private User _user;
+        private readonly User _user;
         private ActionProxy _actionProxy;
 
         private ITimetableViewData _timetableView;
@@ -31,18 +30,15 @@ namespace WindowsFormsUI.UserMainForm
             get { return _viewInfoInstance ?? _timetableView.TimetableView.GetLastUpdated(); }
         }
 
-        public UserForm(MainForm form, User user)
+        public UserForm(User user)
         {
             InitializeComponent();
             _user = user;
-            _mainForm = form;
             _actionProxy = new ActionProxy();
             btnShowView.Click += ShowView;
             btnShowPlan.Click += ShowPlan;
             btnShowTeachers.Click += ShowTeachers;
             btnTimetableTeacher.Click += ShowTeachersTimetable;
-
-            FormClosing += UserForm_FormClosing;
 
             AddPictureBoxSettings();
             AddGridViewSettings();
@@ -78,11 +74,6 @@ namespace WindowsFormsUI.UserMainForm
         private async void UserForm_Load(object sender, EventArgs e)
         {
             await InitDataAsync();
-        }
-
-        private void UserForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _mainForm.Close();
         }
     }
 }
