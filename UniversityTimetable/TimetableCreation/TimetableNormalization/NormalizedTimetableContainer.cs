@@ -56,6 +56,29 @@ namespace UniversityTimetableGenerator.TimetableCreation.TimetableNormalization
                     }
         }
 
+        public IEnumerable<TimetableView> GetNormalizedViewWithInclude()
+        {
+            for (int i = 0; i < Length; i++)
+                for (int day = 0; day < this[i].Timetable.Length; day++)
+                    for (int hour = 0; hour < this[i].Timetable[day].Length; hour++)
+                    {
+                        var cell = this[i].Timetable[day][hour];
+                        if (cell is null) continue;
+                        yield return new TimetableView
+                        {
+                            Id = this.GetHashCode(),
+                            Day = day,
+                            Hour = hour,
+                            Group = this[i].Group,
+                            GroupId = this[i].Group.Id,
+                            Subject = cell.Subject,
+                            SubjectId = cell.Subject.Id,
+                            Teacher = cell.Teacher,
+                            TeacherId = cell.Teacher.Id
+                        };
+                    }
+        }
+
         private void Normalize()
         {
             _timetable = new NormalizedTimetable[RawTimetable.PlanList.Length];

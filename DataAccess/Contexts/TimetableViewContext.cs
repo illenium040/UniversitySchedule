@@ -11,6 +11,7 @@ namespace DataAccess.Contexts
 {
     public class TimetableViewContext : JetDbContext
     {
+        public DbSet<Specialty> Specialties { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Subject> Subjects { get; set; }
@@ -48,6 +49,10 @@ namespace DataAccess.Contexts
                 .HasOne(x => x.Teacher)
                 .WithMany()
                 .HasForeignKey(x => x.TeacherId);
+
+            modelBuilder.Entity<Specialty>()
+                .HasMany(x => x.Groups)
+                .WithOne(x => x.Specialty);
         }
     }
 }

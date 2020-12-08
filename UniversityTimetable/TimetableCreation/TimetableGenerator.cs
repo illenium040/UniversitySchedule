@@ -50,12 +50,13 @@ namespace UniversityTimetableGenerator.TimetableCreation
         {
             try
             {
+                if (_cancellation.IsCancellationRequested) UpdateCancellationToken();
                 return new TimetableAction(await _solver.Solve(_cancellation))
                     .Complete("Timetable created succesfully");
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException opCanceled)
             {
-                return new TimetableResult($"Canceled succesfully", false);
+                throw opCanceled;
             }
             catch (Exception exception)
             {
@@ -73,12 +74,13 @@ namespace UniversityTimetableGenerator.TimetableCreation
         {
             try
             {
+                if (_cancellation.IsCancellationRequested) UpdateCancellationToken();
                 return new TimetableAction(await _solver.Train(timetable, _cancellation))
                     .Complete("Train ended succesfully");
             }
-            catch(OperationCanceledException)
+            catch(OperationCanceledException opCanceled)
             {
-                return new TimetableResult($"Canceled succesfully", false);
+                throw opCanceled;
             }
             catch (Exception exception)
             {

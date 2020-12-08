@@ -29,11 +29,16 @@ namespace UniversityTimetableGenerator.Services
         }
         public abstract Task<TimetableResult> CreateAsync();
         public abstract Task<TimetableResult> TrainAsync(Timetable timetable, int count = 1);
+        public virtual void Cancel()
+        {
+            TimetableFacade.Generator.Cancel();
+        }
+        
         public abstract Task SaveToDatabase(TimetableResult timetableResult);
 
-        public virtual async Task<NormalizedTimetableContainer> GetNormalizedView(TimetableResult timetableResult)
+        public virtual NormalizedTimetableContainer GetNormalizedView(TimetableResult timetableResult)
         {
-            return await Task.Run(() => new NormalizedTimetableContainer(timetableResult, TimetableFacade.DataContainer));
+            return new NormalizedTimetableContainer(timetableResult, TimetableFacade.DataContainer);
         }
     }
 }

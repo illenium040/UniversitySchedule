@@ -30,9 +30,9 @@ namespace UniversityTimetableGenerator.Services
             
         }
 
-        public override async Task<TimetableResult> CreateAsync()
+        public override Task<TimetableResult> CreateAsync()
         {
-            return await TimetableFacade.Generator.Create();
+            return TimetableFacade.Generator.Create();
         }
 
         public override async Task SaveToDatabase(TimetableResult timetableResult)
