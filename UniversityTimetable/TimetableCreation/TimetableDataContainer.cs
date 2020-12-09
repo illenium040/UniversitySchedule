@@ -22,7 +22,7 @@ namespace UniversityTimetableGenerator.TimetableCreation
         public ITimetableViewRepository TimetableView { get; protected set; }
         public TimetableDataContainer()
         {
-            SemestersPart = TimetableSettings.SemestersPart;
+            SemestersPart = TimetableDefaultSettings.SemestersPart;
         }
 
         public TimetableDataContainer Init(ITimetableViewData data)

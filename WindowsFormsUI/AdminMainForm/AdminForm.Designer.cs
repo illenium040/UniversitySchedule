@@ -28,22 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.timetableCreationTab = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnSaveToDatabase = new System.Windows.Forms.Button();
             this.btnTimetableTrain = new System.Windows.Forms.Button();
             this.panelTimetableCreationLog = new System.Windows.Forms.Panel();
             this.lblSolverLog = new System.Windows.Forms.Label();
             this.rbxTimetableResultLog = new System.Windows.Forms.RichTextBox();
-            this.pictureBoxTimetableCreation = new System.Windows.Forms.PictureBox();
             this.btnCancelTimetableCreation = new System.Windows.Forms.Button();
             this.btnShowUserForm = new System.Windows.Forms.Button();
             this.btnCreateTimetable = new System.Windows.Forms.Button();
             this.groupBoxAlgorithmSettings = new System.Windows.Forms.GroupBox();
             this.numericTrainCount = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.numericPopulationCount = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -51,6 +49,7 @@
             this.numericPartOfBest = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.numericIterationsCount = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxDefaultSettings = new System.Windows.Forms.CheckBox();
             this.groupBoxTimetableSettings = new System.Windows.Forms.GroupBox();
             this.numericSemesterPart = new System.Windows.Forms.NumericUpDown();
             this.numericHoursDay = new System.Windows.Forms.NumericUpDown();
@@ -61,12 +60,11 @@
             this.subjectsTeachersTab = new System.Windows.Forms.TabPage();
             this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
             this.planTab = new System.Windows.Forms.TabPage();
-            this.btnSaveToDatabase = new System.Windows.Forms.Button();
+            this.pictureBoxTimetableCreation = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.timetableCreationTab.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panelTimetableCreationLog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).BeginInit();
             this.groupBoxAlgorithmSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericTrainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPopulationCount)).BeginInit();
@@ -76,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -90,18 +89,19 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(632, 406);
+            this.tabControl1.Size = new System.Drawing.Size(719, 406);
             this.tabControl1.TabIndex = 0;
             // 
             // timetableCreationTab
             // 
             this.timetableCreationTab.Controls.Add(this.groupBox2);
             this.timetableCreationTab.Controls.Add(this.groupBoxAlgorithmSettings);
+            this.timetableCreationTab.Controls.Add(this.checkBoxDefaultSettings);
             this.timetableCreationTab.Controls.Add(this.groupBoxTimetableSettings);
             this.timetableCreationTab.Location = new System.Drawing.Point(4, 24);
             this.timetableCreationTab.Name = "timetableCreationTab";
             this.timetableCreationTab.Padding = new System.Windows.Forms.Padding(3);
-            this.timetableCreationTab.Size = new System.Drawing.Size(624, 378);
+            this.timetableCreationTab.Size = new System.Drawing.Size(711, 378);
             this.timetableCreationTab.TabIndex = 0;
             this.timetableCreationTab.Text = "Создание расписания";
             this.timetableCreationTab.UseVisualStyleBackColor = true;
@@ -111,6 +111,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.pictureBoxTimetableCreation);
             this.groupBox2.Controls.Add(this.btnSaveToDatabase);
             this.groupBox2.Controls.Add(this.btnTimetableTrain);
             this.groupBox2.Controls.Add(this.panelTimetableCreationLog);
@@ -119,10 +120,20 @@
             this.groupBox2.Controls.Add(this.btnCreateTimetable);
             this.groupBox2.Location = new System.Drawing.Point(235, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(386, 224);
+            this.groupBox2.Size = new System.Drawing.Size(380, 325);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Создание расписания";
+            // 
+            // btnSaveToDatabase
+            // 
+            this.btnSaveToDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveToDatabase.Location = new System.Drawing.Point(132, 279);
+            this.btnSaveToDatabase.Name = "btnSaveToDatabase";
+            this.btnSaveToDatabase.Size = new System.Drawing.Size(120, 40);
+            this.btnSaveToDatabase.TabIndex = 9;
+            this.btnSaveToDatabase.Text = "Сохранить в базу данных";
+            this.btnSaveToDatabase.UseVisualStyleBackColor = true;
             // 
             // btnTimetableTrain
             // 
@@ -140,20 +151,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTimetableCreationLog.Controls.Add(this.lblSolverLog);
             this.panelTimetableCreationLog.Controls.Add(this.rbxTimetableResultLog);
-            this.panelTimetableCreationLog.Controls.Add(this.pictureBoxTimetableCreation);
             this.panelTimetableCreationLog.Location = new System.Drawing.Point(6, 62);
             this.panelTimetableCreationLog.Name = "panelTimetableCreationLog";
             this.panelTimetableCreationLog.Padding = new System.Windows.Forms.Padding(3);
-            this.panelTimetableCreationLog.Size = new System.Drawing.Size(374, 110);
+            this.panelTimetableCreationLog.Size = new System.Drawing.Size(368, 211);
             this.panelTimetableCreationLog.TabIndex = 7;
             // 
             // lblSolverLog
             // 
-            this.lblSolverLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblSolverLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSolverLog.Location = new System.Drawing.Point(7, 80);
+            this.lblSolverLog.Location = new System.Drawing.Point(7, 181);
             this.lblSolverLog.Name = "lblSolverLog";
-            this.lblSolverLog.Size = new System.Drawing.Size(324, 22);
+            this.lblSolverLog.Size = new System.Drawing.Size(352, 22);
             this.lblSolverLog.TabIndex = 9;
             // 
             // rbxTimetableResultLog
@@ -163,22 +173,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rbxTimetableResultLog.Location = new System.Drawing.Point(7, 6);
             this.rbxTimetableResultLog.Name = "rbxTimetableResultLog";
-            this.rbxTimetableResultLog.Size = new System.Drawing.Size(324, 71);
+            this.rbxTimetableResultLog.Size = new System.Drawing.Size(318, 172);
             this.rbxTimetableResultLog.TabIndex = 8;
             this.rbxTimetableResultLog.Text = "";
-            // 
-            // pictureBoxTimetableCreation
-            // 
-            this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxTimetableCreation.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTimetableCreation.Image")));
-            this.pictureBoxTimetableCreation.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxTimetableCreation.InitialImage")));
-            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(337, 6);
-            this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
-            this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
-            this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxTimetableCreation.TabIndex = 7;
-            this.pictureBoxTimetableCreation.TabStop = false;
-            this.pictureBoxTimetableCreation.Visible = false;
             // 
             // btnCancelTimetableCreation
             // 
@@ -191,7 +188,8 @@
             // 
             // btnShowUserForm
             // 
-            this.btnShowUserForm.Location = new System.Drawing.Point(6, 178);
+            this.btnShowUserForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnShowUserForm.Location = new System.Drawing.Point(6, 279);
             this.btnShowUserForm.Name = "btnShowUserForm";
             this.btnShowUserForm.Size = new System.Drawing.Size(120, 40);
             this.btnShowUserForm.TabIndex = 4;
@@ -211,7 +209,6 @@
             // 
             this.groupBoxAlgorithmSettings.Controls.Add(this.numericTrainCount);
             this.groupBoxAlgorithmSettings.Controls.Add(this.label1);
-            this.groupBoxAlgorithmSettings.Controls.Add(this.checkBox1);
             this.groupBoxAlgorithmSettings.Controls.Add(this.label8);
             this.groupBoxAlgorithmSettings.Controls.Add(this.numericPopulationCount);
             this.groupBoxAlgorithmSettings.Controls.Add(this.label7);
@@ -221,7 +218,7 @@
             this.groupBoxAlgorithmSettings.Controls.Add(this.numericIterationsCount);
             this.groupBoxAlgorithmSettings.Location = new System.Drawing.Point(3, 3);
             this.groupBoxAlgorithmSettings.Name = "groupBoxAlgorithmSettings";
-            this.groupBoxAlgorithmSettings.Size = new System.Drawing.Size(225, 225);
+            this.groupBoxAlgorithmSettings.Size = new System.Drawing.Size(225, 198);
             this.groupBoxAlgorithmSettings.TabIndex = 5;
             this.groupBoxAlgorithmSettings.TabStop = false;
             this.groupBoxAlgorithmSettings.Text = "Настройки алгоритма";
@@ -229,10 +226,25 @@
             // numericTrainCount
             // 
             this.numericTrainCount.Location = new System.Drawing.Point(158, 110);
+            this.numericTrainCount.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericTrainCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericTrainCount.Name = "numericTrainCount";
             this.numericTrainCount.ReadOnly = true;
             this.numericTrainCount.Size = new System.Drawing.Size(52, 23);
             this.numericTrainCount.TabIndex = 14;
+            this.numericTrainCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
@@ -243,22 +255,11 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Количество тренировок:";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(6, 180);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(201, 40);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "Использовать настройки по умолчанию";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(6, 143);
+            this.label8.Location = new System.Drawing.Point(9, 143);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(210, 34);
+            this.label8.Size = new System.Drawing.Size(210, 45);
             this.label8.TabIndex = 11;
             this.label8.Text = "Примечание: количество популяций должно нацело делиться на часть лучших популяций" +
     "";
@@ -267,10 +268,25 @@
             // numericPopulationCount
             // 
             this.numericPopulationCount.Location = new System.Drawing.Point(158, 81);
+            this.numericPopulationCount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericPopulationCount.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.numericPopulationCount.Name = "numericPopulationCount";
             this.numericPopulationCount.ReadOnly = true;
             this.numericPopulationCount.Size = new System.Drawing.Size(52, 23);
             this.numericPopulationCount.TabIndex = 10;
+            this.numericPopulationCount.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             // 
             // label7
             // 
@@ -293,10 +309,25 @@
             // numericPartOfBest
             // 
             this.numericPartOfBest.Location = new System.Drawing.Point(158, 49);
+            this.numericPartOfBest.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericPartOfBest.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numericPartOfBest.Name = "numericPartOfBest";
             this.numericPartOfBest.ReadOnly = true;
             this.numericPartOfBest.Size = new System.Drawing.Size(52, 23);
             this.numericPartOfBest.TabIndex = 7;
+            this.numericPartOfBest.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // label5
             // 
@@ -310,10 +341,36 @@
             // numericIterationsCount
             // 
             this.numericIterationsCount.Location = new System.Drawing.Point(158, 20);
+            this.numericIterationsCount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericIterationsCount.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericIterationsCount.Name = "numericIterationsCount";
             this.numericIterationsCount.ReadOnly = true;
             this.numericIterationsCount.Size = new System.Drawing.Size(52, 23);
             this.numericIterationsCount.TabIndex = 5;
+            this.numericIterationsCount.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // checkBoxDefaultSettings
+            // 
+            this.checkBoxDefaultSettings.Checked = true;
+            this.checkBoxDefaultSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDefaultSettings.Location = new System.Drawing.Point(4, 335);
+            this.checkBoxDefaultSettings.Name = "checkBoxDefaultSettings";
+            this.checkBoxDefaultSettings.Size = new System.Drawing.Size(257, 40);
+            this.checkBoxDefaultSettings.TabIndex = 12;
+            this.checkBoxDefaultSettings.Text = "Использовать настройки по умолчанию";
+            this.checkBoxDefaultSettings.UseVisualStyleBackColor = true;
             // 
             // groupBoxTimetableSettings
             // 
@@ -323,7 +380,7 @@
             this.groupBoxTimetableSettings.Controls.Add(this.label4);
             this.groupBoxTimetableSettings.Controls.Add(this.label3);
             this.groupBoxTimetableSettings.Controls.Add(this.label2);
-            this.groupBoxTimetableSettings.Location = new System.Drawing.Point(3, 234);
+            this.groupBoxTimetableSettings.Location = new System.Drawing.Point(4, 207);
             this.groupBoxTimetableSettings.Name = "groupBoxTimetableSettings";
             this.groupBoxTimetableSettings.Size = new System.Drawing.Size(225, 122);
             this.groupBoxTimetableSettings.TabIndex = 4;
@@ -334,28 +391,73 @@
             // 
             this.numericSemesterPart.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.numericSemesterPart.Location = new System.Drawing.Point(166, 86);
+            this.numericSemesterPart.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericSemesterPart.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericSemesterPart.Name = "numericSemesterPart";
             this.numericSemesterPart.ReadOnly = true;
             this.numericSemesterPart.Size = new System.Drawing.Size(52, 23);
             this.numericSemesterPart.TabIndex = 7;
+            this.numericSemesterPart.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericHoursDay
             // 
             this.numericHoursDay.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.numericHoursDay.Location = new System.Drawing.Point(166, 56);
+            this.numericHoursDay.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.numericHoursDay.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericHoursDay.Name = "numericHoursDay";
             this.numericHoursDay.ReadOnly = true;
             this.numericHoursDay.Size = new System.Drawing.Size(52, 23);
             this.numericHoursDay.TabIndex = 6;
+            this.numericHoursDay.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericDaysWeek
             // 
             this.numericDaysWeek.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.numericDaysWeek.Location = new System.Drawing.Point(166, 25);
+            this.numericDaysWeek.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.numericDaysWeek.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericDaysWeek.Name = "numericDaysWeek";
             this.numericDaysWeek.ReadOnly = true;
             this.numericDaysWeek.Size = new System.Drawing.Size(52, 23);
             this.numericDaysWeek.TabIndex = 5;
+            this.numericDaysWeek.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label4
             // 
@@ -392,7 +494,7 @@
             this.subjectsTeachersTab.Location = new System.Drawing.Point(4, 24);
             this.subjectsTeachersTab.Name = "subjectsTeachersTab";
             this.subjectsTeachersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.subjectsTeachersTab.Size = new System.Drawing.Size(624, 378);
+            this.subjectsTeachersTab.Size = new System.Drawing.Size(711, 378);
             this.subjectsTeachersTab.TabIndex = 1;
             this.subjectsTeachersTab.Text = "Предметы и преподаватели";
             this.subjectsTeachersTab.UseVisualStyleBackColor = true;
@@ -402,7 +504,7 @@
             this.groupsSpecialtiesTab.BackColor = System.Drawing.Color.White;
             this.groupsSpecialtiesTab.Location = new System.Drawing.Point(4, 24);
             this.groupsSpecialtiesTab.Name = "groupsSpecialtiesTab";
-            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(624, 378);
+            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(711, 378);
             this.groupsSpecialtiesTab.TabIndex = 2;
             this.groupsSpecialtiesTab.Text = "Специальности и группы";
             // 
@@ -411,34 +513,36 @@
             this.planTab.BackColor = System.Drawing.Color.White;
             this.planTab.Location = new System.Drawing.Point(4, 24);
             this.planTab.Name = "planTab";
-            this.planTab.Size = new System.Drawing.Size(624, 378);
+            this.planTab.Size = new System.Drawing.Size(711, 378);
             this.planTab.TabIndex = 3;
             this.planTab.Text = "Учебный план";
             // 
-            // btnSaveToDatabase
+            // pictureBoxTimetableCreation
             // 
-            this.btnSaveToDatabase.Location = new System.Drawing.Point(132, 178);
-            this.btnSaveToDatabase.Name = "btnSaveToDatabase";
-            this.btnSaveToDatabase.Size = new System.Drawing.Size(120, 40);
-            this.btnSaveToDatabase.TabIndex = 9;
-            this.btnSaveToDatabase.Text = "Сохранить в базу данных";
-            this.btnSaveToDatabase.UseVisualStyleBackColor = true;
+            this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxTimetableCreation.InitialImage = null;
+            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(333, 24);
+            this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
+            this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
+            this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxTimetableCreation.TabIndex = 10;
+            this.pictureBoxTimetableCreation.TabStop = false;
+            this.pictureBoxTimetableCreation.Visible = false;
             // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(650, 431);
+            this.ClientSize = new System.Drawing.Size(737, 431);
             this.Controls.Add(this.tabControl1);
             this.DoubleBuffered = true;
-            this.MinimumSize = new System.Drawing.Size(580, 470);
+            this.MinimumSize = new System.Drawing.Size(660, 470);
             this.Name = "AdminForm";
             this.Text = "AdminForm";
             this.tabControl1.ResumeLayout(false);
             this.timetableCreationTab.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.panelTimetableCreationLog.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).EndInit();
             this.groupBoxAlgorithmSettings.ResumeLayout(false);
             this.groupBoxAlgorithmSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericTrainCount)).EndInit();
@@ -450,6 +554,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -476,7 +581,7 @@
         private System.Windows.Forms.NumericUpDown numericPopulationCount;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxDefaultSettings;
         private System.Windows.Forms.Button btnShowUserForm;
         private System.Windows.Forms.NumericUpDown numericTrainCount;
         private System.Windows.Forms.Label label1;
@@ -484,11 +589,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnCancelTimetableCreation;
         private System.Windows.Forms.Panel panelTimetableCreationLog;
-        private System.Windows.Forms.PictureBox pictureBoxTimetableCreation;
         private System.Windows.Forms.RichTextBox timetableResultLog;
         private System.Windows.Forms.Label lblSolverLog;
         private System.Windows.Forms.RichTextBox rbxTimetableResultLog;
         private System.Windows.Forms.Button btnTimetableTrain;
         private System.Windows.Forms.Button btnSaveToDatabase;
+        private System.Windows.Forms.PictureBox pictureBoxTimetableCreation;
     }
 }

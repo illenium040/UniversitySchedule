@@ -22,11 +22,26 @@ namespace WindowsFormsUI.AdminMainForm
     {
         private SolverService _solver;
         private Stack<TimetableResult> _timetableResult;
+        private void ApplyAlgSettings()
+        {
+            TimetableDefaultSettings.MaxIterations = (int)numericIterationsCount.Value;
+            TimetableDefaultSettings.PartOfBest = (int)numericPartOfBest.Value;
+            TimetableDefaultSettings.PopulationCount = (int)numericPopulationCount.Value;
+        }
+
+        private void ApplyTimetableSettings()
+        {
+            TimetableDefaultSettings.DaysWeek = (int)numericDaysWeek.Value;
+            TimetableDefaultSettings.HoursDay = (int)numericHoursDay.Value;
+            TimetableDefaultSettings.SemestersPart = (SemestersParts)numericSemesterPart.Value - 1;
+        }
+
         private async Task CreateTimetableAsync()
         {
-            TimetableSettings.MaxIterations = 10;
             try
             {
+                ApplyAlgSettings();
+                ApplyTimetableSettings();
                 pictureBoxTimetableCreation.Invoke(() => pictureBoxTimetableCreation.Visible = true);
                 rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Загружаем необходимые данные\r\n"));
                 if(_solver is null)
@@ -70,7 +85,9 @@ namespace WindowsFormsUI.AdminMainForm
         {
             try
             {
-                if(_timetableResult.Peek()?.Timetable is null)
+                ApplyAlgSettings();
+                ApplyTimetableSettings();
+                if (_timetableResult.Peek()?.Timetable is null)
                 {
                     rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Необходимо создать расписание\r\n"));
                     return;
@@ -85,6 +102,10 @@ namespace WindowsFormsUI.AdminMainForm
                 rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка завершена\r\n"));
             }
             catch (OperationCanceledException)
+            {
+                rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка отменена\r\n"));
+            }
+            catch (AggregateException)
             {
                 rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка отменена\r\n"));
             }
@@ -109,6 +130,28 @@ namespace WindowsFormsUI.AdminMainForm
             {
                 MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void SetDefaultAlgSettings()
+        {
+            numericIterationsCount.Value = TimetableDefaultSettings.MaxIterations;
+            numericPartOfBest.Value = TimetableDefaultSettings.PartOfBest;
+            numericPopulationCount.Value = TimetableDefaultSettings.PopulationCount;
+            numericTrainCount.Value = 10;
+            numericDaysWeek.Value = TimetableDefaultSettings.DaysWeek;
+            numericHoursDay.Value = TimetableDefaultSettings.HoursDay;
+            numericSemesterPart.Value = (int)TimetableDefaultSettings.SemestersPart + 1;
+        }
+
+        private void SetAlgNumericReadOnlyState(bool readOnly)
+        {
+            numericIterationsCount.ReadOnly = readOnly;
+            numericPartOfBest.ReadOnly = readOnly;
+            numericPopulationCount.ReadOnly = readOnly;
+            numericTrainCount.ReadOnly = readOnly;
+            numericDaysWeek.ReadOnly = readOnly;
+            numericHoursDay.ReadOnly = readOnly;
+            numericSemesterPart.ReadOnly = readOnly;
         }
     }
 }

@@ -9,13 +9,15 @@ namespace TimetableAlgorithm
     public class Timetable
     {
         //private Random rnd = new Random();
-        public byte DaysWeek { get; private set; } = (byte)TimetableSettings.DaysWeek;
-        public byte HoursDay { get; private set; } = (byte)TimetableSettings.HoursDay;
+        public byte DaysWeek { get; private set; }
+        public byte HoursDay { get; private set; }
         public TimetablePlansContainer PlanList { get; private set; }
         public int FitnessValue { get; set; }
 
         public Timetable(List<List<Lesson>> lessons)
         {
+            DaysWeek = (byte)TimetableDefaultSettings.DaysWeek;
+            HoursDay = (byte)TimetableDefaultSettings.HoursDay;
             PlanList = new TimetablePlansContainer(lessons)
                 .InitPlans()
                 .InitPairsCounter();

@@ -11,9 +11,7 @@ namespace TimetableAlgorithm
 {
     public class Solver
     {
-        private int _maxIterations = TimetableSettings.MaxIterations;
-        private int _partOfBest = TimetableSettings.PartOfBest;
-        private int _populatinCount = TimetableSettings.PopulationCount;
+        int _populatinCount;
         private List<List<Lesson>> _lessons;
         private List<List<Lesson>> _groupsOnPractice;
         private ILogger _logger;
@@ -42,6 +40,7 @@ namespace TimetableAlgorithm
 
         private Population CreatePopulationBeforeTrain(Timetable timetable)
         {
+            _populatinCount = TimetableDefaultSettings.PopulationCount;
             var population = new Population(timetable.TryChange().TryAddLessons());
             for (int i = 0; i < _populatinCount - 1; i++)
                 population.AddChildOfParent(timetable);
@@ -57,7 +56,7 @@ namespace TimetableAlgorithm
         public async Task<Timetable> Solve(CancellationTokenSource cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested) return null;
-
+            _populatinCount = TimetableDefaultSettings.PopulationCount;
             var pop = new Population(_lessons, _populatinCount);
             if (pop.Count == 0) throw new Exception("Can not create any plan");
 
@@ -68,7 +67,8 @@ namespace TimetableAlgorithm
         private async Task<Timetable> Solve(Population pop, CancellationTokenSource cancellationToken)
         {
             return await Task.Run(() => {
-                int count = _maxIterations;
+                int count = TimetableDefaultSettings.MaxIterations;
+                int _partOfBest = TimetableDefaultSettings.PartOfBest;
                 while (count-- > 0)
                 {
                     if (cancellationToken.IsCancellationRequested) 
@@ -84,8 +84,8 @@ namespace TimetableAlgorithm
                     for (int i = pop.Count / _partOfBest; i < pop.Count; i++)
                         for (int j = 0; j < pop[i].PlanList.Length; j++)
                         {
-                            for (int d = 0; d < TimetableSettings.DaysWeek; d++)
-                                for (int h = 0; h < TimetableSettings.HoursDay; h++)
+                            for (int d = 0; d < TimetableDefaultSettings.DaysWeek; d++)
+                                for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
                                     pop[i].PlanList[j][d, h].RemoveLesson();
                         }
                             

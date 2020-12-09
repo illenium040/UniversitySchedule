@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using TimetableAlgorithm;
+
 using UniversityTimetableGenerator.Actions.ActionsResult;
 using UniversityTimetableGenerator.Services;
 
@@ -38,6 +40,20 @@ namespace WindowsFormsUI.AdminMainForm
 
             btnShowUserForm.Click += ShowTimetableInUserForm;
             btnSaveToDatabase.Click += SaveToDatabase;
+
+            checkBoxDefaultSettings.CheckedChanged += IsDefaultSettings;
+            SetDefaultAlgSettings();
+        }
+
+        private void IsDefaultSettings(object sender, EventArgs e)
+        {
+            if (checkBoxDefaultSettings.Checked)
+            {
+                SetAlgNumericReadOnlyState(true);
+                SetDefaultAlgSettings();
+            }
+            else SetAlgNumericReadOnlyState(false);
+            
         }
 
         private async void SaveToDatabase(object sender, EventArgs e)

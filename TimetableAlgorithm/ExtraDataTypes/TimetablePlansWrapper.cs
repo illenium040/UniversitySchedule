@@ -45,9 +45,9 @@ namespace TimetableAlgorithm
             _plans = new TimetableHourPlan[Lessons.Count][,];
             for (int i = 0; i < Lessons.Count; i++)
             {
-                _plans[i] = new TimetableHourPlan[TimetableSettings.DaysWeek, TimetableSettings.HoursDay];
-                for (int d = 0; d < TimetableSettings.DaysWeek; d++)
-                    for (int h = 0; h < TimetableSettings.HoursDay; h++)
+                _plans[i] = new TimetableHourPlan[TimetableDefaultSettings.DaysWeek, TimetableDefaultSettings.HoursDay];
+                for (int d = 0; d < TimetableDefaultSettings.DaysWeek; d++)
+                    for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
                         _plans[i][d, h] = new TimetableHourPlan();
             }
             return this;

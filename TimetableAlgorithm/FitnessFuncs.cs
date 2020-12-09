@@ -23,12 +23,12 @@ namespace TimetableAlgorithm
             var res = 0;
             for (int i = 0; i < plan.PlanList.Length; i++)
             {
-                for (byte day = 0; day < TimetableSettings.DaysWeek; day++)
+                for (byte day = 0; day < TimetableDefaultSettings.DaysWeek; day++)
                 {
                     var groupHasLessions = new HashSet<int>();
                     var teacherHasLessions = new HashSet<int>();
 
-                    for (byte hour = 0; hour < TimetableSettings.HoursDay; hour++)
+                    for (byte hour = 0; hour < TimetableDefaultSettings.HoursDay; hour++)
                     {
                         var group = plan.PlanList[i][day, hour].GroupTeacher.Group;
                         var teacher = plan.PlanList[i][day, hour].TeacherGroup.Teacher;
@@ -73,12 +73,12 @@ namespace TimetableAlgorithm
 
             for (int i = 0; i < plan.PlanList.Length; i++)
             {
-                for (int d = 0, hcount = 0; d < TimetableSettings.DaysWeek; d++)
+                for (int d = 0, hcount = 0; d < TimetableDefaultSettings.DaysWeek; d++)
                 {
-                    for (int h = 0; h < TimetableSettings.HoursDay; h++)
+                    for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
                         if (plan.PlanList[i][d, h].GroupTeacher == (0, 0)) hcount++;
 
-                    if (hcount == TimetableSettings.HoursDay)
+                    if (hcount == TimetableDefaultSettings.HoursDay)
                         res += EmptyDaysPenalty;
                     hcount = 0;
                 }
@@ -94,9 +94,9 @@ namespace TimetableAlgorithm
             for (int i = 0; i < plan.PlanList.Length; i++)
             {
                 var p = plan.PlanList[i];
-                for (int d = 0, paircount = 0; d < TimetableSettings.DaysWeek; d++)
+                for (int d = 0, paircount = 0; d < TimetableDefaultSettings.DaysWeek; d++)
                 {
-                    for (int h = 0; h < TimetableSettings.HoursDay; h++)
+                    for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
                         if (p[d, h].GroupTeacher != (0, 0))
                             paircount++;
 
