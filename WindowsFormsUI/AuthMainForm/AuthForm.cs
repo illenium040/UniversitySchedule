@@ -15,61 +15,65 @@ using System.Windows.Forms;
 
 using TimetableAlgorithm;
 
+using WindowsFormsUI.MVP.Views;
+
+using static WindowsFormsUI.MVP.Views.IAuthView;
+
 namespace WindowsFormsUI
 {
-    public partial class AuthForm : Form
+    public partial class AuthForm : Form, IAuthView
     {
-        public delegate void UserCreated(User user);
-        public event UserCreated UserCreatedEvent;
+        private readonly ApplicationContext _applicationContext;
+        public string UserName { get { return tbxLogin.Text; } }
+        public string UserPassword { get { return tbxPassword.Text; } }
+        public event Action UserAuth;
 
-        private UserAuthorization _userAuth;
+        private ActionProxy _actionProxy;
 
-        public AuthForm()
+        public AuthForm(ApplicationContext context)
         {
+            _actionProxy = new ActionProxy();
+            _applicationContext = context;
             InitializeComponent();
-            authBtn.Click += Auth;
+            authBtn.Click += async (sender, e) => await _actionProxy.InvokeAsync(UserAuth);
+            
         }
 
-        private async void Auth(object sender, EventArgs e)
+        public void ShowError(string message)
         {
-            TurnControls(false);
-            authStateText.Text = "Авторизация...";
-            try
-            {
-                UserCreatedEvent?.Invoke(await Task.Run(() =>
-                {
-                    _userAuth ??= new UserAuthorization(new UserContext());
-                    return _userAuth.UserRepository.GetUser(tbxLogin.Text, tbxPassword.Text);
-                }));
-                _userAuth.Dispose();
-            }
-            catch (UnauthorizedAccessException exception)
-            {
-                authStateText.Text = exception.Message;
-            }
-            catch (InvalidOperationException exc)
-            {
-                if(exc.Message.Contains("Microsoft.ACE.OLEDB") && exc.Source == "System.Data.OleDb")
-                    MessageBox.Show($"Необходимо установить AccessDatabaseEngine x86 или x64", "Ошибка",
+            MessageBox.Show(message, "Ошибка",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                authStateText.Text = "";
-            }
-            catch (Exception exc)
-            {
-                authStateText.Text = $"Произошла непредвиденная ошибка: {exc.Message}";
-            }
-            finally
-            {
-                TurnControls(true);
-            }
         }
 
-        private void TurnControls(bool isTurnedOn)
+        public new void Show()
         {
-            authBtn.Enabled = isTurnedOn;
-            tbxLogin.Enabled = isTurnedOn;
-            tbxPassword.Enabled = isTurnedOn;
+            _applicationContext.MainForm = this;
+            Application.Run(_applicationContext);
+        }
+
+        public void ShowAuthState(string message)
+        {
+            authStateText.Invoke(() => authStateText.Text = message);
+        }
+
+        public void SetControlsTurnState(bool state)
+        {
+            authBtn.Invoke(()=> authBtn.Enabled = state);
+            tbxLogin.Invoke(() => tbxLogin.Enabled = state);
+            tbxPassword.Invoke(() => tbxPassword.Enabled = state);
+        }
+
+        public new void Close()
+        {
+            if (this.InvokeRequired)
+                this.Invoke(base.Close);
+            else base.Close();
+        }
+
+        public void FromThread(Action action)
+        {
+            this.Invoke(action);
         }
     }
 }

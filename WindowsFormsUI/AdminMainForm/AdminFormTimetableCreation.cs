@@ -67,7 +67,7 @@ namespace WindowsFormsUI.AdminMainForm
 
         private UserForm CreateUserForm()
         {
-            return new UserForm(new User())
+            return new UserForm(null/*, new User()*/)
                 .AddTimetableViewInfo(new TimetableViewInfo()
                  {
                      Days = _timetableResult.Peek().Timetable.DaysWeek,

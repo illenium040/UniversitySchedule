@@ -61,6 +61,7 @@
             this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
             this.planTab = new System.Windows.Forms.TabPage();
             this.pictureBoxTimetableCreation = new System.Windows.Forms.PictureBox();
+            this.databaseTab = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.timetableCreationTab.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,6 +83,7 @@
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.databaseTab);
             this.tabControl1.Controls.Add(this.timetableCreationTab);
             this.tabControl1.Controls.Add(this.subjectsTeachersTab);
             this.tabControl1.Controls.Add(this.groupsSpecialtiesTab);
@@ -89,7 +91,7 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(719, 406);
+            this.tabControl1.Size = new System.Drawing.Size(716, 406);
             this.tabControl1.TabIndex = 0;
             // 
             // timetableCreationTab
@@ -101,7 +103,7 @@
             this.timetableCreationTab.Location = new System.Drawing.Point(4, 24);
             this.timetableCreationTab.Name = "timetableCreationTab";
             this.timetableCreationTab.Padding = new System.Windows.Forms.Padding(3);
-            this.timetableCreationTab.Size = new System.Drawing.Size(711, 378);
+            this.timetableCreationTab.Size = new System.Drawing.Size(708, 378);
             this.timetableCreationTab.TabIndex = 0;
             this.timetableCreationTab.Text = "Создание расписания";
             this.timetableCreationTab.UseVisualStyleBackColor = true;
@@ -120,7 +122,7 @@
             this.groupBox2.Controls.Add(this.btnCreateTimetable);
             this.groupBox2.Location = new System.Drawing.Point(235, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(380, 325);
+            this.groupBox2.Size = new System.Drawing.Size(470, 325);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Создание расписания";
@@ -128,7 +130,7 @@
             // btnSaveToDatabase
             // 
             this.btnSaveToDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveToDatabase.Location = new System.Drawing.Point(132, 279);
+            this.btnSaveToDatabase.Location = new System.Drawing.Point(139, 279);
             this.btnSaveToDatabase.Name = "btnSaveToDatabase";
             this.btnSaveToDatabase.Size = new System.Drawing.Size(120, 40);
             this.btnSaveToDatabase.TabIndex = 9;
@@ -154,7 +156,7 @@
             this.panelTimetableCreationLog.Location = new System.Drawing.Point(6, 62);
             this.panelTimetableCreationLog.Name = "panelTimetableCreationLog";
             this.panelTimetableCreationLog.Padding = new System.Windows.Forms.Padding(3);
-            this.panelTimetableCreationLog.Size = new System.Drawing.Size(368, 211);
+            this.panelTimetableCreationLog.Size = new System.Drawing.Size(458, 211);
             this.panelTimetableCreationLog.TabIndex = 7;
             // 
             // lblSolverLog
@@ -163,7 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSolverLog.Location = new System.Drawing.Point(7, 181);
             this.lblSolverLog.Name = "lblSolverLog";
-            this.lblSolverLog.Size = new System.Drawing.Size(352, 22);
+            this.lblSolverLog.Size = new System.Drawing.Size(442, 22);
             this.lblSolverLog.TabIndex = 9;
             // 
             // rbxTimetableResultLog
@@ -173,7 +175,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rbxTimetableResultLog.Location = new System.Drawing.Point(7, 6);
             this.rbxTimetableResultLog.Name = "rbxTimetableResultLog";
-            this.rbxTimetableResultLog.Size = new System.Drawing.Size(318, 172);
+            this.rbxTimetableResultLog.Size = new System.Drawing.Size(408, 172);
             this.rbxTimetableResultLog.TabIndex = 8;
             this.rbxTimetableResultLog.Text = "";
             // 
@@ -189,7 +191,7 @@
             // btnShowUserForm
             // 
             this.btnShowUserForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowUserForm.Location = new System.Drawing.Point(6, 279);
+            this.btnShowUserForm.Location = new System.Drawing.Point(13, 278);
             this.btnShowUserForm.Name = "btnShowUserForm";
             this.btnShowUserForm.Size = new System.Drawing.Size(120, 40);
             this.btnShowUserForm.TabIndex = 4;
@@ -494,7 +496,7 @@
             this.subjectsTeachersTab.Location = new System.Drawing.Point(4, 24);
             this.subjectsTeachersTab.Name = "subjectsTeachersTab";
             this.subjectsTeachersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.subjectsTeachersTab.Size = new System.Drawing.Size(711, 378);
+            this.subjectsTeachersTab.Size = new System.Drawing.Size(708, 378);
             this.subjectsTeachersTab.TabIndex = 1;
             this.subjectsTeachersTab.Text = "Предметы и преподаватели";
             this.subjectsTeachersTab.UseVisualStyleBackColor = true;
@@ -504,7 +506,7 @@
             this.groupsSpecialtiesTab.BackColor = System.Drawing.Color.White;
             this.groupsSpecialtiesTab.Location = new System.Drawing.Point(4, 24);
             this.groupsSpecialtiesTab.Name = "groupsSpecialtiesTab";
-            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(711, 378);
+            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(708, 378);
             this.groupsSpecialtiesTab.TabIndex = 2;
             this.groupsSpecialtiesTab.Text = "Специальности и группы";
             // 
@@ -513,7 +515,7 @@
             this.planTab.BackColor = System.Drawing.Color.White;
             this.planTab.Location = new System.Drawing.Point(4, 24);
             this.planTab.Name = "planTab";
-            this.planTab.Size = new System.Drawing.Size(711, 378);
+            this.planTab.Size = new System.Drawing.Size(708, 378);
             this.planTab.TabIndex = 3;
             this.planTab.Text = "Учебный план";
             // 
@@ -521,22 +523,31 @@
             // 
             this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxTimetableCreation.InitialImage = null;
-            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(333, 24);
+            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(432, 24);
             this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
             this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
             this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxTimetableCreation.TabIndex = 10;
+            this.pictureBoxTimetableCreation.TabIndex = 13;
             this.pictureBoxTimetableCreation.TabStop = false;
             this.pictureBoxTimetableCreation.Visible = false;
+            // 
+            // databaseTab
+            // 
+            this.databaseTab.Location = new System.Drawing.Point(4, 24);
+            this.databaseTab.Name = "databaseTab";
+            this.databaseTab.Size = new System.Drawing.Size(708, 378);
+            this.databaseTab.TabIndex = 4;
+            this.databaseTab.Text = "База данных";
+            this.databaseTab.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(737, 431);
+            this.ClientSize = new System.Drawing.Size(734, 431);
             this.Controls.Add(this.tabControl1);
             this.DoubleBuffered = true;
-            this.MinimumSize = new System.Drawing.Size(660, 470);
+            this.MinimumSize = new System.Drawing.Size(750, 470);
             this.Name = "AdminForm";
             this.Text = "AdminForm";
             this.tabControl1.ResumeLayout(false);
@@ -594,6 +605,7 @@
         private System.Windows.Forms.RichTextBox rbxTimetableResultLog;
         private System.Windows.Forms.Button btnTimetableTrain;
         private System.Windows.Forms.Button btnSaveToDatabase;
+        private System.Windows.Forms.TabPage databaseTab;
         private System.Windows.Forms.PictureBox pictureBoxTimetableCreation;
     }
 }

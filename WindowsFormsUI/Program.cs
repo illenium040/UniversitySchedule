@@ -1,4 +1,5 @@
 
+using DataAccess;
 using DataAccess.Entities;
 
 using System;
@@ -6,6 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using WindowsFormsUI.MVP.Controllers;
+using WindowsFormsUI.MVP.Presenters;
+using WindowsFormsUI.MVP.ServiceContainers;
+using WindowsFormsUI.MVP.Views;
+using WindowsFormsUI.Services;
+using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI
 {
@@ -20,8 +28,17 @@ namespace WindowsFormsUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-            Application.Exit();
+
+            DataAccessSettings.ConnectionString
+               = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;";
+
+            var controller = new ApplicationController(new LightInjectAdapter())
+                .RegisterView<IAuthView, AuthForm>()
+                .RegisterService<IAuthService, AuthService>()
+                .RegisterView<IUserView, UserForm>()
+                .RegisterInstance(new ApplicationContext());
+
+            controller.Run<AuthPresenter>();
         }
     }
 }

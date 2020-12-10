@@ -19,8 +19,7 @@ namespace WindowsFormsUI
         public MainForm()
         {
             InitializeComponent();
-            DataAccessSettings.ConnectionString
-                = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;";
+           
             
 
             this.FormBorderStyle = FormBorderStyle.None;
@@ -50,17 +49,6 @@ namespace WindowsFormsUI
             _authForm.Show();
             _authForm.UserCreatedEvent += Authorized;
 #endif
-        }
-
-        private void Authorized(User user)
-        {
-            if (user.IsAdmin) _userForm = new AdminForm(user);
-            else _userForm = new UserForm( user);
-            _authForm.RemoveOwnedForm(this);
-            _authForm.Close();
-
-            _userForm.AddOwnedForm(this);
-            _userForm.Show();
         }
     }
 }

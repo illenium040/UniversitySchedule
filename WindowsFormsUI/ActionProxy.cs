@@ -18,7 +18,7 @@ namespace WindowsFormsUI
         {
             if (cancelActionIfBusy && _semaphore.CurrentCount == 0) return;
             _semaphore.Wait();
-            action();
+            action?.Invoke();
             _semaphore.Release();
         }
 

@@ -14,12 +14,13 @@ using System.Threading;
 using System.Resources;
 using WindowsFormsUI.FormCommands;
 using WindowsFormsUI.FormCommands.Receivers;
+using WindowsFormsUI.MVP.Views;
 
 namespace WindowsFormsUI.UserMainForm
 {
-    public partial class UserForm : Form
+    public partial class UserForm : Form, IUserView
     {
-        private readonly User _user;
+        private ApplicationContext _context;
         private ActionProxy _actionProxy;
 
         private ITimetableViewData _timetableView;
@@ -30,10 +31,10 @@ namespace WindowsFormsUI.UserMainForm
             get { return _viewInfoInstance ?? _timetableView.TimetableView.GetLastUpdated(); }
         }
 
-        public UserForm(User user)
+        public UserForm(ApplicationContext context)
         {
+            _context = context;
             InitializeComponent();
-            _user = user;
             _actionProxy = new ActionProxy();
             btnShowView.Click += ShowView;
             btnShowPlan.Click += ShowPlan;
@@ -74,6 +75,29 @@ namespace WindowsFormsUI.UserMainForm
         private async void UserForm_Load(object sender, EventArgs e)
         {
             await InitDataAsync();
+        }
+
+        public new void Show()
+        {
+            _context.MainForm = this;
+            base.Show();
+        }
+
+        public void FromThread(Action action)
+        {
+            this.Invoke(action);
+        }
+
+        public new void Close()
+        {
+            if (this.InvokeRequired)
+                this.Invoke(base.Close);
+            else base.Close();
+        }
+
+        public void Invoke(Action action)
+        {
+            this.Invoke(action);
         }
     }
 }
