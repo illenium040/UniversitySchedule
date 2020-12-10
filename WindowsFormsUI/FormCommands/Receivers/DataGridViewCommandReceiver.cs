@@ -10,11 +10,9 @@ namespace WindowsFormsUI.FormCommands.Receivers
     public class DataGridViewCommandReceiver
     {
         public DataGridView GridView { get; }
-        public ITimetableViewData ViewData { get; }
-        public DataGridViewCommandReceiver(DataGridView grid, ITimetableViewData data)
+        public DataGridViewCommandReceiver(DataGridView grid)
         {
             GridView = grid;
-            ViewData = data;
         }
 
     }

@@ -77,7 +77,7 @@ namespace WindowsFormsUI.AdminMainForm
             {
                 this.Invoke(() => 
                 {
-                    _userTimetableTestForm = CreateUserForm();
+                    //_userTimetableTestForm = CreateUserForm();
                     AddOwnedForm(_userTimetableTestForm);
                     _userTimetableTestForm.FormClosed += (s, e) => this.Invoke(() => RemoveOwnedForm(s as Form));
                     _userTimetableTestForm.Show();

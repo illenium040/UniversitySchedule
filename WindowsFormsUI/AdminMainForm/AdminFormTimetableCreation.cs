@@ -65,21 +65,21 @@ namespace WindowsFormsUI.AdminMainForm
             }
         }
 
-        private UserForm CreateUserForm()
-        {
-            return new UserForm(null/*, new User()*/)
-                .AddTimetableViewInfo(new TimetableViewInfo()
-                 {
-                     Days = _timetableResult.Peek().Timetable.DaysWeek,
-                     Hours = _timetableResult.Peek().Timetable.HoursDay,
-                     Id = 0,
-                     DateTime = DateTime.Now,
-                     IsVerified = true,
-                     TimetableView = _solver.GetNormalizedView(_timetableResult.Peek())
-                    .GetNormalizedViewWithInclude()
-                    .ToList()
-                });
-        }
+        //private UserForm CreateUserForm()
+        //{
+        //    return new UserForm(null/*, new User()*/)
+        //        .AddTimetableViewInfo(new TimetableViewInfo()
+        //         {
+        //             Days = _timetableResult.Peek().Timetable.DaysWeek,
+        //             Hours = _timetableResult.Peek().Timetable.HoursDay,
+        //             Id = 0,
+        //             DateTime = DateTime.Now,
+        //             IsVerified = true,
+        //             TimetableView = _solver.GetNormalizedView(_timetableResult.Peek())
+        //            .GetNormalizedViewWithInclude()
+        //            .ToList()
+        //        });
+        //}
 
         private void TrainTimetable()
         {

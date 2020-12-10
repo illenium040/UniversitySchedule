@@ -11,21 +11,18 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
 {
     public class TimetableCommand : DataGridViewCommand
     {
-        private Group _group;
+        private IEnumerable<Group> _groups;
         private TimetableViewInfo _viewInfo;
-        public TimetableCommand(Group group, TimetableViewInfo viewInfo,
-            DataGridViewCommandReceiver receiver)
-            : base(receiver)
+        public TimetableCommand(IEnumerable<Group> groups, TimetableViewInfo viewInfo)
         {
-            _group = group;
+            _groups = groups;
             _viewInfo = viewInfo;
         }
 
         public override void Execute()
         {
-            var groupsId = _group is null
-                ? _viewInfo.TimetableView.Select(x => x.GroupId).Distinct().OrderBy(x => x).ToList()
-                : new List<int>() { _group.Id };
+            if (Receiver is null) throw new ArgumentNullException(nameof(Receiver));
+            var groupsId = _groups.Select(x => x.Id).Distinct().OrderBy(x => x).ToList();
 
             GridVisualizer
                 .AddSettings(new GridVisualizerSettings())

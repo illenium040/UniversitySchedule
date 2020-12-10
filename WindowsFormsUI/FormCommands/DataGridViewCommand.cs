@@ -14,12 +14,6 @@ namespace WindowsFormsUI.FormCommands
     {
         protected DataGridViewCommandReceiver Receiver;
         protected GridVisualizer GridVisualizer;
-        public DataGridViewCommand(DataGridViewCommandReceiver receiver)
-        {
-            Receiver = receiver;
-            GridVisualizer = new GridVisualizer(receiver.GridView);
-        }
-
         protected void AppendDaysOfWeek(TimetableViewInfo view)
         {
             for (int i = view.Days * view.Hours - view.Hours, j = view.Days; i >= 0; i -= view.Hours, j--)
@@ -31,5 +25,11 @@ namespace WindowsFormsUI.FormCommands
                 });
         }
         public abstract void Execute();
+        public virtual DataGridViewCommand AddReceiver(DataGridViewCommandReceiver receiver)
+        {
+            Receiver = receiver;
+            GridVisualizer = new GridVisualizer(receiver.GridView);
+            return this;
+        }
     }
 }

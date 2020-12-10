@@ -39,7 +39,7 @@
             this.specialtyList = new System.Windows.Forms.ComboBox();
             this.btnShowPlan = new System.Windows.Forms.Button();
             this.preDataLoaderPanel = new System.Windows.Forms.Panel();
-            this.groupsLoadStateText = new System.Windows.Forms.Label();
+            this.preDataLoadStateText = new System.Windows.Forms.Label();
             this.preDataLoaderPictureBox = new System.Windows.Forms.PictureBox();
             this.btnShowView = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -170,23 +170,24 @@
             // preDataLoaderPanel
             // 
             this.preDataLoaderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.preDataLoaderPanel.Controls.Add(this.groupsLoadStateText);
+            this.preDataLoaderPanel.Controls.Add(this.preDataLoadStateText);
             this.preDataLoaderPanel.Controls.Add(this.preDataLoaderPictureBox);
             this.preDataLoaderPanel.Location = new System.Drawing.Point(6, 433);
             this.preDataLoaderPanel.Name = "preDataLoaderPanel";
             this.preDataLoaderPanel.Size = new System.Drawing.Size(154, 95);
             this.preDataLoaderPanel.TabIndex = 5;
+            this.preDataLoaderPanel.Visible = false;
             // 
-            // groupsLoadStateText
+            // preDataLoadStateText
             // 
-            this.groupsLoadStateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.preDataLoadStateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupsLoadStateText.Location = new System.Drawing.Point(0, 14);
-            this.groupsLoadStateText.Name = "groupsLoadStateText";
-            this.groupsLoadStateText.Size = new System.Drawing.Size(154, 42);
-            this.groupsLoadStateText.TabIndex = 2;
-            this.groupsLoadStateText.Text = "Загружаем необходимые данные...";
-            this.groupsLoadStateText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.preDataLoadStateText.Location = new System.Drawing.Point(0, 14);
+            this.preDataLoadStateText.Name = "preDataLoadStateText";
+            this.preDataLoadStateText.Size = new System.Drawing.Size(154, 42);
+            this.preDataLoadStateText.TabIndex = 2;
+            this.preDataLoadStateText.Text = "Загружаем необходимые данные...";
+            this.preDataLoadStateText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // preDataLoaderPictureBox
             // 
@@ -293,7 +294,6 @@
             this.Name = "UserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UserForm";
-            this.Load += new System.EventHandler(this.UserForm_Load);
             this.settingsPanel.ResumeLayout(false);
             this.preDataLoaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.preDataLoaderPictureBox)).EndInit();
@@ -311,7 +311,7 @@
         private System.Windows.Forms.Panel dataViewPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox groupsList;
-        private System.Windows.Forms.Label groupsLoadStateText;
+        private System.Windows.Forms.Label preDataLoadStateText;
         private System.Windows.Forms.Button btnShowView;
         private System.Windows.Forms.DataGridView timetableGridView;
         private System.Windows.Forms.Panel dataLoadStatePanel;

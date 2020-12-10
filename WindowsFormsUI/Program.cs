@@ -34,10 +34,12 @@ namespace WindowsFormsUI
 
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
-                .RegisterService<IAuthService, AuthService>()
                 .RegisterView<IUserView, UserForm>()
+                .RegisterService<IAuthService, AuthService>()
+                .RegisterService<ITimetableLoaderService, TimetableLoaderService>()
                 .RegisterInstance(new ApplicationContext());
 
+            //controller.Run<UserPresenter, User>(new User());
             controller.Run<AuthPresenter>();
         }
     }

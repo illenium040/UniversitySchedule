@@ -14,20 +14,17 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
 {
     public class TeacherInfoCommand : DataGridViewCommand
     {
-        private Teacher _teacher;
-        public TeacherInfoCommand(DataGridViewCommandReceiver receiver, Teacher teacher)
-            : base(receiver)
+        private IEnumerable<Teacher> _teachers;
+        public TeacherInfoCommand(IEnumerable<Teacher> teachers)
         {
-            _teacher = teacher;
+            _teachers = teachers;
         }
         public override void Execute()
         {
-            var teachers = _teacher is null
-                ? Receiver.ViewData.TeacherSubject.GetNamedTeachers()
-                : Receiver.ViewData.TeacherSubject.GetByTeacher(_teacher.Id).Select(x => x.Teacher).Distinct().ToList();
+            if (Receiver is null) throw new ArgumentNullException(nameof(Receiver));
             GridVisualizer
-                .AddColumns(teachers.Select(t => $"{t.ShortFirstname} {t.Lastname}"))
-                .AddRowsByColumn(teachers.Select(t =>
+                .AddColumns(_teachers.Select(t => $"{t.ShortFirstname} {t.Lastname}"))
+                .AddRowsByColumn(_teachers.Select(t =>
                     t.TeacherSubject.Select(x => x.Subject).Distinct().Select(x => x.FullName)))
                 .Resize();
         }

@@ -11,6 +11,6 @@ namespace DataAccess.Repositories.RepositoryInterfaces
     public interface IPlanInformationRepository : IRepository<PlanInformation>
     {
         IEnumerable<PlanInformation> GetAllWithoutPractice();
-        PlanInformation GetPlanInformationBySpecialty(int specialtyId);
+        PlanInformation GetPlanBySpecialty(int specialtyId);
     }
 }

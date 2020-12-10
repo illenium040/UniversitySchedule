@@ -41,9 +41,7 @@ namespace WindowsFormsUI
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+            IdkHelper.ShowErrorMsgBox(message);
         }
 
         public new void Show()

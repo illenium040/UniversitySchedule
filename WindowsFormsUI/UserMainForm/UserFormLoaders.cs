@@ -18,89 +18,54 @@ namespace WindowsFormsUI.UserMainForm
 {
     partial class UserForm
     {
-        private CommandInvoker<DataGridViewCommand> _gridCommandInvoker;
-        private DataGridViewCommandReceiver _gridCommandReceiver;
-
-        private void ShowTimetable()
+        private void VisualizeGridView(Action gridAction)
         {
-            _gridCommandInvoker.SetCommand(new TimetableCommand(
-                groupsList.GetSelectedItem<GroupWrapper>()?.Group,
-                _viewInfo,
-                _gridCommandReceiver))
-                .Run();
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = true);
+            timetableGridView.Invoke(() =>
+            {
+                timetableGridView.Visible = false;
+                timetableGridView.Rows.Clear();
+                timetableGridView.Columns.Clear();
+            });
+            gridAction();
+            timetableGridView.Invoke(() =>
+            {
+                timetableGridView.Visible = true;
+                timetableGridView.Update();
+            });
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = false);
         }
 
-        private void ShowTimetablePlan()
+        public void InitData(TimetableViewInfo info)
         {
-            _gridCommandInvoker.SetCommand(new TimetablePlanCommand(
-                specialtyList.GetSelectedItem<SpecialtyWrapper>()?.Specialty,
-                _gridCommandReceiver))
-                .Run();
-        }
-
-        private void ShowTeacherInfo()
-        {
-            _gridCommandInvoker.SetCommand(new TeacherInfoCommand(
-                _gridCommandReceiver, teacherList.GetSelectedItem<TeacherWrapper>()?.Teacher))
-                .Run();
-        }
-
-        private void ShowTeacherTimetable()
-        {
-            _gridCommandInvoker.SetCommand(new TeacherTimetableCommand(
-                timetableTeacherList.GetSelectedItem<TeacherWrapper>()?.Teacher,
-                _viewInfo,
-                _gridCommandReceiver))
-                .Run();
-        }
-
-        private async Task InitDataAsync()
-        {
-            _timetableView = await Task.Run(() =>
-             new TimetableViewData(
-                new LessonContext(),
-                new SpecialtyContext(),
-                new PlanContext(),
-                new TimetableViewContext()));
-
+            _viewInfoInstance = info;
             _gridCommandInvoker = new CommandInvoker<DataGridViewCommand>();
-            _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView, _timetableView);
-
-            await InitSpecialtiesAndGroups();
-            await InitTeachers();
-
-            preDataLoaderPanel.Visible = false;
+            _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView);
         }
 
-        private async Task InitSpecialtiesAndGroups()
+        private void InitSpecialtiesAndGroups(IEnumerable<Specialty> specialties)
         {
-            await Task.Run(() =>
+            foreach (var specialty in specialties.OrderBy(x => x.Id))
             {
-                foreach (var specialty in _timetableView.Specialties.GetAll().OrderBy(x => x.Id))
-                {
-                    foreach (var group in specialty.Groups.OrderBy(x => x.Id))
-                        groupsList.Invoke(() => groupsList.Items.Add(new GroupWrapper(group)));
-                    specialtyList.Invoke(() => specialtyList.Items.Add(new SpecialtyWrapper(specialty)));
-                }
-            });
-            groupsList.Update();
-            specialtyList.Update();
-            btnShowView.Enabled = true;
-            btnShowPlan.Enabled = true;
+                foreach (var group in specialty.Groups.OrderBy(x => x.Id))
+                    groupsList.Invoke(() => groupsList.Items.Add(new GroupWrapper(group)));
+                specialtyList.Invoke(() => specialtyList.Items.Add(new SpecialtyWrapper(specialty)));
+            }
+            groupsList.Invoke(() => groupsList.Update());
+            specialtyList.Invoke(() => specialtyList.Update());
+            btnShowView.Invoke(() => btnShowView.Enabled = true);
+            btnShowPlan.Invoke(() => btnShowPlan.Enabled = true);
         }
 
-        private async Task InitTeachers()
+        private void InitTeachers(IEnumerable<Teacher> namedTeachers)
         {
-            await Task.Run(() =>
+            foreach (var teacher in namedTeachers.OrderBy(x => x.Lastname))
             {
-                foreach (var teacher in _timetableView.TeacherSubject.GetNamedTeachers().OrderBy(x => x.Lastname))
-                {
-                    teacherList.Invoke(() => teacherList.Items.Add(new TeacherWrapper(teacher)));
-                    timetableTeacherList.Invoke(() => timetableTeacherList.Items.Add(new TeacherWrapper(teacher)));
-                }
-            });
-            btnShowTeachers.Enabled = true;
-            btnTimetableTeacher.Enabled = true;
+                teacherList.Invoke(() => teacherList.Items.Add(new TeacherWrapper(teacher)));
+                timetableTeacherList.Invoke(() => timetableTeacherList.Items.Add(new TeacherWrapper(teacher)));
+            }
+            btnShowTeachers.Invoke(() => btnShowTeachers.Enabled = true);
+            btnTimetableTeacher.Invoke(() => btnTimetableTeacher.Enabled = true);
         }
 
     }

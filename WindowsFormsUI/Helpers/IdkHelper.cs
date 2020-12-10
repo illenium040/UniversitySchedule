@@ -27,5 +27,12 @@ namespace WindowsFormsUI
         {
             return GetRuDayOfWeek((Day)day);
         }
+
+        public static void ShowErrorMsgBox(string message)
+        {
+            MessageBox.Show(message, "Ошибка",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+        }
     }
 }

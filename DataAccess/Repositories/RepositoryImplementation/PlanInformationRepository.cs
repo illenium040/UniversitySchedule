@@ -43,12 +43,12 @@ namespace DataAccess.Repositories.RepositoryImplementation
             }
         }
 
-        public PlanInformation GetPlanInformationBySpecialty(int specialtyId)
+        public PlanInformation GetPlanBySpecialty(int specialtyId)
         {
             return PlanContext.PlanInformation
                 .Include(x => x.HourPlans).ThenInclude(x => x.Subject)
                 .Include(x => x.PlanWeeks)
-                .First(x => x.SpecialtyId == specialtyId);
+                .FirstOrDefault(x => x.SpecialtyId == specialtyId);
         }
     }
 }

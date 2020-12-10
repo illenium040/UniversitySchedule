@@ -13,8 +13,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
     {
         private Teacher _teacher;
         private TimetableViewInfo _viewInfo;
-        public TeacherTimetableCommand(Teacher teacher, TimetableViewInfo viewInfo,
-            DataGridViewCommandReceiver receiver) : base(receiver)
+        public TeacherTimetableCommand(Teacher teacher, TimetableViewInfo viewInfo)
         {
             _teacher = teacher;
             _viewInfo = viewInfo;
@@ -22,6 +21,7 @@ namespace WindowsFormsUI.FormCommands.DataGridCommands
 
         public override void Execute()
         {
+            if (Receiver is null) throw new ArgumentNullException(nameof(Receiver));
             if (_teacher is null) return;
             var timetable = _viewInfo.TimetableView.Where(x => x.TeacherId == _teacher.Id).ToList();
             if (timetable.Count == 0) return;
