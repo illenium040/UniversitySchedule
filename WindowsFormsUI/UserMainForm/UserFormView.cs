@@ -66,6 +66,13 @@ namespace WindowsFormsUI.UserMainForm
 
         public IUserView GridOnLoad()
         {
+            timetableGridView.Invoke(() =>
+            {
+                timetableGridView.Visible = false;
+                timetableGridView.Rows.Clear();
+                timetableGridView.Columns.Clear();
+                timetableGridView.Update();
+            });
             dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = true);
             return this;
         }

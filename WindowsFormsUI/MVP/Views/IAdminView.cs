@@ -33,9 +33,10 @@ namespace WindowsFormsUI.MVP.Views
         event Action ShowInUserForm;
         event Action CancelTimetableProcessing;
         event Action SaveSettings;
+        event Action FormLoaded;
 
         void SetReadOnlySettingsState(bool state);
-        void SetDefaultSettings();
+        void SetTimetableSettings(TimetableSettings settings);
         void LogProccessing(string message);
     }
 }

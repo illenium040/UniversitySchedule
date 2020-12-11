@@ -27,6 +27,7 @@ namespace WindowsFormsUI.AdminMainForm
         public event Action TrainTimetable;
         public event Action CancelTimetableProcessing;
         public event Action SaveSettings;
+        public event Action FormLoaded;
 
         public bool IsDefaultSettings { get { return checkBoxDefaultSettings.Checked; } }
         public Stack<TimetableResult> History { get; private set; }

@@ -15,6 +15,7 @@ namespace WindowsFormsUI.MVP.Presenters
 {
     public class UserPresenter : BasePresenter<IUserView, User>
     {
+        private TimetableViewInfo _timetableView;
         private User _user;
         private ITimetableLoaderService _loaderService;
         public UserPresenter(IApplicationController controller,
@@ -29,6 +30,12 @@ namespace WindowsFormsUI.MVP.Presenters
             View.ShowTimetable += () => View.GridOnLoad().VisualizeGrid(GetTimetableCommand());
         }
 
+        public void RunAsDialog(TimetableViewInfo timetableViewInfo)
+        {
+            _timetableView = timetableViewInfo;
+            View.ShowDialog();
+        }
+
         public override void Run(User argument)
         {
             _user = argument;
@@ -37,13 +44,20 @@ namespace WindowsFormsUI.MVP.Presenters
 
         private void LoadViewData()
         {
-            View.IsPreLoading = true;
-            View.SetPreLoadState("Загружаем необходимые данные...");
-            _loaderService.Load();
-            View.InitData(_loaderService.GetLastUpdatedViewInfo());
-            View.SetPreLoadState("Загружаем список учебного процесса...");
-            View.InitControlsData(_loaderService.GetAllSpecialties(), _loaderService.GetNamedTeachers());
-            View.IsPreLoading = false;
+            try
+            {
+                View.IsPreLoading = true;
+                View.SetPreLoadState("Загружаем необходимые данные...");
+                _loaderService.Load();
+                View.InitData(_timetableView ??= _loaderService.GetLastUpdatedViewInfo());
+                View.SetPreLoadState("Загружаем список учебного процесса...");
+                View.InitControlsData(_loaderService.GetAllSpecialties(), _loaderService.GetNamedTeachers());
+                View.IsPreLoading = false;
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         private DataGridViewCommand GetTeacherInfoCommand()

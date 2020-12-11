@@ -17,6 +17,7 @@ using TimetableAlgorithm;
 using UniversityTimetableGenerator.Actions.ActionsResult;
 using UniversityTimetableGenerator.Services;
 
+using WindowsFormsUI.MVP;
 using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
 
@@ -27,8 +28,6 @@ namespace WindowsFormsUI.AdminMainForm
         private TimetableFormLogger _solverLogger;
         private ApplicationContext _context;
         private ActionProxy _actionProxy;
-
-        
 
         public AdminForm(ApplicationContext context)
         {
@@ -55,21 +54,8 @@ namespace WindowsFormsUI.AdminMainForm
 
             btnSaveSettings.Click += (sender, e)
                 => _actionProxy.Invoke(SaveSettings);
-        }
 
-        private async void ShowTimetableInUserForm(object sender, EventArgs e)
-        {
-            await _actionProxy.InvokeAsync(() =>
-            {
-                this.Invoke(() => 
-                {
-                    //_userTimetableTestForm = CreateUserForm();
-                    //AddOwnedForm(_userTimetableTestForm);
-                    //_userTimetableTestForm.FormClosed += (s, e) => this.Invoke(() => RemoveOwnedForm(s as Form));
-                    //_userTimetableTestForm.Show();
-                });
-            });
-            
+            Load += (sender, e) => FormLoaded();
         }
 
         public new void Show()
@@ -109,9 +95,8 @@ namespace WindowsFormsUI.AdminMainForm
             numericSemesterPart.Invoke(() => numericSemesterPart.ReadOnly = state);
         }
 
-        public void SetDefaultSettings()
+        public void SetTimetableSettings(TimetableSettings settings)
         {
-            var settings = TimetableDefaultSettings.Settings;
             numericIterationsCount.Invoke(() => numericIterationsCount.Value = settings.MaxIterations);
             numericPartOfBest.Invoke(() => numericPartOfBest.Value = settings.PartOfBest);
             numericPopulationCount.Invoke(() => numericPopulationCount.Value = settings.PopulationCount);
@@ -123,7 +108,7 @@ namespace WindowsFormsUI.AdminMainForm
 
         public void LogProccessing(string message)
         {
-            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText(message));
+            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{message}\r\n"));
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Resources;
 using WindowsFormsUI.FormCommands;
 using WindowsFormsUI.FormCommands.Receivers;
 using WindowsFormsUI.MVP.Views;
+using WindowsFormsUI.MVP;
 
 namespace WindowsFormsUI.UserMainForm
 {
@@ -60,7 +61,6 @@ namespace WindowsFormsUI.UserMainForm
                 _context.MainForm = this;
                 base.Show();
             }
-
         }
 
         public void FromThread(Action action)

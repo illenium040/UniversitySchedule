@@ -20,12 +20,6 @@ namespace WindowsFormsUI.UserMainForm
     {
         private void VisualizeGridView(Action gridAction)
         {
-            timetableGridView.Invoke(() =>
-            {
-                timetableGridView.Visible = false;
-                timetableGridView.Rows.Clear();
-                timetableGridView.Columns.Clear();
-            });
             gridAction();
             timetableGridView.Invoke(() =>
             {

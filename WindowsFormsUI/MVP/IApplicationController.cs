@@ -15,10 +15,10 @@ namespace WindowsFormsUI.MVP
         IApplicationController RegisterService<TService, TImplementation>()
             where TImplementation : class, TService;
 
-        void Run<TPresenter>()
+        TPresenter GetPresenter<TPresenter>()
             where TPresenter : class, IPresenter;
 
-        void Run<TPresenter, TArgumnent>(TArgumnent argumnent)
+        TPresenter GetPresenter<TPresenter, TArgumnent>()
             where TPresenter : class, IPresenter<TArgumnent>;
     }
 }

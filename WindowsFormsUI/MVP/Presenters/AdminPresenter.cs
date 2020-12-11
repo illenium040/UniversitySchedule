@@ -5,13 +5,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using TimetableAlgorithm;
 
 using UniversityTimetableGenerator.Services;
 
 using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Views;
+using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.MVP.Presenters
 {
@@ -20,10 +25,81 @@ namespace WindowsFormsUI.MVP.Presenters
         private User _user;
         private IServiceProvider _services;
         private SolverService _solverService;
+        private TimetableSettings _timetableSettings;
         public AdminPresenter(IApplicationController controller, IAdminView view) : base(controller, view)
         {
             _services = RegisterServices();
-            View.CreateTimetable += () => CreateTimetableAsync().Wait(); 
+            View.CreateTimetable += () => CreateTimetable().Wait();
+            View.TrainTimetable += () => TrainTimetable().Wait();
+            View.SaveSettings += () => SaveSettings();
+            View.SaveTimetableToDatabase += () => SaveToDatabase().Wait();
+            View.ShowInUserForm += () => ShowInUserForm();
+            View.DefaultSettingsChecked += () => SetDefaultSettings();
+            View.CancelTimetableProcessing += () => _solverService?.Cancel();
+            View.FormLoaded += () => View.SetTimetableSettings(TimetableDefaultSettings.Settings);
+        }
+
+        private void SetDefaultSettings()
+        {
+            if (View.IsDefaultSettings)
+            {
+                _timetableSettings = TimetableDefaultSettings.Settings;
+                View.SetTimetableSettings(_timetableSettings);
+                View.SetReadOnlySettingsState(true);
+            }
+            else View.SetReadOnlySettingsState(false);
+        }
+
+        private void ShowInUserForm()
+        {
+            try
+            {
+                View.FromThread(() => Controller.GetPresenter<UserPresenter, User>()
+                    .RunAsDialog(new TimetableViewInfo
+                    {
+                        DateTime = DateTime.Now,
+                        Days = View.DaysWeek,
+                        Hours = View.HourDay,
+                        Id = 0,
+                        TimetableView = View.History.Count > 0 ?
+                        _solverService
+                        .GetNormalizedView(View.History.Peek())
+                        .GetNormalizedViewWithInclude()
+                        .ToList() :
+                        throw new InvalidOperationException("Расписание не создано. Нечего тут показывать")
+                    }));
+            }
+            catch (InvalidOperationException exception)
+            {
+                IdkHelper.ShowErrorMsgBox(exception.Message);
+            }
+        }
+
+        private async Task SaveToDatabase()
+        {
+            try
+            {
+                await _solverService.SaveToDatabase(View.History.Peek());
+                MessageBox.Show("Сохранено успешно", "Расписание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception e)
+            {
+                IdkHelper.ShowErrorMsgBox(e.Message);
+            }
+        }
+
+        private void SaveSettings()
+        {
+            _timetableSettings = new TimetableSettings
+            {
+                DaysWeek = View.DaysWeek,
+                HoursDay = View.HourDay,
+                MaxIterations = View.IterationsCount,
+                PartOfBest = View.PartOfBest,
+                PopulationCount = View.PopulationCount,
+                SemestersPart = View.SemestersPart
+            };
+            View.LogProccessing("Настройки сохранены");
         }
 
         public override void Run(User argument)
@@ -40,115 +116,70 @@ namespace WindowsFormsUI.MVP.Presenters
                 .BuildServiceProvider();
         }
 
-        //private void ApplyAlgSettings()
-        //{
-        //    TimetableDefaultSettings.MaxIterations = (int)numericIterationsCount.Value;
-        //    TimetableDefaultSettings.PartOfBest = (int)numericPartOfBest.Value;
-        //    TimetableDefaultSettings.PopulationCount = (int)numericPopulationCount.Value;
-        //}
-
-        //private void ApplyTimetableSettings()
-        //{
-        //    TimetableDefaultSettings.DaysWeek = (int)numericDaysWeek.Value;
-        //    TimetableDefaultSettings.HoursDay = (int)numericHoursDay.Value;
-        //    TimetableDefaultSettings.SemestersPart = (SemestersParts)numericSemesterPart.Value - 1;
-        //}
-
-        private async Task CreateTimetableAsync()
+        private async Task CreateTimetable()
         {
             try
             {
-                if(_solverService is null)
-                    _solverService = _services.GetService<DefaultSolverService>();
+                View.IsTimetableProcessing = true;
+                View.LogProccessing($"Загружаем необходимые данные");
+                _solverService ??= _services.GetService<DefaultSolverService>();
+                _solverService.SetSettings(_timetableSettings);
+                View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());
-                //ApplyAlgSettings();
-                //ApplyTimetableSettings();
-                //pictureBoxTimetableCreation.Invoke(() => pictureBoxTimetableCreation.Visible = true);
-                //rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Загружаем необходимые данные\r\n"));
-                //rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Начинаем создание расписания\r\n"));
-                //History.Push();
-                //rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{History.Peek().Message}\r\n"));
-
+                View.LogProccessing("Расписание создано");
             }
             catch (OperationCanceledException)
             {
-                //rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Создание отменено\r\n"));
+                View.LogProccessing("Создание отменено");
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                IdkHelper.ShowErrorMsgBox(e.Message);
             }
             finally
             {
-                //pictureBoxTimetableCreation.Invoke(() => pictureBoxTimetableCreation.Visible = false);
+                View.IsTimetableProcessing = false;
             }
         }
 
-        //private UserForm CreateUserForm()
-        //{
-        //    return new UserForm(null/*, new User()*/)
-        //        .AddTimetableViewInfo(new TimetableViewInfo()
-        //         {
-        //             Days = _timetableResult.Peek().Timetable.DaysWeek,
-        //             Hours = _timetableResult.Peek().Timetable.HoursDay,
-        //             Id = 0,
-        //             DateTime = DateTime.Now,
-        //             IsVerified = true,
-        //             TimetableView = _solver.GetNormalizedView(_timetableResult.Peek())
-        //            .GetNormalizedViewWithInclude()
-        //            .ToList()
-        //        });
-        //}
-
-        //private void TrainTimetable()
-        //{
-        //    try
-        //    {
-        //        ApplyAlgSettings();
-        //        ApplyTimetableSettings();
-        //        if (History.Peek()?.Timetable is null)
-        //        {
-        //            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Необходимо создать расписание\r\n"));
-        //            return;
-        //        }
-        //        pictureBoxTimetableCreation.Invoke(() => pictureBoxTimetableCreation.Visible = true);
-        //        var trainCount = numericTrainCount.Value;
-        //        for (int i = 0; i < trainCount; i++)
-        //        {
-        //            History.Push(_solver.TrainAsync(History.Peek()?.Timetable).Result);
-        //            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{History.Peek().Message}\r\n"));
-        //        }
-        //        rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка завершена\r\n"));
-        //    }
-        //    catch (OperationCanceledException)
-        //    {
-        //        rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка отменена\r\n"));
-        //    }
-        //    catch (AggregateException)
-        //    {
-        //        rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"Тренировка отменена\r\n"));
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //    finally
-        //    {
-        //        pictureBoxTimetableCreation.Invoke(() => pictureBoxTimetableCreation.Visible = false);
-        //    }
-        //}
-
-        //private void SaveToDatabase()
-        //{
-        //    try
-        //    {
-        //        _solver.SaveToDatabase(History.Peek()).Wait();
-        //        MessageBox.Show("Сохранено успешно", "Расписание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
+        private async Task TrainTimetable()
+        {
+            if(View.History.Count == 0)
+            {
+                View.LogProccessing("Необходимо создать расписание");
+                return;
+            }
+            var tmpTable = View.History.Peek();
+            try
+            {
+                View.IsTimetableProcessing = true;
+                _solverService.SetSettings(_timetableSettings);
+                var trainCount = View.TrainCount;
+                    
+                for (int i = 0; i < trainCount; i++)
+                {
+                    tmpTable = await _solverService.TrainAsync(tmpTable?.Timetable);
+                    View.LogProccessing($"Тренировка №{i} завершена");
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                View.LogProccessing($"Тренировка отменена");
+            }
+            catch (AggregateException)
+            {
+                View.LogProccessing($"Тренировка отменена");
+            }
+            catch (Exception e)
+            {
+                IdkHelper.ShowErrorMsgBox(e.Message);
+            }
+            finally
+            {
+                View.IsTimetableProcessing = false;
+                if (tmpTable != View.History.Peek())
+                    View.History.Push(tmpTable);
+            }
+        }
     }
 }

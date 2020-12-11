@@ -35,22 +35,21 @@ namespace WindowsFormsUI.MVP.Controllers
             return this;
         }
 
-        public void Run<TPresenter>() where TPresenter : class, IPresenter
+        public TPresenter GetPresenter<TPresenter>() where TPresenter : class, IPresenter
         {
             if (!_container.IsRegistered<TPresenter>())
                 _container.Register<TPresenter>();
 
-            var presenter = _container.Resolve<TPresenter>();
-            presenter.Run();
+            return _container.Resolve<TPresenter>();
         }
 
-        public void Run<TPresenter, TArgumnent>(TArgumnent argumnent) where TPresenter : class, IPresenter<TArgumnent>
+        public TPresenter GetPresenter<TPresenter, TArgumnent>()
+            where TPresenter : class, IPresenter<TArgumnent>
         {
             if (!_container.IsRegistered<TPresenter>())
                 _container.Register<TPresenter>();
 
-            var presenter = _container.Resolve<TPresenter>();
-            presenter.Run(argumnent);
+            return _container.Resolve<TPresenter>();
         }
     }
 }

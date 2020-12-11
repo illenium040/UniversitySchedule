@@ -32,8 +32,8 @@ namespace WindowsFormsUI.MVP.Presenters
             try
             {
                 var user = _authService.Auth(View.UserName, View.UserPassword).Result;
-                if(user.IsAdmin) View.FromThread(() => Controller.Run<AdminPresenter, User>(user));
-                else View.FromThread(() => Controller.Run<UserPresenter, User>(user));
+                if(user.IsAdmin) View.FromThread(() => Controller.GetPresenter<AdminPresenter, User>().Run(user));
+                else View.FromThread(() => Controller.GetPresenter<UserPresenter, User>().Run(user));
                 View.Close();
             }
             catch (UnauthorizedAccessException exception)
