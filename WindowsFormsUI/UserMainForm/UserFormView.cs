@@ -52,32 +52,6 @@ namespace WindowsFormsUI.UserMainForm
             else IdkHelper.ShowErrorMsgBox("Параметр не задан или задан неверно");
         }
 
-        public new void Show()
-        {
-            if (_context.MainForm is null)
-            {
-                _context.MainForm = this;
-                Application.Run(_context);
-            }
-            else
-            {
-                _context.MainForm = this;
-                base.Show();
-            }
-
-        }
-
-        public void FromThread(Action action)
-        {
-            this.Invoke(action);
-        }
-
-        public new void Close()
-        {
-            if (this.InvokeRequired)
-                this.Invoke(base.Close);
-            else base.Close();
-        }
 
         public void InitControlsData(IEnumerable<Specialty> specialties, IEnumerable<Teacher> teachers)
         {

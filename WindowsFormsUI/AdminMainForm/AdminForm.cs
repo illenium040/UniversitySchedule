@@ -17,58 +17,44 @@ using TimetableAlgorithm;
 using UniversityTimetableGenerator.Actions.ActionsResult;
 using UniversityTimetableGenerator.Services;
 
+using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.AdminMainForm
 {
-    public partial class AdminForm : Form
+    public partial class AdminForm : Form, IAdminView
     {
+        private TimetableFormLogger _solverLogger;
+        private ApplicationContext _context;
         private ActionProxy _actionProxy;
-        private User _admin;
-        private UserForm _userTimetableTestForm;
-        private IServiceProvider _services;
-        public AdminForm(User user)
+
+        
+
+        public AdminForm(ApplicationContext context)
         {
+            _context = context;
             InitializeComponent();
-            _admin = user;
-            _services = RegisterServices();
             _actionProxy = new ActionProxy();
-            _timetableResult = new Stack<TimetableResult>();
-            btnCreateTimetable.Click += CreateTimetable;
-            btnCancelTimetableCreation.Click += CacncelTimetableCreation;
-            btnTimetableTrain.Click += TrainTimetable;
+            _solverLogger = new TimetableFormLogger(lblSolverLog);
+            History = new Stack<TimetableResult>();
 
-            btnShowUserForm.Click += ShowTimetableInUserForm;
-            btnSaveToDatabase.Click += SaveToDatabase;
+            btnCreateTimetable.Click += async (sender, e) 
+                => await _actionProxy.InvokeAsync(CreateTimetable);
+            btnCancelTimetableCreation.Click += (sender, e) 
+                => CancelTimetableProcessing();
+            btnTimetableTrain.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(TrainTimetable);
 
-            checkBoxDefaultSettings.CheckedChanged += IsDefaultSettings;
-            SetDefaultAlgSettings();
-        }
+            btnShowUserForm.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(ShowInUserForm);
+            btnSaveToDatabase.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(SaveTimetableToDatabase);
 
-        private void IsDefaultSettings(object sender, EventArgs e)
-        {
-            if (checkBoxDefaultSettings.Checked)
-            {
-                SetAlgNumericReadOnlyState(true);
-                SetDefaultAlgSettings();
-            }
-            else SetAlgNumericReadOnlyState(false);
-            
-        }
+            checkBoxDefaultSettings.CheckedChanged += (sender, e)
+                => DefaultSettingsChecked();
 
-        private async void SaveToDatabase(object sender, EventArgs e)
-        {
-            await _actionProxy.InvokeAsync(SaveToDatabase);
-        }
-
-        private async void TrainTimetable(object sender, EventArgs e)
-        {
-            await _actionProxy.InvokeAsync(TrainTimetable);
-        }
-
-        private void CacncelTimetableCreation(object sender, EventArgs e)
-        {
-           _solver?.Cancel();
+            btnSaveSettings.Click += (sender, e)
+                => _actionProxy.Invoke(SaveSettings);
         }
 
         private async void ShowTimetableInUserForm(object sender, EventArgs e)
@@ -78,25 +64,66 @@ namespace WindowsFormsUI.AdminMainForm
                 this.Invoke(() => 
                 {
                     //_userTimetableTestForm = CreateUserForm();
-                    AddOwnedForm(_userTimetableTestForm);
-                    _userTimetableTestForm.FormClosed += (s, e) => this.Invoke(() => RemoveOwnedForm(s as Form));
-                    _userTimetableTestForm.Show();
+                    //AddOwnedForm(_userTimetableTestForm);
+                    //_userTimetableTestForm.FormClosed += (s, e) => this.Invoke(() => RemoveOwnedForm(s as Form));
+                    //_userTimetableTestForm.Show();
                 });
             });
             
         }
 
-        private async void CreateTimetable(object sender, EventArgs e)
+        public new void Show()
         {
-            await _actionProxy.InvokeAsync(() => CreateTimetableAsync().GetAwaiter().GetResult());
+            if (_context.MainForm is null)
+            {
+                _context.MainForm = this;
+                Application.Run(_context);
+            }
+            else
+            {
+                _context.MainForm = this;
+                base.Show();
+            }
         }
 
-        private IServiceProvider RegisterServices()
+        public void FromThread(Action action)
         {
-            return new ServiceCollection()
-                .AddSingleton(typeof(ILogger), new TimetableFormLogger(lblSolverLog))
-                .AddScoped<DefaultSolverService>()
-                .BuildServiceProvider();
+            this.Invoke(action);
+        }
+
+        public new void Close()
+        {
+            if (this.InvokeRequired)
+                this.Invoke(base.Close);
+            else base.Close();
+        }
+
+        public void SetReadOnlySettingsState(bool state)
+        {
+            numericIterationsCount.Invoke(() => numericIterationsCount.ReadOnly = state);
+            numericPartOfBest.Invoke(() => numericPartOfBest.ReadOnly = state);
+            numericPopulationCount.Invoke(() => numericPopulationCount.ReadOnly = state);
+            numericTrainCount.Invoke(() => numericTrainCount.ReadOnly = state);
+            numericDaysWeek.Invoke(() => numericDaysWeek.ReadOnly = state);
+            numericHoursDay.Invoke(() => numericHoursDay.ReadOnly = state);
+            numericSemesterPart.Invoke(() => numericSemesterPart.ReadOnly = state);
+        }
+
+        public void SetDefaultSettings()
+        {
+            var settings = TimetableDefaultSettings.Settings;
+            numericIterationsCount.Invoke(() => numericIterationsCount.Value = settings.MaxIterations);
+            numericPartOfBest.Invoke(() => numericPartOfBest.Value = settings.PartOfBest);
+            numericPopulationCount.Invoke(() => numericPopulationCount.Value = settings.PopulationCount);
+            numericTrainCount.Invoke(() => numericTrainCount.Value = 10);
+            numericDaysWeek.Invoke(() => numericDaysWeek.Value = settings.DaysWeek);
+            numericHoursDay.Invoke(() => numericHoursDay.Value = settings.HoursDay);
+            numericSemesterPart.Invoke(() => numericSemesterPart.Value = (int)settings.SemestersPart + 1);
+        }
+
+        public void LogProccessing(string message)
+        {
+            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText(message));
         }
     }
 }

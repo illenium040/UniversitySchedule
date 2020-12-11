@@ -34,6 +34,11 @@ namespace UniversityTimetableGenerator.Services
             TimetableFacade.Generator.Cancel();
         }
         
+        public virtual void SetSettings(TimetableSettings settings)
+        {
+            TimetableFacade.Generator.AddSettings(settings);
+        }
+
         public abstract Task SaveToDatabase(TimetableResult timetableResult);
 
         public virtual NormalizedTimetableContainer GetNormalizedView(TimetableResult timetableResult)

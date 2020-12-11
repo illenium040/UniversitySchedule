@@ -12,6 +12,7 @@ namespace TimetableAlgorithm
     public class Solver
     {
         int _populatinCount;
+        private TimetableSettings _settings;
         private List<List<Lesson>> _lessons;
         private List<List<Lesson>> _groupsOnPractice;
         private ILogger _logger;
@@ -22,6 +23,12 @@ namespace TimetableAlgorithm
             _groupsOnPractice = lessons.Where(x => x.Count == 0).ToList();
             lessons.RemoveAll(x => x.Count == 0);
             _lessons = lessons;
+        }
+
+        public Solver AddSettings(TimetableSettings settings)
+        {
+            _settings = settings;
+            return this;
         }
 
         public Solver AddLogger(ILogger logger)
@@ -40,8 +47,9 @@ namespace TimetableAlgorithm
 
         private Population CreatePopulationBeforeTrain(Timetable timetable)
         {
-            _populatinCount = TimetableDefaultSettings.PopulationCount;
-            var population = new Population(timetable.TryChange().TryAddLessons());
+            _settings = _settings is null ? TimetableDefaultSettings.Settings : _settings;
+            _populatinCount = _settings.PopulationCount;
+            var population = new Population(timetable.TryChange().TryAddLessons(), _settings);
             for (int i = 0; i < _populatinCount - 1; i++)
                 population.AddChildOfParent(timetable);
             return population;
@@ -55,9 +63,10 @@ namespace TimetableAlgorithm
 
         public async Task<Timetable> Solve(CancellationTokenSource cancellationToken)
         {
+            _settings = _settings is null ? TimetableDefaultSettings.Settings : _settings;
             if (cancellationToken.IsCancellationRequested) return null;
-            _populatinCount = TimetableDefaultSettings.PopulationCount;
-            var pop = new Population(_lessons, _populatinCount);
+            _populatinCount = _settings.PopulationCount;
+            var pop = new Population(_lessons, _populatinCount, _settings);
             if (pop.Count == 0) throw new Exception("Can not create any plan");
 
             return await Solve(pop, cancellationToken);
@@ -67,8 +76,8 @@ namespace TimetableAlgorithm
         private async Task<Timetable> Solve(Population pop, CancellationTokenSource cancellationToken)
         {
             return await Task.Run(() => {
-                int count = TimetableDefaultSettings.MaxIterations;
-                int _partOfBest = TimetableDefaultSettings.PartOfBest;
+                int count = _settings.MaxIterations;
+                int _partOfBest = _settings.PartOfBest;
                 while (count-- > 0)
                 {
                     if (cancellationToken.IsCancellationRequested) 
@@ -84,8 +93,8 @@ namespace TimetableAlgorithm
                     for (int i = pop.Count / _partOfBest; i < pop.Count; i++)
                         for (int j = 0; j < pop[i].PlanList.Length; j++)
                         {
-                            for (int d = 0; d < TimetableDefaultSettings.DaysWeek; d++)
-                                for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
+                            for (int d = 0; d < _settings.DaysWeek; d++)
+                                for (int h = 0; h < _settings.HoursDay; h++)
                                     pop[i].PlanList[j][d, h].RemoveLesson();
                         }
                             

@@ -27,6 +27,12 @@ namespace UniversityTimetableGenerator.TimetableCreation
             return this;
         }
 
+        public TimetableGeneratorWrapper AddSettings(TimetableSettings settings)
+        {
+            Generator.AddSeetings(settings);
+            return this;
+        }
+
         public void Cancel()
         {
             Generator.Cancel();

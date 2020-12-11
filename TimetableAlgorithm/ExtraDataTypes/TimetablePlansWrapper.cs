@@ -14,17 +14,21 @@ namespace TimetableAlgorithm
         private TimetableHourPlan[][,] _plans;
         public List<List<Lesson>> Lessons { get; private set; }
         public List<UnaddedLesson> UnaddedLessons { get; set; }
+        public TimetableSettings Settings { get; private set; }
         public int[] PairsCount { get; private set; }
 
-        public TimetablePlansContainer(List<List<Lesson>> lessons)
+        public TimetablePlansContainer(List<List<Lesson>> lessons, TimetableSettings settings)
         {
+            Settings = settings;
             Lessons = lessons;
             UnaddedLessons = new List<UnaddedLesson>();
         }
 
         public TimetablePlansContainer(List<List<Lesson>> lessons,
-            List<UnaddedLesson> unaddedLessons)
+            List<UnaddedLesson> unaddedLessons,
+            TimetableSettings settings)
         {
+            Settings = settings;
             Lessons = lessons;
             UnaddedLessons = unaddedLessons;
         }
@@ -45,9 +49,9 @@ namespace TimetableAlgorithm
             _plans = new TimetableHourPlan[Lessons.Count][,];
             for (int i = 0; i < Lessons.Count; i++)
             {
-                _plans[i] = new TimetableHourPlan[TimetableDefaultSettings.DaysWeek, TimetableDefaultSettings.HoursDay];
-                for (int d = 0; d < TimetableDefaultSettings.DaysWeek; d++)
-                    for (int h = 0; h < TimetableDefaultSettings.HoursDay; h++)
+                _plans[i] = new TimetableHourPlan[Settings.DaysWeek, Settings.HoursDay];
+                for (int d = 0; d < Settings.DaysWeek; d++)
+                    for (int h = 0; h < Settings.HoursDay; h++)
                         _plans[i][d, h] = new TimetableHourPlan();
             }
             return this;

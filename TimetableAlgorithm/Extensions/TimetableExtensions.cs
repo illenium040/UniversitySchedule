@@ -19,10 +19,10 @@ namespace TimetableAlgorithm
             return count;
         }
 
-        private static int GetPairsCountByDay(TimetableHourPlan[,] hourPlan, byte day)
+        private static int GetPairsCountByDay(Timetable timetable, TimetableHourPlan[,] hourPlan, byte day)
         {
             int count = 0;
-            for (int j = 0; j < TimetableDefaultSettings.HoursDay; j++)
+            for (int j = 0; j < timetable.HoursDay; j++)
                 if (hourPlan[day, j].GroupTeacher.Item1 != 0) count++;
             return count;
         }
@@ -32,7 +32,7 @@ namespace TimetableAlgorithm
         {
             int shift = i > 20 ? 2 : 1;
             byte startHour = (byte)(shift == 1 ? 0 : 2);
-            byte endHour = (byte)(shift == 1 ? 4 : TimetableDefaultSettings.HoursDay);
+            byte endHour = (byte)(shift == 1 ? 4 : timetable.HoursDay);
             if (empty.Key == notEmpty.Key) return false;
             for (byte hour = startHour; hour < endHour; hour++)
             {
@@ -58,8 +58,8 @@ namespace TimetableAlgorithm
             for (int i = 0; i < timetable.PlanList.Length; i++)
             {
                 var pairsCountList = new Dictionary<byte, int>();
-                for (byte day = 0; day < TimetableDefaultSettings.DaysWeek; day++)
-                    pairsCountList.Add(day, GetPairsCountByDay(timetable.PlanList[i], day));
+                for (byte day = 0; day < timetable.DaysWeek; day++)
+                    pairsCountList.Add(day, GetPairsCountByDay(timetable, timetable.PlanList[i], day));
                 var emptyDays = pairsCountList.Where(x => x.Value < 1);
                 foreach (var empty in emptyDays)
                 {
@@ -77,7 +77,7 @@ namespace TimetableAlgorithm
         {
             int shift = lesson.Lesson.ExtraData.Shift;
             byte startHour = (byte)(shift == 1 ? 0 : 2);
-            byte endHour = (byte)(shift == 1 ? 5 : TimetableDefaultSettings.HoursDay);
+            byte endHour = (byte)(shift == 1 ? 5 : timetable.HoursDay);
             for (byte hour = startHour; hour < endHour; hour++)
             {
                 if (timetable.AddLesson(new Lesson(day, hour,
@@ -94,7 +94,7 @@ namespace TimetableAlgorithm
         {
             timetable.PlanList.UnaddedLessons.RemoveAll(x =>
             {
-                for (byte day = 0; day < TimetableDefaultSettings.DaysWeek; day++)
+                for (byte day = 0; day < timetable.DaysWeek; day++)
                     if (TryAddLessonToHour(timetable, day, x)) return true;
                 return false;
             });

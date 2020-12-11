@@ -20,10 +20,6 @@ namespace UniversityTimetableGenerator.TimetableCreation
         public IEnumerable<Specialty> Specialties { get; protected set; }
         public IEnumerable<PlanInformation> PlansInformation { get; protected set; }
         public ITimetableViewRepository TimetableView { get; protected set; }
-        public TimetableDataContainer()
-        {
-            SemestersPart = TimetableDefaultSettings.SemestersPart;
-        }
 
         public TimetableDataContainer Init(ITimetableViewData data)
         {

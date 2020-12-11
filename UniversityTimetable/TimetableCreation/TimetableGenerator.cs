@@ -39,7 +39,11 @@ namespace UniversityTimetableGenerator.TimetableCreation
                 .Create());
         }
 
-
+        public TimetableGenerator AddSeetings(TimetableSettings settings)
+        {
+            _solver.AddSettings(settings);
+            return this;
+        }
         public TimetableGenerator AddLogger(ILogger logger)
         {
             _solver.AddLogger(logger);

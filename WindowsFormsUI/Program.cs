@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Controllers;
 using WindowsFormsUI.MVP.Presenters;
 using WindowsFormsUI.MVP.ServiceContainers;
@@ -35,12 +36,29 @@ namespace WindowsFormsUI
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
                 .RegisterView<IUserView, UserForm>()
+                .RegisterView<IAdminView, AdminForm>()
                 .RegisterService<IAuthService, AuthService>()
                 .RegisterService<ITimetableLoaderService, TimetableLoaderService>()
                 .RegisterInstance(new ApplicationContext());
 
-            //controller.Run<UserPresenter, User>(new User());
-            controller.Run<AuthPresenter>();
+            var vitalikUser = new User
+            {
+                Id = "777",
+                IsAdmin = false,
+                Login = "VitalikNotCool2007",
+                Password = "777"
+            };
+            var vitalikAdminUser = new User
+            {
+                Id = "777",
+                IsAdmin = true,
+                Login = "VitalikCool2009",
+                Password = "777"
+            };
+
+            controller.Run<AdminPresenter, User>(vitalikAdminUser);
+            //controller.Run<UserPresenter, User>(vitalikUser);
+            //controller.Run<AuthPresenter>();
         }
     }
 }

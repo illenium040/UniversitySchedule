@@ -14,18 +14,18 @@ namespace TimetableAlgorithm
         public TimetablePlansContainer PlanList { get; private set; }
         public int FitnessValue { get; set; }
 
-        public Timetable(List<List<Lesson>> lessons)
+        public Timetable(List<List<Lesson>> lessons, TimetableSettings settings)
         {
-            DaysWeek = (byte)TimetableDefaultSettings.DaysWeek;
-            HoursDay = (byte)TimetableDefaultSettings.HoursDay;
-            PlanList = new TimetablePlansContainer(lessons)
+            DaysWeek = (byte)settings.DaysWeek;
+            HoursDay = (byte)settings.HoursDay;
+            PlanList = new TimetablePlansContainer(lessons, settings)
                 .InitPlans()
                 .InitPairsCounter();
         }
 
-        public Timetable(List<List<Lesson>> lessons, List<UnaddedLesson> unaddedLessons)
+        public Timetable(List<List<Lesson>> lessons, List<UnaddedLesson> unaddedLessons, TimetableSettings settings)
         {
-            PlanList = new TimetablePlansContainer(lessons, unaddedLessons)
+            PlanList = new TimetablePlansContainer(lessons, unaddedLessons, settings)
                 .InitPlans()
                 .InitPairsCounter();
         }
@@ -140,7 +140,7 @@ namespace TimetableAlgorithm
 
         public Timetable GetDeepCopy()
         {
-            var result = new Timetable(PlanList.Lessons.ToList(), PlanList.UnaddedLessons.ToList());
+            var result = new Timetable(PlanList.Lessons.ToList(), PlanList.UnaddedLessons.ToList(), PlanList.Settings);
             for (int i = 0; i < result.PlanList.Length; i++)
                 for (int day = 0; day < result.PlanList[i].GetLength(0); day++)
                     for (int hour = 0; hour < result.PlanList[i].GetLength(1); hour++)
