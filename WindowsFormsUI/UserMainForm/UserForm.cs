@@ -23,9 +23,6 @@ namespace WindowsFormsUI.UserMainForm
         private ApplicationContext _context;
         private ActionProxy _actionProxy;
 
-        private ITimetableViewData _timetableView;
-        private TimetableViewInfo _viewInfoInstance;
-
         private CommandInvoker<DataGridViewCommand> _gridCommandInvoker;
         private DataGridViewCommandReceiver _gridCommandReceiver;
 

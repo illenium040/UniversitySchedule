@@ -27,6 +27,6 @@ namespace WindowsFormsUI.MVP.Views
         void InitControlsData(IEnumerable<Specialty> specialties, IEnumerable<Teacher> teachers);
         void SetPreLoadState(string message);
         void VisualizeGrid(DataGridViewCommand command);
-        IUserView AddTimetableViewInfo(TimetableViewInfo viewInfo);
+        IUserView GridOnLoad();
     }
 }

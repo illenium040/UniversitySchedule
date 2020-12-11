@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using WindowsFormsUI.FormCommands;
 using WindowsFormsUI.FormCommands.DataGridCommands;
@@ -22,10 +23,10 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             _loaderService = _timetableLoaderService;
             View.LoadData += () => LoadViewData();
-            View.ShowTeachers += () => View.VisualizeGrid(GetTeacherInfoCommand());
-            View.ShowTimetablePlan += () => View.VisualizeGrid(GetPlanCommand());
-            View.ShowTeachersTimetable += () => View.VisualizeGrid(GetTeacherTimetableCommand());
-            View.ShowTimetable += () => View.VisualizeGrid(GetTimetableCommand());
+            View.ShowTeachers += () => View.GridOnLoad().VisualizeGrid(GetTeacherInfoCommand());
+            View.ShowTimetablePlan += () => View.GridOnLoad().VisualizeGrid(GetPlanCommand());
+            View.ShowTeachersTimetable += () => View.GridOnLoad().VisualizeGrid(GetTeacherTimetableCommand());
+            View.ShowTimetable += () => View.GridOnLoad().VisualizeGrid(GetTimetableCommand());
         }
 
         public override void Run(User argument)
@@ -37,8 +38,8 @@ namespace WindowsFormsUI.MVP.Presenters
         private void LoadViewData()
         {
             View.IsPreLoading = true;
-            _loaderService.Load();
             View.SetPreLoadState("Загружаем необходимые данные...");
+            _loaderService.Load();
             View.InitData(_loaderService.GetLastUpdatedViewInfo());
             View.SetPreLoadState("Загружаем список учебного процесса...");
             View.InitControlsData(_loaderService.GetAllSpecialties(), _loaderService.GetNamedTeachers());

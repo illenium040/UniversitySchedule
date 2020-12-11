@@ -32,10 +32,7 @@ namespace WindowsFormsUI.UserMainForm
             get { return timetableTeacherList.GetSelectedItem<TeacherWrapper>()?.Teacher; }
         }
 
-        public TimetableViewInfo TimetableViewInfo
-        {
-            get { return _viewInfoInstance ??= _timetableView.TimetableView.GetLastUpdated(); }
-        }
+        public TimetableViewInfo TimetableViewInfo { get; private set; }
 
         public bool IsPreLoading
         {
@@ -53,12 +50,6 @@ namespace WindowsFormsUI.UserMainForm
                         .Run());
             }
             else IdkHelper.ShowErrorMsgBox("Параметр не задан или задан неверно");
-        }
-
-        public IUserView AddTimetableViewInfo(TimetableViewInfo viewInfo)
-        {
-            _viewInfoInstance = viewInfo;
-            return this;
         }
 
         public new void Show()
@@ -97,6 +88,12 @@ namespace WindowsFormsUI.UserMainForm
         public void SetPreLoadState(string message)
         {
             preDataLoadStateText.Invoke(() => preDataLoadStateText.Text = message);
+        }
+
+        public IUserView GridOnLoad()
+        {
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = true);
+            return this;
         }
     }
 }

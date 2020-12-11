@@ -20,7 +20,6 @@ namespace WindowsFormsUI.UserMainForm
     {
         private void VisualizeGridView(Action gridAction)
         {
-            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = true);
             timetableGridView.Invoke(() =>
             {
                 timetableGridView.Visible = false;
@@ -38,7 +37,7 @@ namespace WindowsFormsUI.UserMainForm
 
         public void InitData(TimetableViewInfo info)
         {
-            _viewInfoInstance = info;
+            TimetableViewInfo = info;
             _gridCommandInvoker = new CommandInvoker<DataGridViewCommand>();
             _gridCommandReceiver = new DataGridViewCommandReceiver(timetableGridView);
         }
