@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.databaseTab = new System.Windows.Forms.TabPage();
             this.timetableCreationTab = new System.Windows.Forms.TabPage();
+            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureBoxTimetableCreation = new System.Windows.Forms.PictureBox();
             this.btnSaveToDatabase = new System.Windows.Forms.Button();
             this.btnTimetableTrain = new System.Windows.Forms.Button();
             this.panelTimetableCreationLog = new System.Windows.Forms.Panel();
+            this.pictureBoxTimetableCreation = new System.Windows.Forms.PictureBox();
             this.lblSolverLog = new System.Windows.Forms.Label();
             this.rbxTimetableResultLog = new System.Windows.Forms.RichTextBox();
             this.btnCancelTimetableCreation = new System.Windows.Forms.Button();
@@ -62,12 +64,11 @@
             this.subjectsTeachersTab = new System.Windows.Forms.TabPage();
             this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
             this.planTab = new System.Windows.Forms.TabPage();
-            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.timetableCreationTab.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).BeginInit();
             this.panelTimetableCreationLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).BeginInit();
             this.groupBoxAlgorithmSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericTrainCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPopulationCount)).BeginInit();
@@ -99,7 +100,7 @@
             // 
             this.databaseTab.Location = new System.Drawing.Point(4, 24);
             this.databaseTab.Name = "databaseTab";
-            this.databaseTab.Size = new System.Drawing.Size(708, 378);
+            this.databaseTab.Size = new System.Drawing.Size(756, 416);
             this.databaseTab.TabIndex = 4;
             this.databaseTab.Text = "База данных";
             this.databaseTab.UseVisualStyleBackColor = true;
@@ -119,12 +120,20 @@
             this.timetableCreationTab.Text = "Создание расписания";
             this.timetableCreationTab.UseVisualStyleBackColor = true;
             // 
+            // btnSaveSettings
+            // 
+            this.btnSaveSettings.Location = new System.Drawing.Point(4, 369);
+            this.btnSaveSettings.Name = "btnSaveSettings";
+            this.btnSaveSettings.Size = new System.Drawing.Size(105, 41);
+            this.btnSaveSettings.TabIndex = 13;
+            this.btnSaveSettings.Text = "Сохранить настройки";
+            this.btnSaveSettings.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.pictureBoxTimetableCreation);
             this.groupBox2.Controls.Add(this.btnSaveToDatabase);
             this.groupBox2.Controls.Add(this.btnTimetableTrain);
             this.groupBox2.Controls.Add(this.panelTimetableCreationLog);
@@ -138,22 +147,10 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Создание расписания";
             // 
-            // pictureBoxTimetableCreation
-            // 
-            this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxTimetableCreation.InitialImage = null;
-            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(451, 24);
-            this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
-            this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
-            this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxTimetableCreation.TabIndex = 13;
-            this.pictureBoxTimetableCreation.TabStop = false;
-            this.pictureBoxTimetableCreation.Visible = false;
-            // 
             // btnSaveToDatabase
             // 
             this.btnSaveToDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveToDatabase.Location = new System.Drawing.Point(139, 360);
+            this.btnSaveToDatabase.Location = new System.Drawing.Point(139, 359);
             this.btnSaveToDatabase.Name = "btnSaveToDatabase";
             this.btnSaveToDatabase.Size = new System.Drawing.Size(120, 40);
             this.btnSaveToDatabase.TabIndex = 9;
@@ -174,6 +171,7 @@
             this.panelTimetableCreationLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTimetableCreationLog.Controls.Add(this.pictureBoxTimetableCreation);
             this.panelTimetableCreationLog.Controls.Add(this.lblSolverLog);
             this.panelTimetableCreationLog.Controls.Add(this.rbxTimetableResultLog);
             this.panelTimetableCreationLog.Location = new System.Drawing.Point(6, 62);
@@ -181,6 +179,19 @@
             this.panelTimetableCreationLog.Padding = new System.Windows.Forms.Padding(3);
             this.panelTimetableCreationLog.Size = new System.Drawing.Size(477, 292);
             this.panelTimetableCreationLog.TabIndex = 7;
+            // 
+            // pictureBoxTimetableCreation
+            // 
+            this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxTimetableCreation.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTimetableCreation.Image")));
+            this.pictureBoxTimetableCreation.InitialImage = null;
+            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(436, 6);
+            this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
+            this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
+            this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxTimetableCreation.TabIndex = 13;
+            this.pictureBoxTimetableCreation.TabStop = false;
+            this.pictureBoxTimetableCreation.Visible = false;
             // 
             // lblSolverLog
             // 
@@ -519,7 +530,7 @@
             this.subjectsTeachersTab.Location = new System.Drawing.Point(4, 24);
             this.subjectsTeachersTab.Name = "subjectsTeachersTab";
             this.subjectsTeachersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.subjectsTeachersTab.Size = new System.Drawing.Size(708, 378);
+            this.subjectsTeachersTab.Size = new System.Drawing.Size(756, 416);
             this.subjectsTeachersTab.TabIndex = 1;
             this.subjectsTeachersTab.Text = "Предметы и преподаватели";
             this.subjectsTeachersTab.UseVisualStyleBackColor = true;
@@ -529,7 +540,7 @@
             this.groupsSpecialtiesTab.BackColor = System.Drawing.Color.White;
             this.groupsSpecialtiesTab.Location = new System.Drawing.Point(4, 24);
             this.groupsSpecialtiesTab.Name = "groupsSpecialtiesTab";
-            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(708, 378);
+            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(756, 416);
             this.groupsSpecialtiesTab.TabIndex = 2;
             this.groupsSpecialtiesTab.Text = "Специальности и группы";
             // 
@@ -538,18 +549,9 @@
             this.planTab.BackColor = System.Drawing.Color.White;
             this.planTab.Location = new System.Drawing.Point(4, 24);
             this.planTab.Name = "planTab";
-            this.planTab.Size = new System.Drawing.Size(708, 378);
+            this.planTab.Size = new System.Drawing.Size(756, 416);
             this.planTab.TabIndex = 3;
             this.planTab.Text = "Учебный план";
-            // 
-            // btnSaveSettings
-            // 
-            this.btnSaveSettings.Location = new System.Drawing.Point(4, 369);
-            this.btnSaveSettings.Name = "btnSaveSettings";
-            this.btnSaveSettings.Size = new System.Drawing.Size(105, 41);
-            this.btnSaveSettings.TabIndex = 13;
-            this.btnSaveSettings.Text = "Сохранить настройки";
-            this.btnSaveSettings.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
@@ -564,8 +566,8 @@
             this.tabControl1.ResumeLayout(false);
             this.timetableCreationTab.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).EndInit();
             this.panelTimetableCreationLog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTimetableCreation)).EndInit();
             this.groupBoxAlgorithmSettings.ResumeLayout(false);
             this.groupBoxAlgorithmSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericTrainCount)).EndInit();

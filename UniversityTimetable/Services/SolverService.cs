@@ -20,22 +20,32 @@ namespace UniversityTimetableGenerator.Services
         protected ILogger Logger;
         protected IServiceProvider ServiceProvider;
 
-        public SolverService(IServiceProvider serviceProvider, TimetableFacade timetableFacade)
+        public SolverService(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
             Logger = serviceProvider.GetService<ILogger>();
-            TimetableFacade = timetableFacade.AddLogger(Logger);
-            TimetableFacade.Generator.AddLogger(Logger);
+        }
+
+        protected abstract TimetableFacade CreateFacade();
+        public SolverService Load()
+        {
+            if(TimetableFacade is null)
+                TimetableFacade = CreateFacade().AddLogger(Logger);
+            return this;
         }
         public abstract Task<TimetableResult> CreateAsync();
         public abstract Task<TimetableResult> TrainAsync(Timetable timetable, int count = 1);
         public virtual void Cancel()
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             TimetableFacade.Generator.Cancel();
         }
         
         public virtual void SetSettings(TimetableSettings settings)
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             TimetableFacade.Generator.AddSettings(settings);
         }
 
@@ -43,6 +53,8 @@ namespace UniversityTimetableGenerator.Services
 
         public virtual NormalizedTimetableContainer GetNormalizedView(TimetableResult timetableResult)
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             return new NormalizedTimetableContainer(timetableResult, TimetableFacade.DataContainer);
         }
     }

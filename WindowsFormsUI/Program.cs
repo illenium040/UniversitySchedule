@@ -1,6 +1,8 @@
 
 using DataAccess;
+using DataAccess.Contexts;
 using DataAccess.Entities;
+using DataAccess.RepositoryUsage;
 
 using System;
 using System.Collections.Generic;
@@ -38,8 +40,8 @@ namespace WindowsFormsUI
                 .RegisterView<IUserView, UserForm>()
                 .RegisterView<IAdminView, AdminForm>()
                 .RegisterService<IAuthService, AuthService>()
-                .RegisterService<ITimetableLoaderService, TimetableLoaderService>()
-                .RegisterInstance(new ApplicationContext());
+                .RegisterInstance(new ApplicationContext())
+                .RegisterInstance<ITimetableViewDataLoader>(new TimetableViewDataLoader());
 
             var vitalikUser = new User
             {

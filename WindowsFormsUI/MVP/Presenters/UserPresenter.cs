@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using DataAccess.RepositoryUsage;
 
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,16 @@ namespace WindowsFormsUI.MVP.Presenters
 {
     public class UserPresenter : BasePresenter<IUserView, User>
     {
+        private ITimetableViewData _viewData;
+        private ITimetableViewDataLoader _viewDataLoader;
         private TimetableViewInfo _timetableView;
         private User _user;
-        private ITimetableLoaderService _loaderService;
+        
         public UserPresenter(IApplicationController controller,
-            ITimetableLoaderService _timetableLoaderService,
+            ITimetableViewDataLoader viewDataLoader,
             IUserView view) : base(controller, view)
         {
-            _loaderService = _timetableLoaderService;
+            _viewDataLoader = viewDataLoader;
             View.LoadData += () => LoadViewData();
             View.ShowTeachers += () => View.GridOnLoad().VisualizeGrid(GetTeacherInfoCommand());
             View.ShowTimetablePlan += () => View.GridOnLoad().VisualizeGrid(GetPlanCommand());
@@ -48,10 +51,11 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 View.IsPreLoading = true;
                 View.SetPreLoadState("Загружаем необходимые данные...");
-                _loaderService.Load();
-                View.InitData(_timetableView ??= _loaderService.GetLastUpdatedViewInfo());
+                _viewData ??= _viewDataLoader.Load();
+                View.InitData(_timetableView ??= _viewData.TimetableView.GetLastUpdated());
                 View.SetPreLoadState("Загружаем список учебного процесса...");
-                View.InitControlsData(_loaderService.GetAllSpecialties(), _loaderService.GetNamedTeachers());
+                View.InitControlsData(_viewData.Specialties.GetAll(), 
+                    _viewData.TeacherSubject.GetNamedTeachers());
                 View.IsPreLoading = false;
             }
             catch (Exception e)
@@ -63,14 +67,15 @@ namespace WindowsFormsUI.MVP.Presenters
         private DataGridViewCommand GetTeacherInfoCommand()
         {
             return new TeacherInfoCommand(View.SelectedTeacherAbout is null
-                ? _loaderService.GetNamedTeachers()
+                ? _viewData.TeacherSubject.GetNamedTeachers()
                 : new List<Teacher> { View.SelectedTeacherAbout });
         }
 
         private DataGridViewCommand GetPlanCommand()
         {
             if (View.SelectedSpecialtyForPlan is null) return null;
-            return new TimetablePlanCommand(_loaderService.GetPlanBySpecialty(View.SelectedSpecialtyForPlan));
+            return new TimetablePlanCommand(_viewData.PlansInformation
+                .GetPlanBySpecialty(View.SelectedSpecialtyForPlan.Id));
         }
 
         private DataGridViewCommand GetTimetableCommand()

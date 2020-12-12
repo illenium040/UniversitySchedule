@@ -64,7 +64,7 @@ namespace WindowsFormsUI.MVP.Presenters
                         TimetableView = View.History.Count > 0 ?
                         _solverService
                         .GetNormalizedView(View.History.Peek())
-                        .GetNormalizedViewWithInclude()
+                        .GetAsTimetableViewWithInclude()
                         .ToList() :
                         throw new InvalidOperationException("Расписание не создано. Нечего тут показывать")
                     }));
@@ -79,6 +79,8 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             try
             {
+                if (View.History.Count < 0)
+                    throw new InvalidOperationException("Необходимо создать расписание");
                 await _solverService.SaveToDatabase(View.History.Peek());
                 MessageBox.Show("Сохранено успешно", "Расписание", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -90,16 +92,20 @@ namespace WindowsFormsUI.MVP.Presenters
 
         private void SaveSettings()
         {
-            _timetableSettings = new TimetableSettings
+            if (!View.IsDefaultSettings)
             {
-                DaysWeek = View.DaysWeek,
-                HoursDay = View.HourDay,
-                MaxIterations = View.IterationsCount,
-                PartOfBest = View.PartOfBest,
-                PopulationCount = View.PopulationCount,
-                SemestersPart = View.SemestersPart
-            };
-            View.LogProccessing("Настройки сохранены");
+                _timetableSettings = new TimetableSettings
+                {
+                    DaysWeek = View.DaysWeek,
+                    HoursDay = View.HourDay,
+                    MaxIterations = View.IterationsCount,
+                    PartOfBest = View.PartOfBest,
+                    PopulationCount = View.PopulationCount,
+                    SemestersPart = View.SemestersPart
+                };
+                View.LogProccessing("Настройки сохранены");
+            }
+            else View.LogProccessing("Используются настройки по умолчанию");
         }
 
         public override void Run(User argument)
@@ -122,7 +128,7 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 View.IsTimetableProcessing = true;
                 View.LogProccessing($"Загружаем необходимые данные");
-                _solverService ??= _services.GetService<DefaultSolverService>();
+                _solverService ??= _services.GetService<DefaultSolverService>().Load();
                 _solverService.SetSettings(_timetableSettings);
                 View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());

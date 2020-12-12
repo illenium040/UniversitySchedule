@@ -35,7 +35,7 @@ namespace UniversityTimetableGenerator.TimetableCreation
                     Days = timetableContainer.RawTimetable.DaysWeek,
                     Hours = timetableContainer.RawTimetable.HoursDay,
                     IsVerified = false
-                }, timetableContainer.GetNormalizedView());
+                }, timetableContainer.GetAsTimetableView());
                 DataContainer.SaveChanges();
             });
         }

@@ -23,25 +23,26 @@ namespace UniversityTimetableGenerator.Services
 {
     public class DefaultSolverService : SolverService
     {
-        public DefaultSolverService(IServiceProvider services)
-            : base(services, new TimetableFacadeBuilder(
-                    new TimetableDataBuilder().Build()).Build())
-        {
-            
-        }
+        public DefaultSolverService(IServiceProvider services) : base(services) { }
 
         public override Task<TimetableResult> CreateAsync()
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             return TimetableFacade.Generator.Create();
         }
 
         public override async Task SaveToDatabase(TimetableResult timetableResult)
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             await TimetableFacade.Saver.SaveToDatabase(timetableResult);
         }
 
         public override async Task<TimetableResult> TrainAsync(Timetable timetable, int count = 1)
         {
+            if (TimetableFacade is null)
+                throw new NullReferenceException("Facade isn't loaded");
             for (int i = 0; i < count; i++)
             {
                 var result = await TimetableFacade.Generator.Train(timetable);
@@ -49,6 +50,14 @@ namespace UniversityTimetableGenerator.Services
                 else timetable = result.Timetable;
             }
             return new TimetableResult("Timetable is trained", true, timetable);
+        }
+
+        protected override TimetableFacade CreateFacade()
+        {
+            return new TimetableFacadeBuilder(
+                    new TimetableDataBuilder().Build())
+                .Build()
+                .AddLogger(Logger);
         }
     }
 }
