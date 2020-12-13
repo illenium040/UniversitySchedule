@@ -48,5 +48,56 @@ namespace WindowsFormsUI.AdminMainForm
         public int HourDay { get { return (int)numericHoursDay.Value; } }
         public SemestersParts SemestersPart { get { return (SemestersParts)numericSemesterPart.Value - 1; } }
         public int TrainCount { get { return (int)numericTrainCount.Value; } }
+
+        public void SetTimetableSettings(TimetableSettings settings, bool isDefault)
+        {
+            numericIterationsCount.Invoke(() => numericIterationsCount.Value = settings.MaxIterations);
+            numericPartOfBest.Invoke(() => numericPartOfBest.Value = settings.PartOfBest);
+            numericPopulationCount.Invoke(() => numericPopulationCount.Value = settings.PopulationCount);
+            numericTrainCount.Invoke(() => numericTrainCount.Value = 10);
+            numericDaysWeek.Invoke(() => numericDaysWeek.Value = settings.DaysWeek);
+            numericHoursDay.Invoke(() => numericHoursDay.Value = settings.HoursDay);
+            numericSemesterPart.Invoke(() => numericSemesterPart.Value = (int)settings.SemestersPart + 1);
+            SetReadOnlyTimetableSettingsState(isDefault);
+        }
+
+        public void LogProccessing(string message)
+        {
+            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{message}\r\n"));
+        }
+
+        private void SetSEventsTimetableCreation()
+        {
+            btnCreateTimetable.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(CreateTimetable);
+            btnCancelTimetableCreation.Click += (sender, e)
+                => CancelTimetableProcessing();
+            btnTimetableTrain.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(TrainTimetable);
+
+            btnShowUserForm.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(ShowInUserForm);
+            btnSaveToDatabase.Click += async (sender, e)
+                => await _actionProxy.InvokeAsync(SaveTimetableToDatabase);
+
+            checkBoxDefaultSettings.CheckedChanged += (sender, e)
+                => DefaultTimetableSettingsChecked?.Invoke();
+
+            btnSaveSettings.Click += (sender, e)
+                => _actionProxy.Invoke(SaveTimetableSettings);
+
+            Load += (sender, e) => LoadTimetableData?.Invoke();
+        }
+
+        private void SetReadOnlyTimetableSettingsState(bool state)
+        {
+            numericIterationsCount.Invoke(() => numericIterationsCount.ReadOnly = state);
+            numericPartOfBest.Invoke(() => numericPartOfBest.ReadOnly = state);
+            numericPopulationCount.Invoke(() => numericPopulationCount.ReadOnly = state);
+            numericTrainCount.Invoke(() => numericTrainCount.ReadOnly = state);
+            numericDaysWeek.Invoke(() => numericDaysWeek.ReadOnly = state);
+            numericHoursDay.Invoke(() => numericHoursDay.ReadOnly = state);
+            numericSemesterPart.Invoke(() => numericSemesterPart.ReadOnly = state);
+        }
     }
 }

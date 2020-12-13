@@ -26,5 +26,14 @@
     <Setting Name="SemesterPart" Type="TimetableAlgorithm.SemestersParts" Scope="User">
       <Value Profile="(Default)">First</Value>
     </Setting>
+    <Setting Name="DatabaseSoursePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DatabaseBackupsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DefaultConString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

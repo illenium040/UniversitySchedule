@@ -35,8 +35,7 @@ namespace WindowsFormsUI.MVP.Views
         event Action SaveTimetableSettings;
         event Action LoadTimetableData;
 
-        void SetReadOnlySettingsState(bool state);
-        void SetTimetableSettings(TimetableSettings settings);
+        void SetTimetableSettings(TimetableSettings settings, bool isDefault);
         void LogProccessing(string message);
     }
 }

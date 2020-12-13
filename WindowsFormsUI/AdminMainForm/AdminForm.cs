@@ -38,33 +38,8 @@ namespace WindowsFormsUI.AdminMainForm
             _solverLogger = new TimetableFormLogger(lblSolverLog);
             History = new Stack<TimetableResult>();
 
-            btnCreateTimetable.Click += async (sender, e) 
-                => await _actionProxy.InvokeAsync(CreateTimetable);
-            btnCancelTimetableCreation.Click += (sender, e) 
-                => CancelTimetableProcessing();
-            btnTimetableTrain.Click += async (sender, e)
-                => await _actionProxy.InvokeAsync(TrainTimetable);
-
-            btnShowUserForm.Click += async (sender, e)
-                => await _actionProxy.InvokeAsync(ShowInUserForm);
-            btnSaveToDatabase.Click += async (sender, e)
-                => await _actionProxy.InvokeAsync(SaveTimetableToDatabase);
-
-            checkBoxDefaultSettings.CheckedChanged += (sender, e)
-                => DefaultTimetableSettingsChecked();
-
-            btnSaveSettings.Click += (sender, e)
-                => _actionProxy.Invoke(SaveTimetableSettings);
-
-            Load += (sender, e) => LoadTimetableData();
-
-            btnCreateBackup.Click += BtnCreateBackup_Click;
-
-        }
-
-        private void BtnCreateBackup_Click(object sender, EventArgs e)
-        {
-            File.Copy(@"C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb", "Backup.accdb");
+            SetEventsDatabaseView();
+            SetSEventsTimetableCreation();
         }
 
         public new void Show()
@@ -91,33 +66,6 @@ namespace WindowsFormsUI.AdminMainForm
             if (this.InvokeRequired)
                 this.Invoke(base.Close);
             else base.Close();
-        }
-
-        public void SetReadOnlySettingsState(bool state)
-        {
-            numericIterationsCount.Invoke(() => numericIterationsCount.ReadOnly = state);
-            numericPartOfBest.Invoke(() => numericPartOfBest.ReadOnly = state);
-            numericPopulationCount.Invoke(() => numericPopulationCount.ReadOnly = state);
-            numericTrainCount.Invoke(() => numericTrainCount.ReadOnly = state);
-            numericDaysWeek.Invoke(() => numericDaysWeek.ReadOnly = state);
-            numericHoursDay.Invoke(() => numericHoursDay.ReadOnly = state);
-            numericSemesterPart.Invoke(() => numericSemesterPart.ReadOnly = state);
-        }
-
-        public void SetTimetableSettings(TimetableSettings settings)
-        {
-            numericIterationsCount.Invoke(() => numericIterationsCount.Value = settings.MaxIterations);
-            numericPartOfBest.Invoke(() => numericPartOfBest.Value = settings.PartOfBest);
-            numericPopulationCount.Invoke(() => numericPopulationCount.Value = settings.PopulationCount);
-            numericTrainCount.Invoke(() => numericTrainCount.Value = 10);
-            numericDaysWeek.Invoke(() => numericDaysWeek.Value = settings.DaysWeek);
-            numericHoursDay.Invoke(() => numericHoursDay.Value = settings.HoursDay);
-            numericSemesterPart.Invoke(() => numericSemesterPart.Value = (int)settings.SemestersPart + 1);
-        }
-
-        public void LogProccessing(string message)
-        {
-            rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{message}\r\n"));
         }
     }
 }

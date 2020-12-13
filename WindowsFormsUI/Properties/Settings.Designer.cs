@@ -120,5 +120,42 @@ namespace WindowsFormsUI.Properties {
                 this["SemesterPart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DatabaseSoursePath {
+            get {
+                return ((string)(this["DatabaseSoursePath"]));
+            }
+            set {
+                this["DatabaseSoursePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DatabaseBackupsPath {
+            get {
+                return ((string)(this["DatabaseBackupsPath"]));
+            }
+            set {
+                this["DatabaseBackupsPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\ScheduleP" +
+            "roject\\UniversitySchedule.accdb;")]
+        public string DefaultConString {
+            get {
+                return ((string)(this["DefaultConString"]));
+            }
+            set {
+                this["DefaultConString"] = value;
+            }
+        }
     }
 }

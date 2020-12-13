@@ -32,7 +32,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.databaseTab = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tbxDatabaseSourceBackup = new System.Windows.Forms.TextBox();
+            this.btnSaveDatabaseFolderDialog = new System.Windows.Forms.Button();
+            this.btnDatabaseFileDialog = new System.Windows.Forms.Button();
+            this.tbxBackupFileName = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbxDatabasePathSaveBackup = new System.Windows.Forms.TextBox();
             this.tbxDatabasePathBackup = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -77,10 +81,6 @@
             this.subjectsTeachersTab = new System.Windows.Forms.TabPage();
             this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
             this.planTab = new System.Windows.Forms.TabPage();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbxBackupFileName = new System.Windows.Forms.TextBox();
-            this.btnDatabaseFileDialog = new System.Windows.Forms.Button();
-            this.btnSaveDatabaseFolderDialog = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.databaseTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -133,7 +133,7 @@
             this.groupBox3.Controls.Add(this.btnDatabaseFileDialog);
             this.groupBox3.Controls.Add(this.tbxBackupFileName);
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.tbxDatabaseSourceBackup);
+            this.groupBox3.Controls.Add(this.tbxDatabasePathSaveBackup);
             this.groupBox3.Controls.Add(this.tbxDatabasePathBackup);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label11);
@@ -145,12 +145,46 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Бэкап";
             // 
-            // tbxDatabaseSourceBackup
+            // btnSaveDatabaseFolderDialog
             // 
-            this.tbxDatabaseSourceBackup.Location = new System.Drawing.Point(7, 87);
-            this.tbxDatabaseSourceBackup.Name = "tbxDatabaseSourceBackup";
-            this.tbxDatabaseSourceBackup.Size = new System.Drawing.Size(196, 23);
-            this.tbxDatabaseSourceBackup.TabIndex = 4;
+            this.btnSaveDatabaseFolderDialog.Location = new System.Drawing.Point(203, 87);
+            this.btnSaveDatabaseFolderDialog.Name = "btnSaveDatabaseFolderDialog";
+            this.btnSaveDatabaseFolderDialog.Size = new System.Drawing.Size(30, 23);
+            this.btnSaveDatabaseFolderDialog.TabIndex = 8;
+            this.btnSaveDatabaseFolderDialog.Text = "...";
+            this.btnSaveDatabaseFolderDialog.UseVisualStyleBackColor = true;
+            // 
+            // btnDatabaseFileDialog
+            // 
+            this.btnDatabaseFileDialog.Location = new System.Drawing.Point(203, 42);
+            this.btnDatabaseFileDialog.Name = "btnDatabaseFileDialog";
+            this.btnDatabaseFileDialog.Size = new System.Drawing.Size(30, 23);
+            this.btnDatabaseFileDialog.TabIndex = 7;
+            this.btnDatabaseFileDialog.Text = "...";
+            this.btnDatabaseFileDialog.UseVisualStyleBackColor = true;
+            // 
+            // tbxBackupFileName
+            // 
+            this.tbxBackupFileName.Location = new System.Drawing.Point(7, 135);
+            this.tbxBackupFileName.Name = "tbxBackupFileName";
+            this.tbxBackupFileName.Size = new System.Drawing.Size(226, 23);
+            this.tbxBackupFileName.TabIndex = 6;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 117);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(154, 15);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Имя сохраняемого файла:";
+            // 
+            // tbxDatabasePathSaveBackup
+            // 
+            this.tbxDatabasePathSaveBackup.Location = new System.Drawing.Point(7, 87);
+            this.tbxDatabasePathSaveBackup.Name = "tbxDatabasePathSaveBackup";
+            this.tbxDatabasePathSaveBackup.Size = new System.Drawing.Size(196, 23);
+            this.tbxDatabasePathSaveBackup.TabIndex = 4;
             // 
             // tbxDatabasePathBackup
             // 
@@ -213,8 +247,6 @@
             // chbxDefaultConStringSettings
             // 
             this.chbxDefaultConStringSettings.AutoSize = true;
-            this.chbxDefaultConStringSettings.Checked = true;
-            this.chbxDefaultConStringSettings.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbxDefaultConStringSettings.Location = new System.Drawing.Point(7, 117);
             this.chbxDefaultConStringSettings.Name = "chbxDefaultConStringSettings";
             this.chbxDefaultConStringSettings.Size = new System.Drawing.Size(250, 19);
@@ -704,40 +736,6 @@
             this.planTab.TabIndex = 3;
             this.planTab.Text = "Учебный план";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 117);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(154, 15);
-            this.label13.TabIndex = 5;
-            this.label13.Text = "Имя сохраняемого файла:";
-            // 
-            // tbxBackupFileName
-            // 
-            this.tbxBackupFileName.Location = new System.Drawing.Point(7, 135);
-            this.tbxBackupFileName.Name = "tbxBackupFileName";
-            this.tbxBackupFileName.Size = new System.Drawing.Size(226, 23);
-            this.tbxBackupFileName.TabIndex = 6;
-            // 
-            // btnDatabaseFileDialog
-            // 
-            this.btnDatabaseFileDialog.Location = new System.Drawing.Point(203, 42);
-            this.btnDatabaseFileDialog.Name = "btnDatabaseFileDialog";
-            this.btnDatabaseFileDialog.Size = new System.Drawing.Size(30, 23);
-            this.btnDatabaseFileDialog.TabIndex = 7;
-            this.btnDatabaseFileDialog.Text = "...";
-            this.btnDatabaseFileDialog.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveDatabaseFolderDialog
-            // 
-            this.btnSaveDatabaseFolderDialog.Location = new System.Drawing.Point(203, 87);
-            this.btnSaveDatabaseFolderDialog.Name = "btnSaveDatabaseFolderDialog";
-            this.btnSaveDatabaseFolderDialog.Size = new System.Drawing.Size(30, 23);
-            this.btnSaveDatabaseFolderDialog.TabIndex = 8;
-            this.btnSaveDatabaseFolderDialog.Text = "...";
-            this.btnSaveDatabaseFolderDialog.UseVisualStyleBackColor = true;
-            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -819,7 +817,7 @@
         private System.Windows.Forms.TextBox tbxUserConString;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnCreateBackup;
-        private System.Windows.Forms.TextBox tbxDatabaseSourceBackup;
+        private System.Windows.Forms.TextBox tbxDatabasePathSaveBackup;
         private System.Windows.Forms.TextBox tbxDatabasePathBackup;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;

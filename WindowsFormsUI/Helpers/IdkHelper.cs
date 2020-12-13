@@ -34,5 +34,24 @@ namespace WindowsFormsUI
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
         }
+
+
+        public static string GetFileDialogResult(string fileExtension)
+        {
+            var fileDialog = new OpenFileDialog();
+            fileDialog.DefaultExt = fileExtension;
+            fileDialog.Filter = $"Access database Files (*.{fileExtension})|*.{fileExtension}";
+            var result = fileDialog.ShowDialog();
+            if (result == DialogResult.OK) return fileDialog.FileName;
+            return "";
+        }
+
+        public static string GetFolderDialogResult()
+        {
+            var fileDialog = new FolderBrowserDialog();
+            var result = fileDialog.ShowDialog();
+            if (result == DialogResult.OK) return fileDialog.SelectedPath;
+            return "";
+        }
     }
 }

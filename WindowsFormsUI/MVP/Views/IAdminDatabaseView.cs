@@ -11,12 +11,17 @@ namespace WindowsFormsUI.MVP.Views
         string UserDatabaseConnectionString { get; }
         public bool IsDefaultConnectionStrings { get; }
 
-        event Action GetSavePathFromDialog;
-        event Action GetDatabasePathFromDialog;
+        event Action SetSavePathFromDialog;
+        event Action SetDatabasePathFromDialog;
         event Action CreateBackup;
-        string DatabasePath { get; }
-        string DatabaseSavePath { get; }
-        string SavedFileName { get; }
+        event Action LoadDatabaseSettings;
+        event Action UseDefaultConStringsChecked;
+        string DatabasePath { get; set; }
+        string DatabaseSavePath { get; set; }
+        string DatabaseSavedFileName { get; }
+
+        public void SetDatabaseSettings(DatabaseSettings settings, bool isDefault);
+
 
     }
 }

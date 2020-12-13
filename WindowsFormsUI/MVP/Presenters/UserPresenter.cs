@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using DataAccess;
+using DataAccess.Entities;
 using DataAccess.RepositoryUsage;
 
 using System;
@@ -51,6 +52,7 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 View.IsPreLoading = true;
                 View.SetPreLoadState("Загружаем необходимые данные...");
+                DataAccessSettings.ConnectionString = Properties.Settings.Default.DatabaseUserConString;
                 _viewData ??= _viewDataLoader.Load();
                 View.InitData(_timetableView ??= _viewData.TimetableView.GetLastUpdated());
                 View.SetPreLoadState("Загружаем список учебного процесса...");

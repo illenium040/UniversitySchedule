@@ -37,22 +37,14 @@ namespace WindowsFormsUI.MVP.Presenters
             View.ShowInUserForm += () => ShowInUserForm();
             View.DefaultTimetableSettingsChecked += () => SetDefaultSettings();
             View.CancelTimetableProcessing += () => _solverService?.Cancel();
-            View.LoadTimetableData += () => View.SetTimetableSettings(TimetableDefaultSettings.Settings);
+            View.LoadTimetableData += () => View.SetTimetableSettings(TimetableDefaultSettings.Settings, true);
         }
 
         private void SetDefaultSettings()
         {
             if (View.IsDefaultTimetableSettings)
-            {
-                View.SetTimetableSettings(_timetableSettings = TimetableDefaultSettings.Settings);
-                View.SetReadOnlySettingsState(true);
-            }
-            else
-            {
-                View.SetTimetableSettings(_timetableSettings = GetSavedSettings());
-                View.SetReadOnlySettingsState(false);
-            }
-            
+                View.SetTimetableSettings(_timetableSettings = TimetableDefaultSettings.Settings, true);
+            else View.SetTimetableSettings(_timetableSettings = GetSavedSettings(), false);
         }
 
         private void ShowInUserForm()
