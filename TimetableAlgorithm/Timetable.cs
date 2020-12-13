@@ -9,6 +9,7 @@ namespace TimetableAlgorithm
     public class Timetable
     {
         //private Random rnd = new Random();
+        public Exception Exception { get; set; }
         public byte DaysWeek { get; private set; }
         public byte HoursDay { get; private set; }
         public TimetablePlansContainer PlanList { get; private set; }

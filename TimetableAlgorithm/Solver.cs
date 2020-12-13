@@ -75,39 +75,51 @@ namespace TimetableAlgorithm
         private int _prevFitness = 0;
         private async Task<Timetable> Solve(Population pop, CancellationTokenSource cancellationToken)
         {
-            return await Task.Run(() => {
-                int count = _settings.MaxIterations;
-                int _partOfBest = _settings.PartOfBest;
-                while (count-- > 0)
+            try
+            {
+                return await Task.Run(() =>
                 {
-                    if (cancellationToken.IsCancellationRequested) 
-                        throw new OperationCanceledException("Timetable creation canceled");
+                    int count = _settings.MaxIterations;
+                    int _partOfBest = _settings.PartOfBest;
+                    while (count-- > 0)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                            throw new OperationCanceledException("Timetable creation canceled");
+
+                        pop.ForEach(p => p.FitnessValue = Fitness(p));
+
+                        pop.Sort((p1, p2) => p1.FitnessValue.CompareTo(p2.FitnessValue));
+                        if (pop[0].FitnessValue == 0) return pop[0];
+
+                        if (_prevFitness != pop[0].FitnessValue)
+                            _logger?.Log($"Current fitness value: {_prevFitness = pop[0].FitnessValue}");
+
+                        for (int i = pop.Count / _partOfBest; i < pop.Count; i++)
+                            for (int j = 0; j < pop[i].PlanList.Length; j++)
+                            {
+                                for (int d = 0; d < _settings.DaysWeek; d++)
+                                    for (int h = 0; h < _settings.HoursDay; h++)
+                                        pop[i].PlanList[j][d, h].RemoveLesson();
+                            }
+
+                        for (int i = pop.Count / _partOfBest, j = 0; i < pop.Count; j++)
+                            for (int k = 0; k < _partOfBest - 1; k++, i++)
+                                pop.AddChildOfParentMem(j, i);
+                    }
+
                     pop.ForEach(p => p.FitnessValue = Fitness(p));
-
                     pop.Sort((p1, p2) => p1.FitnessValue.CompareTo(p2.FitnessValue));
-                    if (pop[0].FitnessValue == 0) return pop[0];
-
-                    if (_prevFitness != pop[0].FitnessValue)
-                        _logger?.Log($"Current fitness value: {_prevFitness = pop[0].FitnessValue}");
-
-                    for (int i = pop.Count / _partOfBest; i < pop.Count; i++)
-                        for (int j = 0; j < pop[i].PlanList.Length; j++)
-                        {
-                            for (int d = 0; d < _settings.DaysWeek; d++)
-                                for (int h = 0; h < _settings.HoursDay; h++)
-                                    pop[i].PlanList[j][d, h].RemoveLesson();
-                        }
-                            
-                    for (int i = pop.Count / _partOfBest, j = 0; i < pop.Count; j++)
-                        for (int k = 0; k < _partOfBest - 1; k++, i++)
-                            pop.AddChildOfParentMem(j, i);
-                }
-
+                    _logger?.Log($"Current fitness value: {_prevFitness = pop[0].FitnessValue}");
+                    return pop[0];
+                });
+            }
+            catch (OperationCanceledException e)
+            {
                 pop.ForEach(p => p.FitnessValue = Fitness(p));
                 pop.Sort((p1, p2) => p1.FitnessValue.CompareTo(p2.FitnessValue));
-                _logger?.Log($"Current fitness value: {_prevFitness = pop[0].FitnessValue}");
+                pop[0].Exception = e;
                 return pop[0];
-            });
+            }
         }
     }
 }

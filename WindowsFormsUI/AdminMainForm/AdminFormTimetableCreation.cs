@@ -14,22 +14,23 @@ using TimetableAlgorithm;
 using UniversityTimetableGenerator.Actions.ActionsResult;
 using UniversityTimetableGenerator.Services;
 
+using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.AdminMainForm
 {
-    partial class AdminForm
+    partial class AdminForm : IAdminCreateTimetableView
     {
-        public event Action DefaultSettingsChecked;
+        public event Action DefaultTimetableSettingsChecked;
         public event Action SaveTimetableToDatabase;
         public event Action ShowInUserForm;
         public event Action CreateTimetable;
         public event Action TrainTimetable;
         public event Action CancelTimetableProcessing;
-        public event Action SaveSettings;
-        public event Action FormLoaded;
+        public event Action SaveTimetableSettings;
+        public event Action LoadTimetableData;
 
-        public bool IsDefaultSettings { get { return checkBoxDefaultSettings.Checked; } }
+        public bool IsDefaultTimetableSettings { get { return checkBoxDefaultSettings.Checked; } }
         public Stack<TimetableResult> History { get; private set; }
 
         public TimetableFormLogger SolverLogger { get { return _solverLogger; } }
@@ -45,9 +46,7 @@ namespace WindowsFormsUI.AdminMainForm
         public int PopulationCount { get { return (int)numericPopulationCount.Value; } }
         public int DaysWeek { get { return (int)numericDaysWeek.Value; } }
         public int HourDay { get { return (int)numericHoursDay.Value; } }
-        public SemestersParts SemestersPart { get { return (SemestersParts)numericSemesterPart.Value; } }
+        public SemestersParts SemestersPart { get { return (SemestersParts)numericSemesterPart.Value - 1; } }
         public int TrainCount { get { return (int)numericTrainCount.Value; } }
-
-
     }
 }

@@ -31,6 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.databaseTab = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tbxDatabaseSourceBackup = new System.Windows.Forms.TextBox();
+            this.tbxDatabasePathBackup = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnCreateBackup = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSaveConStrings = new System.Windows.Forms.Button();
+            this.chbxDefaultConStringSettings = new System.Windows.Forms.CheckBox();
+            this.tbxUserConString = new System.Windows.Forms.TextBox();
+            this.tbxAdminConString = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.timetableCreationTab = new System.Windows.Forms.TabPage();
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -64,7 +77,14 @@
             this.subjectsTeachersTab = new System.Windows.Forms.TabPage();
             this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
             this.planTab = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbxBackupFileName = new System.Windows.Forms.TextBox();
+            this.btnDatabaseFileDialog = new System.Windows.Forms.Button();
+            this.btnSaveDatabaseFolderDialog = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.databaseTab.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.timetableCreationTab.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panelTimetableCreationLog.SuspendLayout();
@@ -93,17 +113,148 @@
             this.tabControl1.Location = new System.Drawing.Point(10, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(764, 444);
+            this.tabControl1.Size = new System.Drawing.Size(716, 446);
             this.tabControl1.TabIndex = 0;
             // 
             // databaseTab
             // 
+            this.databaseTab.Controls.Add(this.groupBox3);
+            this.databaseTab.Controls.Add(this.groupBox1);
             this.databaseTab.Location = new System.Drawing.Point(4, 24);
             this.databaseTab.Name = "databaseTab";
-            this.databaseTab.Size = new System.Drawing.Size(756, 416);
+            this.databaseTab.Size = new System.Drawing.Size(708, 418);
             this.databaseTab.TabIndex = 4;
             this.databaseTab.Text = "База данных";
             this.databaseTab.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnSaveDatabaseFolderDialog);
+            this.groupBox3.Controls.Add(this.btnDatabaseFileDialog);
+            this.groupBox3.Controls.Add(this.tbxBackupFileName);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.tbxDatabaseSourceBackup);
+            this.groupBox3.Controls.Add(this.tbxDatabasePathBackup);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.btnCreateBackup);
+            this.groupBox3.Location = new System.Drawing.Point(466, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(239, 200);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Бэкап";
+            // 
+            // tbxDatabaseSourceBackup
+            // 
+            this.tbxDatabaseSourceBackup.Location = new System.Drawing.Point(7, 87);
+            this.tbxDatabaseSourceBackup.Name = "tbxDatabaseSourceBackup";
+            this.tbxDatabaseSourceBackup.Size = new System.Drawing.Size(196, 23);
+            this.tbxDatabaseSourceBackup.TabIndex = 4;
+            // 
+            // tbxDatabasePathBackup
+            // 
+            this.tbxDatabasePathBackup.Location = new System.Drawing.Point(7, 42);
+            this.tbxDatabasePathBackup.Name = "tbxDatabasePathBackup";
+            this.tbxDatabasePathBackup.Size = new System.Drawing.Size(196, 23);
+            this.tbxDatabasePathBackup.TabIndex = 3;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(116, 15);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Путь к базе данных:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 68);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(178, 15);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Путь сохранения базы данных:";
+            // 
+            // btnCreateBackup
+            // 
+            this.btnCreateBackup.Location = new System.Drawing.Point(133, 164);
+            this.btnCreateBackup.Name = "btnCreateBackup";
+            this.btnCreateBackup.Size = new System.Drawing.Size(100, 30);
+            this.btnCreateBackup.TabIndex = 0;
+            this.btnCreateBackup.Text = "Создать";
+            this.btnCreateBackup.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnSaveConStrings);
+            this.groupBox1.Controls.Add(this.chbxDefaultConStringSettings);
+            this.groupBox1.Controls.Add(this.tbxUserConString);
+            this.groupBox1.Controls.Add(this.tbxAdminConString);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(457, 150);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Строки подключения";
+            // 
+            // btnSaveConStrings
+            // 
+            this.btnSaveConStrings.Location = new System.Drawing.Point(351, 114);
+            this.btnSaveConStrings.Name = "btnSaveConStrings";
+            this.btnSaveConStrings.Size = new System.Drawing.Size(100, 30);
+            this.btnSaveConStrings.TabIndex = 5;
+            this.btnSaveConStrings.Text = "Сохранить";
+            this.btnSaveConStrings.UseVisualStyleBackColor = true;
+            // 
+            // chbxDefaultConStringSettings
+            // 
+            this.chbxDefaultConStringSettings.AutoSize = true;
+            this.chbxDefaultConStringSettings.Checked = true;
+            this.chbxDefaultConStringSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbxDefaultConStringSettings.Location = new System.Drawing.Point(7, 117);
+            this.chbxDefaultConStringSettings.Name = "chbxDefaultConStringSettings";
+            this.chbxDefaultConStringSettings.Size = new System.Drawing.Size(250, 19);
+            this.chbxDefaultConStringSettings.TabIndex = 4;
+            this.chbxDefaultConStringSettings.Text = "Использовать настройки по умолчанию";
+            this.chbxDefaultConStringSettings.UseVisualStyleBackColor = true;
+            // 
+            // tbxUserConString
+            // 
+            this.tbxUserConString.Location = new System.Drawing.Point(7, 87);
+            this.tbxUserConString.Name = "tbxUserConString";
+            this.tbxUserConString.ReadOnly = true;
+            this.tbxUserConString.Size = new System.Drawing.Size(444, 23);
+            this.tbxUserConString.TabIndex = 3;
+            // 
+            // tbxAdminConString
+            // 
+            this.tbxAdminConString.Location = new System.Drawing.Point(7, 42);
+            this.tbxAdminConString.Name = "tbxAdminConString";
+            this.tbxAdminConString.ReadOnly = true;
+            this.tbxAdminConString.Size = new System.Drawing.Size(444, 23);
+            this.tbxAdminConString.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 68);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(308, 15);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Строка подключения к базе данных для пользователя:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 23);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(324, 15);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Строка подключения к базе данных для администратора:";
             // 
             // timetableCreationTab
             // 
@@ -115,7 +266,7 @@
             this.timetableCreationTab.Location = new System.Drawing.Point(4, 24);
             this.timetableCreationTab.Name = "timetableCreationTab";
             this.timetableCreationTab.Padding = new System.Windows.Forms.Padding(3);
-            this.timetableCreationTab.Size = new System.Drawing.Size(756, 416);
+            this.timetableCreationTab.Size = new System.Drawing.Size(708, 418);
             this.timetableCreationTab.TabIndex = 0;
             this.timetableCreationTab.Text = "Создание расписания";
             this.timetableCreationTab.UseVisualStyleBackColor = true;
@@ -142,7 +293,7 @@
             this.groupBox2.Controls.Add(this.btnCreateTimetable);
             this.groupBox2.Location = new System.Drawing.Point(264, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(489, 406);
+            this.groupBox2.Size = new System.Drawing.Size(441, 410);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Создание расписания";
@@ -150,7 +301,7 @@
             // btnSaveToDatabase
             // 
             this.btnSaveToDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveToDatabase.Location = new System.Drawing.Point(139, 359);
+            this.btnSaveToDatabase.Location = new System.Drawing.Point(139, 363);
             this.btnSaveToDatabase.Name = "btnSaveToDatabase";
             this.btnSaveToDatabase.Size = new System.Drawing.Size(120, 40);
             this.btnSaveToDatabase.TabIndex = 9;
@@ -177,7 +328,7 @@
             this.panelTimetableCreationLog.Location = new System.Drawing.Point(6, 62);
             this.panelTimetableCreationLog.Name = "panelTimetableCreationLog";
             this.panelTimetableCreationLog.Padding = new System.Windows.Forms.Padding(3);
-            this.panelTimetableCreationLog.Size = new System.Drawing.Size(477, 292);
+            this.panelTimetableCreationLog.Size = new System.Drawing.Size(429, 296);
             this.panelTimetableCreationLog.TabIndex = 7;
             // 
             // pictureBoxTimetableCreation
@@ -185,7 +336,7 @@
             this.pictureBoxTimetableCreation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxTimetableCreation.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTimetableCreation.Image")));
             this.pictureBoxTimetableCreation.InitialImage = null;
-            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(436, 6);
+            this.pictureBoxTimetableCreation.Location = new System.Drawing.Point(388, 6);
             this.pictureBoxTimetableCreation.Name = "pictureBoxTimetableCreation";
             this.pictureBoxTimetableCreation.Size = new System.Drawing.Size(32, 32);
             this.pictureBoxTimetableCreation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -197,9 +348,9 @@
             // 
             this.lblSolverLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSolverLog.Location = new System.Drawing.Point(7, 253);
+            this.lblSolverLog.Location = new System.Drawing.Point(7, 257);
             this.lblSolverLog.Name = "lblSolverLog";
-            this.lblSolverLog.Size = new System.Drawing.Size(461, 31);
+            this.lblSolverLog.Size = new System.Drawing.Size(413, 31);
             this.lblSolverLog.TabIndex = 9;
             // 
             // rbxTimetableResultLog
@@ -209,7 +360,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rbxTimetableResultLog.Location = new System.Drawing.Point(7, 6);
             this.rbxTimetableResultLog.Name = "rbxTimetableResultLog";
-            this.rbxTimetableResultLog.Size = new System.Drawing.Size(427, 244);
+            this.rbxTimetableResultLog.Size = new System.Drawing.Size(379, 248);
             this.rbxTimetableResultLog.TabIndex = 8;
             this.rbxTimetableResultLog.Text = "";
             // 
@@ -225,7 +376,7 @@
             // btnShowUserForm
             // 
             this.btnShowUserForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowUserForm.Location = new System.Drawing.Point(13, 359);
+            this.btnShowUserForm.Location = new System.Drawing.Point(13, 363);
             this.btnShowUserForm.Name = "btnShowUserForm";
             this.btnShowUserForm.Size = new System.Drawing.Size(120, 40);
             this.btnShowUserForm.TabIndex = 4;
@@ -530,7 +681,7 @@
             this.subjectsTeachersTab.Location = new System.Drawing.Point(4, 24);
             this.subjectsTeachersTab.Name = "subjectsTeachersTab";
             this.subjectsTeachersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.subjectsTeachersTab.Size = new System.Drawing.Size(756, 416);
+            this.subjectsTeachersTab.Size = new System.Drawing.Size(708, 418);
             this.subjectsTeachersTab.TabIndex = 1;
             this.subjectsTeachersTab.Text = "Предметы и преподаватели";
             this.subjectsTeachersTab.UseVisualStyleBackColor = true;
@@ -540,7 +691,7 @@
             this.groupsSpecialtiesTab.BackColor = System.Drawing.Color.White;
             this.groupsSpecialtiesTab.Location = new System.Drawing.Point(4, 24);
             this.groupsSpecialtiesTab.Name = "groupsSpecialtiesTab";
-            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(756, 416);
+            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(708, 418);
             this.groupsSpecialtiesTab.TabIndex = 2;
             this.groupsSpecialtiesTab.Text = "Специальности и группы";
             // 
@@ -549,21 +700,60 @@
             this.planTab.BackColor = System.Drawing.Color.White;
             this.planTab.Location = new System.Drawing.Point(4, 24);
             this.planTab.Name = "planTab";
-            this.planTab.Size = new System.Drawing.Size(756, 416);
+            this.planTab.Size = new System.Drawing.Size(708, 418);
             this.planTab.TabIndex = 3;
             this.planTab.Text = "Учебный план";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 117);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(154, 15);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Имя сохраняемого файла:";
+            // 
+            // tbxBackupFileName
+            // 
+            this.tbxBackupFileName.Location = new System.Drawing.Point(7, 135);
+            this.tbxBackupFileName.Name = "tbxBackupFileName";
+            this.tbxBackupFileName.Size = new System.Drawing.Size(226, 23);
+            this.tbxBackupFileName.TabIndex = 6;
+            // 
+            // btnDatabaseFileDialog
+            // 
+            this.btnDatabaseFileDialog.Location = new System.Drawing.Point(203, 42);
+            this.btnDatabaseFileDialog.Name = "btnDatabaseFileDialog";
+            this.btnDatabaseFileDialog.Size = new System.Drawing.Size(30, 23);
+            this.btnDatabaseFileDialog.TabIndex = 7;
+            this.btnDatabaseFileDialog.Text = "...";
+            this.btnDatabaseFileDialog.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveDatabaseFolderDialog
+            // 
+            this.btnSaveDatabaseFolderDialog.Location = new System.Drawing.Point(203, 87);
+            this.btnSaveDatabaseFolderDialog.Name = "btnSaveDatabaseFolderDialog";
+            this.btnSaveDatabaseFolderDialog.Size = new System.Drawing.Size(30, 23);
+            this.btnSaveDatabaseFolderDialog.TabIndex = 8;
+            this.btnSaveDatabaseFolderDialog.Text = "...";
+            this.btnSaveDatabaseFolderDialog.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 469);
+            this.ClientSize = new System.Drawing.Size(734, 471);
             this.Controls.Add(this.tabControl1);
             this.DoubleBuffered = true;
-            this.MinimumSize = new System.Drawing.Size(750, 470);
+            this.MinimumSize = new System.Drawing.Size(750, 510);
             this.Name = "AdminForm";
             this.Text = "AdminForm";
             this.tabControl1.ResumeLayout(false);
+            this.databaseTab.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.timetableCreationTab.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.panelTimetableCreationLog.ResumeLayout(false);
@@ -621,5 +811,22 @@
         private System.Windows.Forms.TabPage databaseTab;
         private System.Windows.Forms.PictureBox pictureBoxTimetableCreation;
         private System.Windows.Forms.Button btnSaveSettings;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox tbxAdminConString;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chbxDefaultConStringSettings;
+        private System.Windows.Forms.TextBox tbxUserConString;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnCreateBackup;
+        private System.Windows.Forms.TextBox tbxDatabaseSourceBackup;
+        private System.Windows.Forms.TextBox tbxDatabasePathBackup;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnSaveConStrings;
+        private System.Windows.Forms.Button btnSaveDatabaseFolderDialog;
+        private System.Windows.Forms.Button btnDatabaseFileDialog;
+        private System.Windows.Forms.TextBox tbxBackupFileName;
+        private System.Windows.Forms.Label label13;
     }
 }

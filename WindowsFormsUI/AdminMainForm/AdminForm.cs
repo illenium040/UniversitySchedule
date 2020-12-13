@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -50,12 +51,20 @@ namespace WindowsFormsUI.AdminMainForm
                 => await _actionProxy.InvokeAsync(SaveTimetableToDatabase);
 
             checkBoxDefaultSettings.CheckedChanged += (sender, e)
-                => DefaultSettingsChecked();
+                => DefaultTimetableSettingsChecked();
 
             btnSaveSettings.Click += (sender, e)
-                => _actionProxy.Invoke(SaveSettings);
+                => _actionProxy.Invoke(SaveTimetableSettings);
 
-            Load += (sender, e) => FormLoaded();
+            Load += (sender, e) => LoadTimetableData();
+
+            btnCreateBackup.Click += BtnCreateBackup_Click;
+
+        }
+
+        private void BtnCreateBackup_Click(object sender, EventArgs e)
+        {
+            File.Copy(@"C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb", "Backup.accdb");
         }
 
         public new void Show()

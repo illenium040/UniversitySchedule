@@ -32,8 +32,8 @@ namespace WindowsFormsUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DataAccessSettings.ConnectionString
-               = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;";
+            DataAccessSettings.ConnectionString = Properties.Settings.Default.DatabaseAdminConString;
+            
 
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
