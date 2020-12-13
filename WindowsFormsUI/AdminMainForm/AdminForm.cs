@@ -1,26 +1,8 @@
-﻿using DataAccess.Entities;
-using DataAccess.Loggers;
-
-using Microsoft.Extensions.DependencyInjection;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-
-using TimetableAlgorithm;
-
 using UniversityTimetableGenerator.Actions.ActionsResult;
-using UniversityTimetableGenerator.Services;
-
-using WindowsFormsUI.MVP;
 using WindowsFormsUI.MVP.Views;
-using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.AdminMainForm
 {

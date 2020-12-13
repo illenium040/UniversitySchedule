@@ -26,7 +26,7 @@ namespace WindowsFormsUI.MVP.Presenters
         private IServiceProvider _services;
         private SolverService _solverService;
 
-        private TimetableSettings _timetableSettings;
+        private TimetableSettings _timetableSettingsAfterCreate;
         public AdminCreateTimetablePresenter(IApplicationController controller, IAdminCreateTimetableView view) : base(controller, view)
         {
             _services = RegisterServices();
@@ -43,8 +43,8 @@ namespace WindowsFormsUI.MVP.Presenters
         private void SetDefaultSettings()
         {
             if (View.IsDefaultTimetableSettings)
-                View.SetTimetableSettings(_timetableSettings = TimetableDefaultSettings.Settings, true);
-            else View.SetTimetableSettings(_timetableSettings = GetSavedSettings(), false);
+                View.SetTimetableSettings(TimetableDefaultSettings.Settings, true);
+            else View.SetTimetableSettings(GetSavedSettings(), false);
         }
 
         private void ShowInUserForm()
@@ -110,7 +110,6 @@ namespace WindowsFormsUI.MVP.Presenters
                 Properties.Settings.Default.PopulationCount = View.PopulationCount;
                 Properties.Settings.Default.SemesterPart = View.SemestersPart;
                 Properties.Settings.Default.Save();
-                _timetableSettings = GetSavedSettings();
                 View.LogProccessing("Настройки сохранены");
             }
             else View.LogProccessing("Используются настройки по умолчанию");
@@ -134,9 +133,12 @@ namespace WindowsFormsUI.MVP.Presenters
             try
             {
                 View.IsTimetableProcessing = true;
+                if (View.IsDefaultTimetableSettings)
+                    _timetableSettingsAfterCreate = TimetableDefaultSettings.Settings;
+                else _timetableSettingsAfterCreate = GetSavedSettings();
                 View.LogProccessing($"Загружаем необходимые данные");
                 _solverService ??= _services.GetService<DefaultSolverService>().Load();
-                _solverService.SetSettings(_timetableSettings);
+                _solverService.SetSettings(_timetableSettingsAfterCreate);
                 View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());
                 if (View.History.Peek().Timetable.Exception != null)
@@ -168,7 +170,7 @@ namespace WindowsFormsUI.MVP.Presenters
             try
             {
                 View.IsTimetableProcessing = true;
-                _solverService.SetSettings(_timetableSettings);
+                _solverService.SetSettings(_timetableSettingsAfterCreate);
                 var trainCount = View.TrainCount;
                 for (int i = 0; i < trainCount; i++)
                 {
