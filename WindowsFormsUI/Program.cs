@@ -34,7 +34,6 @@ namespace WindowsFormsUI
 
             DataAccessSettings.ConnectionString = Properties.Settings.Default.DatabaseAdminConString;
             
-
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
                 .RegisterView<IUserView, UserForm>()

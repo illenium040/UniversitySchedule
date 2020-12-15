@@ -10,7 +10,7 @@ using WindowsFormsUI.AdminMainForm;
 
 namespace WindowsFormsUI.MVP.Views
 {
-    public interface IAdminCreateTimetableView : IPartialView
+    public interface ITimetableCreationView : IPartialView
     {
         TimetableFormLogger SolverLogger { get; }
         bool IsTimetableProcessing { get; set; }

@@ -94,20 +94,14 @@ namespace WindowsFormsUI
             return this;
         }
 
-        //TODO: use max height and max width to resize cells
         public GridVisualizer Resize()
         {
             _gridView.Invoke(() =>
             {
-                var maxWidth = _gridView.Columns.AsEnumerable()
-                    .Max(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true));
-                var minWidth = _gridView.Columns.AsEnumerable()
-                    .Min(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true));
                 foreach (var col in _gridView.Columns.AsEnumerable())
-                    col.Width = (maxWidth + minWidth) / (maxWidth / minWidth);
+                    col.Width = col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
                 foreach (var row in _gridView.Rows.AsEnumerable())
                     row.Height = row.GetPreferredHeight(row.Index, DataGridViewAutoSizeRowMode.AllCells, true);
-                
             });
             return this;
         }

@@ -18,8 +18,8 @@ namespace WindowsFormsUI.MVP.Presenters
         public AdminDatabasePresenter(IApplicationController controller,
             IAdminDatabaseView view) : base(controller, view)
         {
-            View.SetDatabasePathFromDialog += () => View.DatabasePath = IdkHelper.GetFileDialogResult("accdb");
-            View.SetSavePathFromDialog += () => View.DatabaseSavePath = IdkHelper.GetFolderDialogResult();
+            View.SetDatabasePathFromDialog += () => View.DatabasePath = WinFormStaticHelper.GetFileDialogResult("accdb");
+            View.SetSavePathFromDialog += () => View.DatabaseSavePath = WinFormStaticHelper.GetFolderDialogResult();
             View.CreateBackup += () => CreateBackup();
             View.SaveDatabaseConStrings += SaveConnectionStrings;
             View.LoadDatabaseSettings += LoadSettings;
@@ -86,7 +86,7 @@ namespace WindowsFormsUI.MVP.Presenters
             }
             catch(Exception e)
             {
-                IdkHelper.ShowErrorMsgBox(e.Message);
+                WinFormStaticHelper.ShowErrorMsgBox(e.Message);
             }
         }
 
