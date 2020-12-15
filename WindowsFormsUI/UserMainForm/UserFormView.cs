@@ -49,7 +49,8 @@ namespace WindowsFormsUI.UserMainForm
                         command.AddReceiver(_gridCommandReceiver))
                         .Run());
             }
-            else IdkHelper.ShowErrorMsgBox("Параметр не задан или задан неверно");
+            else WinFormStaticHelper.ShowErrorMsgBox("Параметр не задан или задан неверно");
+            dataLoadStatePanel.Invoke(() => dataLoadStatePanel.Visible = false);
         }
 
 

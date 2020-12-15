@@ -41,7 +41,7 @@ namespace WindowsFormsUI
 
         public void ShowError(string message)
         {
-            IdkHelper.ShowErrorMsgBox(message);
+            WinFormStaticHelper.ShowErrorMsgBox(message);
         }
 
         public new void Show()
