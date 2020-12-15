@@ -99,14 +99,14 @@ namespace WindowsFormsUI
         {
             _gridView.Invoke(() =>
             {
-                var maxHeight = _gridView.Rows.AsEnumearble()
-                .Max(row => row.GetPreferredHeight(row.Index, DataGridViewAutoSizeRowMode.AllCells, true));
-                var maxWidth = _gridView.Columns.AsEnumearble()
-                .Max(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true));
-                for (int i = 0; i < _gridView.Rows.Count; i++)
-                    _gridView.Rows[i].Height = maxHeight;
-                for (int i = 0; i < _gridView.Columns.Count; i++)
-                    _gridView.Columns[i].Width = maxWidth;
+                var maxWidth = _gridView.Columns.AsEnumerable()
+                    .Max(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true));
+                var minWidth = _gridView.Columns.AsEnumerable()
+                    .Min(col => col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true));
+                foreach (var col in _gridView.Columns.AsEnumerable())
+                    col.Width = (maxWidth + minWidth) / (maxWidth / minWidth);
+                foreach (var row in _gridView.Rows.AsEnumerable())
+                    row.Height = row.GetPreferredHeight(row.Index, DataGridViewAutoSizeRowMode.AllCells, true);
                 
             });
             return this;

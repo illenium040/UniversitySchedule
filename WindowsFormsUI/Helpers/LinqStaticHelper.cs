@@ -27,13 +27,13 @@ namespace WindowsFormsUI
             action(enumearble.Select(x => x.ToArray()).ToArray());
         }
 
-        public static IEnumerable<DataGridViewRow> AsEnumearble(this DataGridViewRowCollection dataGridView)
+        public static IEnumerable<DataGridViewRow> AsEnumerable(this DataGridViewRowCollection dataGridView)
         {
             foreach (DataGridViewRow row in dataGridView)
                 yield return row;
         }
 
-        public static IEnumerable<DataGridViewColumn> AsEnumearble(this DataGridViewColumnCollection dataGridView)
+        public static IEnumerable<DataGridViewColumn> AsEnumerable(this DataGridViewColumnCollection dataGridView)
         {
             foreach (DataGridViewColumn row in dataGridView)
                 yield return row;

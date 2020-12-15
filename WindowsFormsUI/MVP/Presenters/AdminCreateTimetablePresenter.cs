@@ -171,11 +171,14 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 View.IsTimetableProcessing = true;
                 _solverService.SetSettings(_timetableSettingsAfterCreate);
+                _timetableSettingsAfterCreate.MaxIterations = View.IterationsCount;
+                _timetableSettingsAfterCreate.PartOfBest = View.PartOfBest;
+                _timetableSettingsAfterCreate.PopulationCount = View.PopulationCount;
                 var trainCount = View.TrainCount;
                 for (int i = 0; i < trainCount; i++)
                 {
                     tmpTable = await _solverService.TrainAsync(tmpTable?.Timetable);
-                    View.LogProccessing($"Тренировка №{i} завершена");
+                    View.LogProccessing($"Тренировка №{i+1} завершена");
                 }
                 if (tmpTable.Timetable.Exception != null)
                     throw tmpTable.Timetable.Exception;
