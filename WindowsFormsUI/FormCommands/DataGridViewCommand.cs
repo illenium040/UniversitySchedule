@@ -21,7 +21,7 @@ namespace WindowsFormsUI.FormCommands
                 {
                     grid.Rows.Insert(i, 1);
                     for (int col = 0; col < grid.Columns.Count; col++)
-                        grid[col, i].Value = WinFormStaticHelper.GetRuDayOfWeek(j - 1);
+                        grid[col, i].Value = IdkHelper.GetRuDayOfWeek(j - 1);
                 });
         }
         public abstract void Execute();

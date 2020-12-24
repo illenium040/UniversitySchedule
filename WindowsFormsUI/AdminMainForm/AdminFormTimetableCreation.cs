@@ -19,7 +19,7 @@ using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.AdminMainForm
 {
-    partial class AdminForm : ITimetableCreationView
+    partial class AdminForm : IAdminCreateTimetableView
     {
         public event Action DefaultTimetableSettingsChecked;
         public event Action SaveTimetableToDatabase;

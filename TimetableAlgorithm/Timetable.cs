@@ -54,7 +54,7 @@ namespace TimetableAlgorithm
         {
             int shift = lesson.ExtraData.Shift;
             byte startHour = (byte)(shift == 1 ? 0 : 3);
-            byte endHour = (byte)(shift == 1 ? 3 : HoursDay);
+            byte endHour = (byte)(shift == 1 ? 4 : HoursDay);
             for (byte hour = startHour; hour < endHour; hour++)
             {
                 var les = new Lesson(day, hour,

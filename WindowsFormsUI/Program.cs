@@ -34,6 +34,7 @@ namespace WindowsFormsUI
 
             DataAccessSettings.ConnectionString = Properties.Settings.Default.DatabaseAdminConString;
             
+
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
                 .RegisterView<IUserView, UserForm>()
@@ -42,9 +43,24 @@ namespace WindowsFormsUI
                 .RegisterInstance(new ApplicationContext())
                 .RegisterInstance<ITimetableViewDataLoader>(new TimetableViewDataLoader());
 
-            //controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
-            //controller.GetPresenter<UserPresenter, User>().Run(vitalikUser);
-            controller.GetPresenter<AuthPresenter>().Run();
+            var vitalikUser = new User
+            {
+                Id = "777",
+                IsAdmin = false,
+                Login = "VitalikNotCool2007",
+                Password = "777"
+            };
+            var vitalikAdminUser = new User
+            {
+                Id = "777",
+                IsAdmin = true,
+                Login = "VitalikCool2009",
+                Password = "777"
+            };
+
+            controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
+            //controller.Run<UserPresenter, User>(vitalikUser);
+            //controller.Run<AuthPresenter>();
         }
     }
 }

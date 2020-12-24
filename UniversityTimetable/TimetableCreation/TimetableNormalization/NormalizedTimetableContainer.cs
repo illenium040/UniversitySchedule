@@ -56,7 +56,7 @@ namespace UniversityTimetableGenerator.TimetableCreation.TimetableNormalization
                     }
         }
 
-        public IEnumerable<TimetableView> AsTimetableViewWithInclude()
+        public IEnumerable<TimetableView> GetAsTimetableViewWithInclude()
         {
             for (int i = 0; i < Length; i++)
                 for (int day = 0; day < this[i].Timetable.Length; day++)

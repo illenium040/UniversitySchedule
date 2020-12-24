@@ -20,14 +20,14 @@ using WindowsFormsUI.UserMainForm;
 
 namespace WindowsFormsUI.MVP.Presenters
 {
-    public class AdminTimetableCreationPresenter : BasePartialPresenter<ITimetableCreationView, User>
+    public class AdminCreateTimetablePresenter : BasePartialPresenter<IAdminCreateTimetableView, User>
     {
         private User _user;
         private IServiceProvider _services;
         private SolverService _solverService;
 
         private TimetableSettings _timetableSettingsAfterCreate;
-        public AdminTimetableCreationPresenter(IApplicationController controller, ITimetableCreationView view) : base(controller, view)
+        public AdminCreateTimetablePresenter(IApplicationController controller, IAdminCreateTimetableView view) : base(controller, view)
         {
             _services = RegisterServices();
             View.CreateTimetable += () => CreateTimetable().Wait();
@@ -61,14 +61,14 @@ namespace WindowsFormsUI.MVP.Presenters
                         TimetableView = View.History.Count > 0 ?
                         _solverService
                         .GetNormalizedView(View.History.Peek())
-                        .AsTimetableViewWithInclude()
+                        .GetAsTimetableViewWithInclude()
                         .ToList() :
                         throw new InvalidOperationException("Расписание не создано. Нечего тут показывать")
                     }));
             }
             catch (InvalidOperationException exception)
             {
-                WinFormStaticHelper.ShowErrorMsgBox(exception.Message);
+                IdkHelper.ShowErrorMsgBox(exception.Message);
             }
         }
 
@@ -83,7 +83,7 @@ namespace WindowsFormsUI.MVP.Presenters
             }
             catch (Exception e)
             {
-                WinFormStaticHelper.ShowErrorMsgBox(e.Message);
+                IdkHelper.ShowErrorMsgBox(e.Message);
             }
         }
 
@@ -151,7 +151,7 @@ namespace WindowsFormsUI.MVP.Presenters
             }
             catch (Exception e)
             {
-                WinFormStaticHelper.ShowErrorMsgBox(e.Message);
+                IdkHelper.ShowErrorMsgBox(e.Message);
             }
             finally
             {
@@ -171,14 +171,11 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 View.IsTimetableProcessing = true;
                 _solverService.SetSettings(_timetableSettingsAfterCreate);
-                _timetableSettingsAfterCreate.MaxIterations = View.IterationsCount;
-                _timetableSettingsAfterCreate.PartOfBest = View.PartOfBest;
-                _timetableSettingsAfterCreate.PopulationCount = View.PopulationCount;
                 var trainCount = View.TrainCount;
                 for (int i = 0; i < trainCount; i++)
                 {
                     tmpTable = await _solverService.TrainAsync(tmpTable?.Timetable);
-                    View.LogProccessing($"Тренировка №{i+1} завершена");
+                    View.LogProccessing($"Тренировка №{i} завершена");
                 }
                 if (tmpTable.Timetable.Exception != null)
                     throw tmpTable.Timetable.Exception;
@@ -193,7 +190,7 @@ namespace WindowsFormsUI.MVP.Presenters
             }
             catch (Exception e)
             {
-                WinFormStaticHelper.ShowErrorMsgBox(e.Message);
+                IdkHelper.ShowErrorMsgBox(e.Message);
             }
             finally
             {

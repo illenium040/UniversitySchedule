@@ -16,7 +16,7 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             _partialViews = new List<IPresenter<User>>()
             {
-                new AdminTimetableCreationPresenter(controller, view as ITimetableCreationView),
+                new AdminCreateTimetablePresenter(controller, view as IAdminCreateTimetableView),
                 new AdminDatabasePresenter(controller, view as IAdminDatabaseView)
             };
         }

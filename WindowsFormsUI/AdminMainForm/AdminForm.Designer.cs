@@ -78,6 +78,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.subjectsTeachersTab = new System.Windows.Forms.TabPage();
+            this.groupsSpecialtiesTab = new System.Windows.Forms.TabPage();
+            this.planTab = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.databaseTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -104,6 +107,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.databaseTab);
             this.tabControl1.Controls.Add(this.timetableCreationTab);
+            this.tabControl1.Controls.Add(this.subjectsTeachersTab);
+            this.tabControl1.Controls.Add(this.groupsSpecialtiesTab);
+            this.tabControl1.Controls.Add(this.planTab);
             this.tabControl1.Location = new System.Drawing.Point(10, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -299,7 +305,7 @@
             // 
             // btnSaveSettings
             // 
-            this.btnSaveSettings.Location = new System.Drawing.Point(153, 367);
+            this.btnSaveSettings.Location = new System.Drawing.Point(4, 369);
             this.btnSaveSettings.Name = "btnSaveSettings";
             this.btnSaveSettings.Size = new System.Drawing.Size(105, 41);
             this.btnSaveSettings.TabIndex = 13;
@@ -702,6 +708,34 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Дней в неделю:";
             // 
+            // subjectsTeachersTab
+            // 
+            this.subjectsTeachersTab.Location = new System.Drawing.Point(4, 24);
+            this.subjectsTeachersTab.Name = "subjectsTeachersTab";
+            this.subjectsTeachersTab.Padding = new System.Windows.Forms.Padding(3);
+            this.subjectsTeachersTab.Size = new System.Drawing.Size(708, 418);
+            this.subjectsTeachersTab.TabIndex = 1;
+            this.subjectsTeachersTab.Text = "Предметы и преподаватели";
+            this.subjectsTeachersTab.UseVisualStyleBackColor = true;
+            // 
+            // groupsSpecialtiesTab
+            // 
+            this.groupsSpecialtiesTab.BackColor = System.Drawing.Color.White;
+            this.groupsSpecialtiesTab.Location = new System.Drawing.Point(4, 24);
+            this.groupsSpecialtiesTab.Name = "groupsSpecialtiesTab";
+            this.groupsSpecialtiesTab.Size = new System.Drawing.Size(708, 418);
+            this.groupsSpecialtiesTab.TabIndex = 2;
+            this.groupsSpecialtiesTab.Text = "Специальности и группы";
+            // 
+            // planTab
+            // 
+            this.planTab.BackColor = System.Drawing.Color.White;
+            this.planTab.Location = new System.Drawing.Point(4, 24);
+            this.planTab.Name = "planTab";
+            this.planTab.Size = new System.Drawing.Size(708, 418);
+            this.planTab.TabIndex = 3;
+            this.planTab.Text = "Учебный план";
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -741,6 +775,9 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage timetableCreationTab;
+        private System.Windows.Forms.TabPage subjectsTeachersTab;
+        private System.Windows.Forms.TabPage groupsSpecialtiesTab;
+        private System.Windows.Forms.TabPage planTab;
         private System.Windows.Forms.Button btnCreateTimetable;
         private System.Windows.Forms.GroupBox groupBoxAlgorithmSettings;
         private System.Windows.Forms.GroupBox groupBoxTimetableSettings;
