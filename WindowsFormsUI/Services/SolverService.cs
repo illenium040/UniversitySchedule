@@ -18,12 +18,9 @@ namespace UniversityTimetableGenerator.Services
     {
         protected TimetableFacade TimetableFacade;
         protected ILogger Logger;
-        protected IServiceProvider ServiceProvider;
 
-        public SolverService(IServiceProvider serviceProvider)
+        public SolverService()
         {
-            ServiceProvider = serviceProvider;
-            Logger = serviceProvider.GetService<ILogger>();
         }
 
         protected abstract TimetableFacade CreateFacade();

@@ -2,6 +2,7 @@
 using DataAccess;
 using DataAccess.Contexts;
 using DataAccess.Entities;
+using DataAccess.Loggers;
 using DataAccess.RepositoryUsage;
 
 using System;
@@ -9,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using UniversityTimetableGenerator.Services;
 
 using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Controllers;
@@ -40,6 +43,7 @@ namespace WindowsFormsUI
                 .RegisterView<IAdminView, AdminForm>()
                 .RegisterService<IAuthService, AuthService>()
                 .RegisterInstance(new ApplicationContext())
+                .RegisterService<SolverService, DefaultSolverService>()
                 .RegisterInstance<ITimetableViewDataLoader>(new TimetableViewDataLoader());
 
             var vitalikUser = new User
@@ -57,8 +61,8 @@ namespace WindowsFormsUI
                 Password = "777"
             };
 
-            //controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
-            controller.GetPresenter<UserPresenter, User>().Run(vitalikUser);
+            controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
+            //controller.GetPresenter<UserPresenter, User>().Run(vitalikUser);
             //controller.Run<AuthPresenter>();
         }
     }

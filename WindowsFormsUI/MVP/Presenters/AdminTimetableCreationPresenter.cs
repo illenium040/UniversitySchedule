@@ -23,13 +23,13 @@ namespace WindowsFormsUI.MVP.Presenters
     public class AdminTimetableCreationPresenter : BasePartialPresenter<ITimetableCreationView, User>
     {
         private User _user;
-        private IServiceProvider _services;
         private SolverService _solverService;
 
         private TimetableSettings _timetableSettingsAfterCreate;
-        public AdminTimetableCreationPresenter(IApplicationController controller, ITimetableCreationView view) : base(controller, view)
+        public AdminTimetableCreationPresenter(IApplicationController controller,
+            ITimetableCreationView view) : base(controller, view)
         {
-            _services = RegisterServices();
+            _solverService = controller.GetService<SolverService>();
             View.CreateTimetable += () => CreateTimetable().Wait();
             View.TrainTimetable += () => TrainTimetable().Wait();
             View.SaveTimetableSettings += () => SaveSettings();
@@ -120,14 +120,6 @@ namespace WindowsFormsUI.MVP.Presenters
             _user = argument;
         }
 
-        private IServiceProvider RegisterServices()
-        {
-            return new ServiceCollection()
-                .AddSingleton(typeof(ILogger), View.SolverLogger)
-                .AddScoped<DefaultSolverService>()
-                .BuildServiceProvider();
-        }
-
         private async Task CreateTimetable()
         {
             try
@@ -137,8 +129,8 @@ namespace WindowsFormsUI.MVP.Presenters
                     _timetableSettingsAfterCreate = TimetableDefaultSettings.Settings;
                 else _timetableSettingsAfterCreate = GetSavedSettings();
                 View.LogProccessing($"Загружаем необходимые данные");
-                _solverService ??= _services.GetService<DefaultSolverService>().Load();
-                _solverService.SetSettings(_timetableSettingsAfterCreate);
+                _solverService.Load()
+                    .SetSettings(_timetableSettingsAfterCreate);
                 View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());
                 if (View.History.Peek().Timetable.Exception != null)

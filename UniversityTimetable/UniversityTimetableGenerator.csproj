@@ -291,14 +291,14 @@
     <Compile Include="LessonsCreators\ILessonsCreator.cs" />
     <Compile Include="LessonsCreators\LessonsCreator.cs" />
     <Compile Include="LessonsCreators\NominatorOnlyLessons.cs" />
+    <Compile Include="TimetableCreation\DataContainers\SelectableDataContainer.cs" />
+    <Compile Include="TimetableCreation\DataTypes\SelectableTimetableData.cs" />
     <Compile Include="TimetableCreation\Saver\DefaultTimetableSaver.cs" />
     <Compile Include="TimetableCreation\TimetableDataBuilder.cs" />
     <Compile Include="TimetableCreation\TimetableFacade.cs" />
     <Compile Include="TimetableCreation\TimetableFacadeBuilder.cs" />
     <Compile Include="TimetableCreation\TimetableNormalization\NormalizedTimetable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DefaultSolverService.cs" />
-    <Compile Include="Services\SolverService.cs" />
     <Compile Include="TimetableCreation\Wrappers\DefaultGeneratorWrapper.cs" />
     <Compile Include="TimetableCreation\TimetableNormalization\NormalizedTimetableCell.cs" />
     <Compile Include="TimetableCreation\TimetableNormalization\NormalizedTimetableContainer.cs" />
@@ -317,10 +317,6 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{de435395-d78f-4c1b-9886-72f424fa1f89}</Project>
       <Name>DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TimetableAlgorithm\TimetableAlgorithm.csproj">
-      <Project>{3eeccd06-7b94-4506-ad21-b3caa66ead55}</Project>
-      <Name>TimetableAlgorithm</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

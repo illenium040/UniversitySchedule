@@ -15,6 +15,8 @@ namespace WindowsFormsUI.MVP
         IApplicationController RegisterService<TService, TImplementation>()
             where TImplementation : class, TService;
 
+        TService GetService<TService>() where TService : class;
+
         TPresenter GetPresenter<TPresenter>()
             where TPresenter : class, IPresenter;
 

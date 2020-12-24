@@ -23,8 +23,6 @@ namespace UniversityTimetableGenerator.Services
 {
     public class DefaultSolverService : SolverService
     {
-        public DefaultSolverService(IServiceProvider services) : base(services) { }
-
         public override Task<TimetableResult> CreateAsync()
         {
             if (TimetableFacade is null)

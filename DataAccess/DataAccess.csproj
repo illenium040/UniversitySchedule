@@ -188,8 +188,6 @@
     <Compile Include="Entities\TimetableView.cs" />
     <Compile Include="Entities\TimetableViewInfo.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Loggers\ConsoleLogger.cs" />
-    <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccessSettings.cs" />

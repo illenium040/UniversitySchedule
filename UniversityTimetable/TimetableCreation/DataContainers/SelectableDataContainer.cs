@@ -1,5 +1,4 @@
-﻿using DataAccess.Entities;
-using DataAccess.RepositoryUsage;
+﻿using DataAccess.RepositoryUsage;
 
 using System;
 using System.Collections.Generic;
@@ -7,25 +6,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using TimetableAlgorithm;
+using UniversityTimetableGenerator.TimetableCreation.DataTypes;
 
 namespace UniversityTimetableGenerator.TimetableCreation.DataContainers
 {
-    public class DefaultTimetableDataContainer : TimetableDataContainer
+    public class SelectableDataContainer : TimetableDataContainer
     {
+        private SelectableTimetableData _data;
+        public SelectableDataContainer(SelectableTimetableData data)
+        {
+            _data = data;
+        }
+
         protected override void InitPlansInformation()
         {
-            TeacherSubjects = ViewData.TeacherSubject.GetWithNamedTeachers();
+            PlansInformation = _data.Plans;
         }
 
         protected override void InitSpecialties()
         {
-            Specialties = ViewData.Specialties.GetAll();
+            Specialties = _data.Specialties;
         }
 
         protected override void InitTeacherSubjects()
         {
-            PlansInformation = ViewData.PlansInformation.GetAllWithoutPractice().ToList();
+            TeacherSubjects = ViewData.TeacherSubject.GetWithNamedTeachers();
         }
 
         protected override void InitView()

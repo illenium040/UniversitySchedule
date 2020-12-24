@@ -51,5 +51,11 @@ namespace WindowsFormsUI.MVP.Controllers
 
             return _container.Resolve<TPresenter>();
         }
+
+        public TService GetService<TService>()
+            where TService : class
+        {
+            return _container.Resolve<TService>();
+        }
     }
 }
