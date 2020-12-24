@@ -58,8 +58,8 @@ namespace WindowsFormsUI
                 Password = "777"
             };
 
-            controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
-            //controller.Run<UserPresenter, User>(vitalikUser);
+            //controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
+            controller.GetPresenter<UserPresenter, User>().Run(vitalikUser);
             //controller.Run<AuthPresenter>();
         }
     }

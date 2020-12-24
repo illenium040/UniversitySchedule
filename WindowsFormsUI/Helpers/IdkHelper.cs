@@ -41,8 +41,7 @@ namespace WindowsFormsUI
             var fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = fileExtension;
             fileDialog.Filter = $"Access database Files (*.{fileExtension})|*.{fileExtension}";
-            var result = fileDialog.ShowDialog();
-            if (result == DialogResult.OK) return fileDialog.FileName;
+            if (fileDialog.ShowDialog() == DialogResult.OK) return fileDialog.FileName;
             return "";
         }
 
