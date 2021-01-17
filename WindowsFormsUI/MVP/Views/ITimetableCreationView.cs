@@ -1,10 +1,10 @@
-﻿using System;
+﻿using API.TimetableCreation;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 using TimetableAlgorithm;
-
-using UniversityTimetableGenerator.Actions.ActionsResult;
 
 using WindowsFormsUI.AdminMainForm;
 
@@ -24,7 +24,7 @@ namespace WindowsFormsUI.MVP.Views
         SemestersParts SemestersPart { get; }
         int TrainCount { get; }
 
-        Stack<TimetableResult> History { get; }
+        Stack<TimetableHandler> History { get; }
 
         event Action DefaultTimetableSettingsChecked;
         event Action CreateTimetable;

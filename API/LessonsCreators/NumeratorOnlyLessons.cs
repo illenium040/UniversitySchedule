@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TimetableAlgorithm;
 
-using UniversityTimetableGenerator.TimetableCreation;
+using API.TimetableCreation;
 
-namespace UniversityTimetableGenerator.LessonsCreator
+namespace API.LessonsCreator
 {
-    public class NominatorOnlyLessons : LessonsCreator
+    public class NumeratorOnlyLessons : LessonsCreator
     {
-        public override ILessonsCreator AppendGroups()
+        protected override LessonsCreator AddGroups()
         {
             foreach (var plan in DataContainer.PlansInformation)
             {
@@ -33,7 +33,7 @@ namespace UniversityTimetableGenerator.LessonsCreator
             return this;
         }
 
-        public override List<List<Lesson>> Create()
+        protected override List<List<Lesson>> AddLessons()
         {
             var solverLessons = new List<List<Lesson>>();
             foreach (var specialty in DataContainer.Specialties)

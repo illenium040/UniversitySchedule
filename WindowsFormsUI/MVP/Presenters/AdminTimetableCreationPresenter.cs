@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 using TimetableAlgorithm;
 
-using UniversityTimetableGenerator.Services;
+using API.Services;
 
 using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Views;
@@ -59,9 +59,8 @@ namespace WindowsFormsUI.MVP.Presenters
                         Hours = View.HourDay,
                         Id = 0,
                         TimetableView = View.History.Count > 0 ?
-                        _solverService
-                        .GetNormalizedView(View.History.Peek())
-                        .AsTimetableViewWithInclude()
+                        View.History.Peek().GetNormalized()
+                        .AsTimetableView()
                         .ToList() :
                         throw new InvalidOperationException("Расписание не создано. Нечего тут показывать")
                     }));
@@ -78,7 +77,7 @@ namespace WindowsFormsUI.MVP.Presenters
             {
                 if (View.History.Count < 0)
                     throw new InvalidOperationException("Необходимо создать расписание");
-                await _solverService.SaveToDatabase(View.History.Peek());
+                await View.History.Peek().SaveToDatabase();
                 MessageBox.Show("Сохранено успешно", "Расписание", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception e)
@@ -133,8 +132,8 @@ namespace WindowsFormsUI.MVP.Presenters
                     .SetSettings(_timetableSettingsAfterCreate);
                 View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());
-                if (View.History.Peek().Timetable.Exception != null)
-                    throw View.History.Peek().Timetable.Exception;
+                if (View.History.Peek().RawTimetable.Exception != null)
+                    throw View.History.Peek().RawTimetable.Exception;
                 View.LogProccessing("Расписание создано");
             }
             catch (OperationCanceledException)
@@ -169,11 +168,11 @@ namespace WindowsFormsUI.MVP.Presenters
                 var trainCount = View.TrainCount;
                 for (int i = 0; i < trainCount; i++)
                 {
-                    tmpTable = await _solverService.TrainAsync(tmpTable?.Timetable);
+                    tmpTable = await _solverService.TrainAsync(tmpTable?.RawTimetable);
                     View.LogProccessing($"Тренировка №{i+1} завершена");
                 }
-                if (tmpTable.Timetable.Exception != null)
-                    throw tmpTable.Timetable.Exception;
+                if (tmpTable.RawTimetable.Exception != null)
+                    throw tmpTable.RawTimetable.Exception;
             }
             catch (OperationCanceledException)
             {

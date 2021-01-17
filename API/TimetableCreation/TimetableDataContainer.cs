@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 using TimetableAlgorithm;
 
-namespace UniversityTimetableGenerator.TimetableCreation
+namespace API.TimetableCreation
 {
     public abstract class TimetableDataContainer : IDisposable
     {

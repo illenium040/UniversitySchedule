@@ -5,54 +5,41 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using UniversityTimetableGenerator.TimetableCreation;
-using UniversityTimetableGenerator.Actions.ActionsResult;
+using API.TimetableCreation;
 using TimetableAlgorithm;
-using UniversityTimetableGenerator.TimetableCreation.TimetableNormalization;
+using API.TimetableCreation.TimetableNormalization;
 using DataAccess.Entities;
 using System.Collections.Generic;
 
-namespace UniversityTimetableGenerator.Services
+namespace API.Services
 {
     public abstract class SolverService
     {
-        protected TimetableFacade TimetableFacade;
+        protected TimetableGenerator Generator;
         protected ILogger Logger;
 
-        public SolverService()
-        {
-        }
-
-        protected abstract TimetableFacade CreateFacade();
+        protected abstract TimetableGenerator Init();
         public SolverService Load()
         {
-            if(TimetableFacade is null)
-                TimetableFacade = CreateFacade().AddLogger(Logger);
+            if(Generator is null)
+                Generator = Init();
+            Generator.AddLogger(Logger);
             return this;
         }
-        public abstract Task<TimetableResult> CreateAsync();
-        public abstract Task<TimetableResult> TrainAsync(Timetable timetable, int count = 1);
+        public abstract Task<TimetableHandler> CreateAsync();
+        public abstract Task<TimetableHandler> TrainAsync(Timetable timetable, int count = 1);
         public virtual void Cancel()
         {
-            if (TimetableFacade is null)
-                throw new NullReferenceException("Facade isn't loaded");
-            TimetableFacade.Generator.Cancel();
+            if (Generator is null)
+                throw new NullReferenceException("Generator isn't loaded");
+            Generator.Cancel();
         }
         
         public virtual void SetSettings(TimetableSettings settings)
         {
-            if (TimetableFacade is null)
-                throw new NullReferenceException("Facade isn't loaded");
-            TimetableFacade.Generator.AddSettings(settings);
-        }
-
-        public abstract Task SaveToDatabase(TimetableResult timetableResult);
-
-        public virtual NormalizedTimetableContainer GetNormalizedView(TimetableResult timetableResult)
-        {
-            if (TimetableFacade is null)
-                throw new NullReferenceException("Facade isn't loaded");
-            return new NormalizedTimetableContainer(timetableResult, TimetableFacade.DataContainer);
+            if (Generator is null)
+                throw new NullReferenceException("Generator isn't loaded");
+            Generator.AddSettings(settings);
         }
     }
 }

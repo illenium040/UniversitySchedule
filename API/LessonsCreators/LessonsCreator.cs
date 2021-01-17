@@ -7,13 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TimetableAlgorithm;
 
-using UniversityTimetableGenerator.TimetableCreation;
+using API.TimetableCreation;
 
-namespace UniversityTimetableGenerator.LessonsCreator
+namespace API.LessonsCreator
 {
     public abstract class LessonsCreator : ILessonsCreator
     {
         protected TimetableDataContainer DataContainer;
+        protected abstract LessonsCreator AddGroups();
+        protected abstract List<List<Lesson>> AddLessons();
+
+        protected int GetGroupSemesterId(int groupId, int semesterParts) =>
+            groupId / 100 * 2 - 2 / (semesterParts + 1);
+
         protected IEnumerable<Group> GetGroupsByHourPlan(HourPlan plan)
         {
             for (int i = (int)DataContainer.SemestersPart; i < plan.SemestersCount; i += 2)
@@ -25,16 +31,15 @@ namespace UniversityTimetableGenerator.LessonsCreator
             }
         }
 
-        protected int GetGroupSemesterId(int groupId, int semesterParts) =>
-            groupId / 100 * 2 - 2 / (semesterParts + 1);
-
-        public abstract ILessonsCreator AppendGroups();
-        public abstract List<List<Lesson>> Create();
-
-        public ILessonsCreator AddTimetableData(TimetableDataContainer timetableInfo)
+        protected virtual LessonsCreator AddTimetableData(TimetableDataContainer timetableInfo)
         {
             DataContainer = timetableInfo;
             return this;
+        }
+
+        public List<List<Lesson>> Create(TimetableDataContainer timetableInfo)
+        {
+            return AddTimetableData(timetableInfo).AddGroups().AddLessons();
         }
     }
 }

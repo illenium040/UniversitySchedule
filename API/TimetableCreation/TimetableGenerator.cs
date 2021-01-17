@@ -8,12 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using TimetableAlgorithm;
+using API.LessonsCreator;
+using API.TimetableCreation.TimetableNormalization;
 
-using UniversityTimetableGenerator.Actions;
-using UniversityTimetableGenerator.Actions.ActionsResult;
-using UniversityTimetableGenerator.LessonsCreator;
-
-namespace UniversityTimetableGenerator.TimetableCreation
+namespace API.TimetableCreation
 {
     public class TimetableGenerator
     {
@@ -21,25 +19,27 @@ namespace UniversityTimetableGenerator.TimetableCreation
         private Solver _solver;
 
         protected ILessonsCreator LessonsCreator;
-        protected TimetableDataContainer DataContainer;
+        protected INormalization Normalization;
+        public TimetableDataContainer DataContainer { get; }
 
-        public TimetableGenerator(ILessonsCreator lessonsCreator, TimetableDataContainer dataContainer)
+        public TimetableGenerator(
+            ILessonsCreator lessonsCreator,
+            TimetableDataContainer dataContainer,
+            INormalization normalization)
         {
             LessonsCreator = lessonsCreator;
             DataContainer = dataContainer;
+            Normalization = normalization;
             _cancellation = new CancellationTokenSource();
             Solver.FitnessFunctions = new List<Func<Timetable, int>>
             {
                 FitnessFuncs.Windows,
                 FitnessFuncs.EmptyDays
             };
-            _solver = new Solver(LessonsCreator
-                .AddTimetableData(DataContainer)
-                .AppendGroups()
-                .Create());
+            _solver = new Solver(LessonsCreator.Create(dataContainer));
         }
 
-        public TimetableGenerator AddSeetings(TimetableSettings settings)
+        public TimetableGenerator AddSettings(TimetableSettings settings)
         {
             _solver.AddSettings(settings);
             return this;
@@ -50,13 +50,12 @@ namespace UniversityTimetableGenerator.TimetableCreation
             return this;
         }
 
-        public async Task<TimetableResult> Create()
+        public async Task<TimetableHandler> Create()
         {
             try
             {
                 if (_cancellation.IsCancellationRequested) UpdateCancellationToken();
-                return new TimetableAction(await _solver.Solve(_cancellation))
-                    .Complete("Timetable created succesfully");
+                return new TimetableHandler(await _solver.Solve(_cancellation), Normalization, DataContainer);
             }
             catch (OperationCanceledException opCanceled)
             {
@@ -64,8 +63,7 @@ namespace UniversityTimetableGenerator.TimetableCreation
             }
             catch (Exception exception)
             {
-                return new TimetableAction()
-                    .Fault($"Creation failed cause of the exception: {exception.Message}",exception);
+                throw exception;
             }
             finally
             {
@@ -74,13 +72,12 @@ namespace UniversityTimetableGenerator.TimetableCreation
             
         }
 
-        public async Task<TimetableResult> Train(Timetable timetable)
+        public async Task<TimetableHandler> Train(Timetable timetable)
         {
             try
             {
                 if (_cancellation.IsCancellationRequested) UpdateCancellationToken();
-                return new TimetableAction(await _solver.Train(timetable, _cancellation))
-                    .Complete("Train ended succesfully");
+                return new TimetableHandler(await _solver.Train(timetable, _cancellation), Normalization, DataContainer);
             }
             catch(OperationCanceledException opCanceled)
             {
@@ -88,8 +85,7 @@ namespace UniversityTimetableGenerator.TimetableCreation
             }
             catch (Exception exception)
             {
-                return new TimetableAction()
-                    .Fault($"Creation failed cause of the exception: {exception.Message}", exception);
+                throw exception;
             }
             finally
             {

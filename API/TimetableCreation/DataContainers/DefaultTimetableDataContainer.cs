@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 using TimetableAlgorithm;
 
-namespace UniversityTimetableGenerator.TimetableCreation.DataContainers
+namespace API.TimetableCreation.DataContainers
 {
     public class DefaultTimetableDataContainer : TimetableDataContainer
     {

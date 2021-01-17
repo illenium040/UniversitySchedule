@@ -13,49 +13,40 @@ using System.Threading.Tasks;
 
 using TimetableAlgorithm;
 
-using UniversityTimetableGenerator.Actions.ActionsResult;
-using UniversityTimetableGenerator.LessonsCreator;
-using UniversityTimetableGenerator.TimetableCreation;
-using UniversityTimetableGenerator.TimetableCreation.Wrappers;
-using UniversityTimetableGenerator.TimetableCreation.TimetableNormalization;
+using API.LessonsCreator;
+using API.TimetableCreation;
+using API.TimetableCreation.TimetableNormalization;
 
-namespace UniversityTimetableGenerator.Services
+namespace API.Services
 {
     public class DefaultSolverService : SolverService
     {
-        public override Task<TimetableResult> CreateAsync()
+        public override Task<TimetableHandler> CreateAsync()
         {
-            if (TimetableFacade is null)
+            if (Generator is null)
                 throw new NullReferenceException("Facade isn't loaded");
-            return TimetableFacade.Generator.Create();
+            return Generator.Create();
         }
 
-        public override async Task SaveToDatabase(TimetableResult timetableResult)
+        public override async Task<TimetableHandler> TrainAsync(Timetable timetable, int count = 1)
         {
-            if (TimetableFacade is null)
+            if (Generator is null)
                 throw new NullReferenceException("Facade isn't loaded");
-            await TimetableFacade.Saver.SaveToDatabase(timetableResult);
-        }
-
-        public override async Task<TimetableResult> TrainAsync(Timetable timetable, int count = 1)
-        {
-            if (TimetableFacade is null)
-                throw new NullReferenceException("Facade isn't loaded");
+            //bruh
+            TimetableHandler handler = null;
             for (int i = 0; i < count; i++)
             {
-                var result = await TimetableFacade.Generator.Train(timetable);
-                if (!result.IsCompleted) await Logger?.LogAsync(result.Message);
-                else timetable = result.Timetable;
+                handler = await Generator.Train(timetable);
+                timetable = handler.RawTimetable;
             }
-            return new TimetableResult("Timetable is trained", true, timetable);
+            return handler;
         }
 
-        protected override TimetableFacade CreateFacade()
+        protected override TimetableGenerator Init()
         {
-            return new TimetableFacadeBuilder(
+            return new TimetableGeneratorBuilder(
                     new TimetableDataBuilder().Build())
-                .Build()
-                .AddLogger(Logger);
+                .Build();
         }
     }
 }

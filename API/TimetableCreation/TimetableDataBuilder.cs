@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UniversityTimetableGenerator.LessonsCreator;
-using UniversityTimetableGenerator.TimetableCreation.DataContainers;
+using API.LessonsCreator;
+using API.TimetableCreation.DataContainers;
 
-namespace UniversityTimetableGenerator.TimetableCreation
+namespace API.TimetableCreation
 {
     public class TimetableDataBuilder
     {
@@ -49,7 +49,7 @@ namespace UniversityTimetableGenerator.TimetableCreation
             _dataContainer ??= new DefaultTimetableDataContainer();
             _dataContainer.Init(_viewData);
 
-            _lessonsCreator ??= new NominatorOnlyLessons();
+            _lessonsCreator ??= new NumeratorOnlyLessons();
 
             return new TimetableData
             {

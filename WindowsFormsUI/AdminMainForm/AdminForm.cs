@@ -1,7 +1,8 @@
-﻿using System;
+﻿using API.TimetableCreation;
+
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using UniversityTimetableGenerator.Actions.ActionsResult;
 using WindowsFormsUI.MVP.Views;
 
 namespace WindowsFormsUI.AdminMainForm
@@ -18,7 +19,7 @@ namespace WindowsFormsUI.AdminMainForm
             InitializeComponent();
             _actionProxy = new ActionProxy();
             _solverLogger = new TimetableFormLogger(lblSolverLog);
-            History = new Stack<TimetableResult>();
+            History = new Stack<TimetableHandler>();
 
             SetEventsDatabaseView();
             SetSEventsTimetableCreation();

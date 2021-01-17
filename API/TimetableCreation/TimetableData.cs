@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UniversityTimetableGenerator.LessonsCreator;
+using API.LessonsCreator;
 
-namespace UniversityTimetableGenerator.TimetableCreation
+namespace API.TimetableCreation
 {
     public class TimetableData
     {

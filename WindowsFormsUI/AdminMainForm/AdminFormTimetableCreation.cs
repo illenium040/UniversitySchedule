@@ -10,12 +10,11 @@ using DataAccess.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 using TimetableAlgorithm;
-
-using UniversityTimetableGenerator.Actions.ActionsResult;
-using UniversityTimetableGenerator.Services;
+using API.Services;
 
 using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
+using API.TimetableCreation;
 
 namespace WindowsFormsUI.AdminMainForm
 {
@@ -31,7 +30,7 @@ namespace WindowsFormsUI.AdminMainForm
         public event Action LoadTimetableData;
 
         public bool IsDefaultTimetableSettings { get { return checkBoxDefaultSettings.Checked; } }
-        public Stack<TimetableResult> History { get; private set; }
+        public Stack<TimetableHandler> History { get; private set; }
 
         public TimetableFormLogger SolverLogger { get { return _solverLogger; } }
 

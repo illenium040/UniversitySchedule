@@ -6,10 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UniversityTimetableGenerator.TimetableCreation.DataTypes;
+using API.TimetableCreation;
+using DataAccess.Entities;
 
-namespace UniversityTimetableGenerator.TimetableCreation.DataContainers
+namespace API.TimetableCreation.DataContainers
 {
+    public class SelectableTimetableData
+    {
+        public IEnumerable<Specialty> Specialties { get; set; }
+        public IEnumerable<PlanInformation> Plans { get; set; }
+    }
+
     public class SelectableDataContainer : TimetableDataContainer
     {
         private SelectableTimetableData _data;
