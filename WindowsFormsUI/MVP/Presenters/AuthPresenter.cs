@@ -51,6 +51,7 @@ namespace WindowsFormsUI.MVP.Presenters
             catch (Exception exc)
             {
                 View.ShowAuthState($"Произошла непредвиденная ошибка: {exc.Message}");
+                WinFormStaticHelper.ShowErrorMsgBox(exc.Message);
                 View.SetControlsTurnState(true);
             }
             

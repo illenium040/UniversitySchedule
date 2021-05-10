@@ -28,7 +28,7 @@ namespace API.TimetableCreation
 
         public bool IsValid()
         {
-            if (RawTimetable.Exception != null) return false;
+            //if (RawTimetable.Exception != null) return false;
             return true;
         }
 

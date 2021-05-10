@@ -18,6 +18,22 @@ namespace DataAccess.Repositories.RepositoryImplementation
         public LessonContext LessonContext { get { return Context as LessonContext; } }
         public LessonsRepository(LessonContext context) : base(context) { }
 
+        public override void Add(TeacherSubject entity)
+        {
+            LessonContext.Teachers.Add(entity.Teacher);
+        }
+
+        public override void Update(TeacherSubject entity)
+        {
+            LessonContext.Teachers.Update(entity.Teacher);
+        }
+
+        public override void Remove(TeacherSubject entity)
+        {
+            LessonContext.Teachers.Remove(entity.Teacher);
+            LessonContext.Subjects.Remove(entity.Subject);
+        }
+
         public IEnumerable<TeacherSubject> GetBySubject(int id)
         {
             return LessonContext.TeacherSubjects

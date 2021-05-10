@@ -10,13 +10,18 @@ namespace WindowsFormsUI.Services
 {
     public class TimetableViewDataLoader : ITimetableViewDataLoader
     {
+        private TimetableViewData _data;
         public ITimetableViewData Load()
         {
-            return new TimetableViewData(
+            if (_data is null)
+            {
+                _data = new TimetableViewData(
                 new LessonContext(),
                 new SpecialtyContext(),
                 new PlanContext(),
                 new TimetableViewContext());
+            }
+            return _data;
         }
 
         public async Task<ITimetableViewData> LoadAsync()

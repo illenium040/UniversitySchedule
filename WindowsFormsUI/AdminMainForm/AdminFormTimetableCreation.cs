@@ -15,11 +15,15 @@ using API.Services;
 using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
 using API.TimetableCreation;
+using WindowsFormsUI.CustomControllers;
 
 namespace WindowsFormsUI.AdminMainForm
 {
     partial class AdminForm : ITimetableCreationView
     {
+        private CancelButton _createTimetableBtn;
+        private CancelButton _trainTimetableBtn;
+
         public event Action DefaultTimetableSettingsChecked;
         public event Action SaveTimetableToDatabase;
         public event Action ShowInUserForm;
@@ -65,14 +69,46 @@ namespace WindowsFormsUI.AdminMainForm
             rbxTimetableResultLog.Invoke(() => rbxTimetableResultLog.AppendText($"{message}\r\n"));
         }
 
-        private void SetSEventsTimetableCreation()
+        
+
+        private void SetEventsTimetableCreation()
         {
-            btnCreateTimetable.Click += async (sender, e)
-                => await _actionProxy.InvokeAsync(CreateTimetable);
-            btnCancelTimetableCreation.Click += (sender, e)
-                => CancelTimetableProcessing();
-            btnTimetableTrain.Click += async (sender, e)
-                => await _actionProxy.InvokeAsync(TrainTimetable);
+            _createTimetableBtn = new CancelButton(btnCreateTimetable);
+            _createTimetableBtn.OnClick += async () =>
+            {
+                try
+                {
+                    TurnButtons(btnCreateTimetable, false);
+                    await _actionProxy.InvokeAsync(CreateTimetable);
+                }
+                catch (Exception e)
+                {
+                    _createTimetableBtn.Cancel();
+                }
+                finally
+                {
+                    TurnButtons(btnCreateTimetable, true);
+                }
+            };
+            _createTimetableBtn.OnCancel += () => CancelTimetableProcessing();
+            _trainTimetableBtn = new CancelButton(btnTimetableTrain);
+            _trainTimetableBtn.OnClick += async () =>
+            {
+                try
+                {
+                    TurnButtons(btnTimetableTrain, false);
+                    await _actionProxy.InvokeAsync(TrainTimetable);
+                }
+                catch (Exception e)
+                {
+                    _trainTimetableBtn.Cancel();
+                }
+                finally
+                {
+                    TurnButtons(btnTimetableTrain, true);
+                }
+            };
+            _trainTimetableBtn.OnCancel += () => CancelTimetableProcessing();
 
             btnShowUserForm.Click += async (sender, e)
                 => await _actionProxy.InvokeAsync(ShowInUserForm);
@@ -86,6 +122,21 @@ namespace WindowsFormsUI.AdminMainForm
                 => _actionProxy.Invoke(SaveTimetableSettings);
 
             Load += (sender, e) => LoadTimetableData?.Invoke();
+        }
+
+        private void TurnButtons(Button sender, bool state)
+        {
+            TurnButton(btnCreateTimetable, sender, state);
+            TurnButton(btnTimetableTrain, sender, state);
+            TurnButton(btnShowUserForm, sender, state);
+            TurnButton(btnSaveToDatabase, sender, state);
+            TurnButton(btnSaveSettings, sender, state);
+        }
+
+        private void TurnButton(Button target, Button sender, bool state)
+        {
+            if (!target.Equals(sender))
+                target.Enabled = state;
         }
 
         private void SetReadOnlyTimetableSettingsState(bool state)

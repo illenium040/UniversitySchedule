@@ -25,8 +25,8 @@ namespace WindowsFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\ScheduleP" +
-            "roject\\UniversitySchedule.accdb;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\Диплом\\Sc" +
+            "heduleProject\\UniversitySchedule.accdb;")]
         public string DatabaseAdminConString {
             get {
                 return ((string)(this["DatabaseAdminConString"]));
@@ -38,8 +38,8 @@ namespace WindowsFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\ScheduleP" +
-            "roject\\UniversitySchedule.accdb;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\Диплом\\Sc" +
+            "heduleProject\\UniversitySchedule.accdb;")]
         public string DatabaseUserConString {
             get {
                 return ((string)(this["DatabaseUserConString"]));
@@ -147,8 +147,8 @@ namespace WindowsFormsUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\ScheduleP" +
-            "roject\\UniversitySchedule.accdb;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\Диплом\\Sc" +
+            "heduleProject\\UniversitySchedule.accdb;")]
         public string DefaultConString {
             get {
                 return ((string)(this["DefaultConString"]));

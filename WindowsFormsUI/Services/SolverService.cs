@@ -15,24 +15,28 @@ namespace API.Services
 {
     public abstract class SolverService
     {
-        protected TimetableGenerator Generator;
-        protected ILogger Logger;
+        public bool IsCancelRequired { get; private set; }
 
+        protected TimetableGenerator Generator;
+        public ILogger Logger { get; private set; }
         protected abstract TimetableGenerator Init();
-        public SolverService Load()
+        public SolverService Load(ILogger logger = null)
         {
-            if(Generator is null)
+            IsCancelRequired = false;
+            if (Generator is null)
+            {
                 Generator = Init();
-            Generator.AddLogger(Logger);
+            }
+            Generator.AddLogger(Logger = logger);
             return this;
         }
         public abstract Task<TimetableHandler> CreateAsync();
         public abstract Task<TimetableHandler> TrainAsync(Timetable timetable, int count = 1);
         public virtual void Cancel()
         {
-            if (Generator is null)
-                throw new NullReferenceException("Generator isn't loaded");
-            Generator.Cancel();
+            if(Generator is null)
+                IsCancelRequired = true;
+            else Generator.Cancel();
         }
         
         public virtual void SetSettings(TimetableSettings settings)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using WindowsFormsUI.MVP.Views;
+using WindowsFormsUI.Services;
 
 namespace WindowsFormsUI.MVP.Presenters
 {
@@ -17,7 +18,8 @@ namespace WindowsFormsUI.MVP.Presenters
             _partialViews = new List<IPresenter<User>>()
             {
                 new AdminTimetableCreationPresenter(controller, view as ITimetableCreationView),
-                new AdminDatabasePresenter(controller, view as IAdminDatabaseView)
+                new AdminDatabasePresenter(controller, view as IAdminDatabaseView),
+                new AdminUpdateDBPresenter(controller, controller.GetService<ITimetableViewDataLoader>(), view as IAdminFormUpdateDB)
             };
         }
 

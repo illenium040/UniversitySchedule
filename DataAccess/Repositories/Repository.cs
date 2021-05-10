@@ -52,5 +52,10 @@ namespace DataAccess.Repositories
         {
             Context.Set<TEntity>().RemoveRange(entities);
         }
+
+        public virtual void Update(TEntity entity)
+        {
+            Context.Set<TEntity>().Update(entity);
+        }
     }
 }

@@ -59,6 +59,29 @@ namespace API.TimetableCreation.TimetableNormalization
                                 Id = _id,
                                 Day = day,
                                 Hour = hour,
+                                //Group = _timetable[i][day][hour].Group,
+                                GroupId = _timetable[i][day][hour].Group.Id,
+                                //Subject = cell.Subject,
+                                SubjectId = cell.Subject.Id,
+                                //Teacher = cell.Teacher,
+                                TeacherId = cell.Teacher.Id
+                            };
+                    }
+        }
+
+        public IEnumerable<TimetableView> AsJoinedTimetableView()
+        {
+            for (int i = 0; i < Length; i++)
+                for (int day = 0; day < DaysWeek; day++)
+                    for (int hour = 0; hour < HoursDay; hour++)
+                    {
+                        var cell = _timetable[i][day][hour];
+                        if (cell != null)
+                            yield return new TimetableView
+                            {
+                                Id = _id,
+                                Day = day,
+                                Hour = hour,
                                 Group = _timetable[i][day][hour].Group,
                                 GroupId = _timetable[i][day][hour].Group.Id,
                                 Subject = cell.Subject,

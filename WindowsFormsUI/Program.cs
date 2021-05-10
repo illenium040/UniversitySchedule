@@ -35,7 +35,7 @@ namespace WindowsFormsUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DataAccessSettings.ConnectionString = Properties.Settings.Default.DatabaseAdminConString;
+            DataAccessSettings.ConnectionString = Properties.Settings.Default.DefaultConString;
             
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IAuthView, AuthForm>()
@@ -63,7 +63,7 @@ namespace WindowsFormsUI
 
             controller.GetPresenter<AdminPresenter, User>().Run(vitalikAdminUser);
             //controller.GetPresenter<UserPresenter, User>().Run(vitalikUser);
-            //controller.Run<AuthPresenter>();
+            //controller.GetPresenter<AuthPresenter>().Run();
         }
     }
 }

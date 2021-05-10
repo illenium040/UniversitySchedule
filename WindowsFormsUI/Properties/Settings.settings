@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="DatabaseAdminConString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\Диплом\ScheduleProject\UniversitySchedule.accdb;</Value>
     </Setting>
     <Setting Name="DatabaseUserConString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\Диплом\ScheduleProject\UniversitySchedule.accdb;</Value>
     </Setting>
     <Setting Name="DaysWeek" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">6</Value>
@@ -33,7 +33,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultConString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\ScheduleProject\UniversitySchedule.accdb;</Value>
+      <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\illenium\Desktop\Диплом\ScheduleProject\UniversitySchedule.accdb;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

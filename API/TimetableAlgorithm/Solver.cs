@@ -92,7 +92,7 @@ namespace TimetableAlgorithm
                         if (pop[0].FitnessValue == 0) return pop[0];
 
                         if (_prevFitness != pop[0].FitnessValue)
-                            _logger?.Log($"Current fitness value: {_prevFitness = pop[0].FitnessValue}");
+                            _logger?.Log($"Текущая оценка: {_prevFitness = pop[0].FitnessValue}");
 
                         for (int i = pop.Count / _partOfBest; i < pop.Count; i++)
                             for (int j = 0; j < pop[i].PlanList.Length; j++)

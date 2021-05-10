@@ -17,6 +17,7 @@ using API.Services;
 using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
+using System.Threading;
 
 namespace WindowsFormsUI.MVP.Presenters
 {
@@ -24,7 +25,6 @@ namespace WindowsFormsUI.MVP.Presenters
     {
         private User _user;
         private SolverService _solverService;
-
         private TimetableSettings _timetableSettingsAfterCreate;
         public AdminTimetableCreationPresenter(IApplicationController controller,
             ITimetableCreationView view) : base(controller, view)
@@ -36,8 +36,13 @@ namespace WindowsFormsUI.MVP.Presenters
             View.SaveTimetableToDatabase += () => SaveToDatabase().Wait();
             View.ShowInUserForm += () => ShowInUserForm();
             View.DefaultTimetableSettingsChecked += () => SetDefaultSettings();
-            View.CancelTimetableProcessing += () => _solverService?.Cancel();
+            View.CancelTimetableProcessing += () => Cancel();
             View.LoadTimetableData += () => View.SetTimetableSettings(TimetableDefaultSettings.Settings, true);
+        }
+
+        private void Cancel()
+        {
+            _solverService?.Cancel();
         }
 
         private void SetDefaultSettings()
@@ -60,9 +65,9 @@ namespace WindowsFormsUI.MVP.Presenters
                         Id = 0,
                         TimetableView = View.History.Count > 0 ?
                         View.History.Peek().GetNormalized()
-                        .AsTimetableView()
+                        .AsJoinedTimetableView()
                         .ToList() :
-                        throw new InvalidOperationException("Расписание не создано. Нечего тут показывать")
+                        throw new InvalidOperationException("Необходимо создать хотя бы одно расписание")
                     }));
             }
             catch (InvalidOperationException exception)
@@ -75,7 +80,7 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             try
             {
-                if (View.History.Count < 0)
+                if (View.History.Count <= 0)
                     throw new InvalidOperationException("Необходимо создать расписание");
                 await View.History.Peek().SaveToDatabase();
                 MessageBox.Show("Сохранено успешно", "Расписание", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -127,13 +132,17 @@ namespace WindowsFormsUI.MVP.Presenters
                 if (View.IsDefaultTimetableSettings)
                     _timetableSettingsAfterCreate = TimetableDefaultSettings.Settings;
                 else _timetableSettingsAfterCreate = GetSavedSettings();
+
                 View.LogProccessing($"Загружаем необходимые данные");
-                _solverService.Load()
-                    .SetSettings(_timetableSettingsAfterCreate);
+                _solverService.Load(View.SolverLogger).SetSettings(_timetableSettingsAfterCreate);
+                if (_solverService.IsCancelRequired)
+                    throw new OperationCanceledException();
                 View.LogProccessing($"Начинаем создание расписания");
                 View.History.Push(await _solverService.CreateAsync());
+
                 if (View.History.Peek().RawTimetable.Exception != null)
                     throw View.History.Peek().RawTimetable.Exception;
+
                 View.LogProccessing("Расписание создано");
             }
             catch (OperationCanceledException)
@@ -155,7 +164,7 @@ namespace WindowsFormsUI.MVP.Presenters
             if(View.History.Count == 0)
             {
                 View.LogProccessing("Необходимо создать расписание");
-                return;
+                throw new Exception("Stack is empty");
             }
             var tmpTable = View.History.Peek();
             try

@@ -18,37 +18,40 @@ namespace DataAccess.RepositoryUsage
         public IPlanInformationRepository PlansInformation { get; private set; }
         public ITimetableViewRepository TimetableView { get; private set; }
 
-        private readonly LessonContext _lessonsContext;
-        private readonly SpecialtyContext _specialtiesContext;
-        private readonly PlanContext _planContext;
-        private readonly TimetableViewContext _viewContext;
+        public LessonContext LessonsContext { get; }
+        public SpecialtyContext SpecialtiesContext { get; }
+        public PlanContext PlanContext { get; }
+        public TimetableViewContext ViewContext { get; }
         public TimetableViewData(
             LessonContext lessonsContext,
             SpecialtyContext specialtiesContext,
             PlanContext planContext,
             TimetableViewContext viewContext)
         {
-            _lessonsContext = lessonsContext;
-            _specialtiesContext = specialtiesContext;
-            _planContext = planContext;
-            _viewContext = viewContext;
-            TeacherSubject = new LessonsRepository(_lessonsContext);
-            Specialties = new SpecialtiesRepository(_specialtiesContext);
-            PlansInformation = new PlanInformationRepository(_planContext);
-            TimetableView = new TimetableViewRepository(_viewContext);
+            LessonsContext = lessonsContext;
+            SpecialtiesContext = specialtiesContext;
+            PlanContext = planContext;
+            ViewContext = viewContext;
+            TeacherSubject = new LessonsRepository(LessonsContext);
+            Specialties = new SpecialtiesRepository(SpecialtiesContext);
+            PlansInformation = new PlanInformationRepository(PlanContext);
+            TimetableView = new TimetableViewRepository(ViewContext);
         }
 
         public void Dispose()
         {
-            _lessonsContext.Dispose();
-            _specialtiesContext.Dispose();
-            _planContext.Dispose();
-            _viewContext.Dispose();
+            LessonsContext.Dispose();
+            SpecialtiesContext.Dispose();
+            PlanContext.Dispose();
+            ViewContext.Dispose();
         }
 
         public int Complete()
         {
-            return _viewContext.SaveChanges();
+            PlanContext.SaveChanges();
+            LessonsContext.SaveChanges();
+            SpecialtiesContext.SaveChanges();
+            return ViewContext.SaveChanges();
         }
     }
 }
