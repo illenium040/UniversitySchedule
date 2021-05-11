@@ -58,7 +58,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBoxTimetableCreation.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhQABAANUAACQmJJyenNTS1GRmZOzq7Ly+vDw+PNze3PT29ISGhMzKzDw6PLS2tExKTCwuLKyq
         rNza3PTy9MTGxOTm5Pz+/IyOjCwqLKSipNTW1GxubOzu7MTCxERCROTi5Pz6/MzOzExOTJSSlP///wAA
@@ -193,7 +193,7 @@
         5ytm9BrdbLvVIQEGURAWBAA7
 </value>
   </data>
-  <data name="pictureBoxTimetableCreation.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhQABAANUAACQmJJyenNTS1GRmZOzq7Ly+vDw+PNze3PT29ISGhMzKzDw6PLS2tExKTCwuLKyq
         rNza3PTy9MTGxOTm5Pz+/IyOjCwqLKSipNTW1GxubOzu7MTCxERCROTi5Pz6/MzOzExOTJSSlP///wAA

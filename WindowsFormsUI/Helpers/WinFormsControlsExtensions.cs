@@ -39,5 +39,17 @@ namespace WindowsFormsUI
             for (int i = 0; i < count; i++)
                 grid.Rows.Add();
         }
+
+        public static void Clear(this DataGridView grid)
+        {
+            
+            grid.Invoke(g => 
+            {
+                g.Columns.Clear();
+                g.Rows.Clear();
+                g.Refresh();
+            }
+            );
+        }
     }
 }

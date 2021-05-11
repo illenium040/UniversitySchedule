@@ -18,12 +18,29 @@ namespace DataAccess.Repositories.RepositoryImplementation
         public PlanContext PlanContext { get { return Context as PlanContext; } }
         public PlanInformationRepository(DbContext context) : base(context) { }
 
+
+        public override void Add(PlanInformation entity)
+        {
+            PlanContext.PlanInformation.Add(entity);
+        }
+
+        public override void Remove(PlanInformation entity)
+        {
+            PlanContext.PlanInformation.Remove(entity);
+            PlanContext.PlanWeeks.Remove(entity.PlanWeeks);
+        }
+
+        public override void Update(PlanInformation entity)
+        {
+            PlanContext.PlanInformation.Update(entity);
+        }
+
         public override PlanInformation Get(int id)
         {
             return PlanContext.PlanInformation
                 .Include(x => x.PlanWeeks)
                 .Include(x => x.HourPlans)
-                .First(x => x.Id == id); 
+                .FirstOrDefault(x => x.Id == id); 
         }
 
         public override IEnumerable<PlanInformation> GetAll()

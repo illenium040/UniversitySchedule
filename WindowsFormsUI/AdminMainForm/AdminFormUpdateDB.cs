@@ -1,63 +1,32 @@
 ﻿using DataAccess.Contexts;
 using DataAccess.Entities;
 using DataAccess.Repositories.RepositoryInterfaces;
+using DataAccess.RepositoryUsage;
 
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using WindowsFormsUI.AdminMainForm.UpdateDbData;
 using WindowsFormsUI.MVP.Views;
 
 namespace WindowsFormsUI.AdminMainForm
 {
+
     partial class AdminForm : Form, IAdminFormUpdateDB
     {
-        private class UpdatedData<T>
-        {
-            public Dictionary<DataGridViewRow, T> DataRowToData { get; }
-            public List<T> Added { get; }
-            public List<T> Removed { get; }
-            public List<T> Updated { get; }
-
-            public UpdatedData()
-            {
-                DataRowToData = new Dictionary<DataGridViewRow, T>();
-                Added = new List<T>();
-                Removed = new List<T>();
-                Updated = new List<T>();
-            }
-
-            public void Check()
-            {
-                for (int i = 0; i < Added.Count; i++)
-                {
-                    if (Removed.Contains(Added[i]))
-                    {
-                        Added.Remove(Added[i]);
-                        i--;
-                    }
-                }
-                for (int i = 0; i < Updated.Count; i++)
-                {
-                    if(Removed.Contains(Updated[i]) || Added.Contains(Updated[i]))
-                    {
-                        Updated.Remove(Updated[i]);
-                        i--;
-                    }
-                }
-            }
-        } 
+        private ITimetableViewData _formUpdatedData;
         public bool IsConfirmationRequired => isConfirmation.Checked;
         private int _selectedIndex;
         private string _selectedItem;
 
-        private UpdatedData<TeacherSubject> _lessonsData;
-
-        private Dictionary<DataGridViewRow, PlanInformation> _dataRowToPlanInfo;
-        private Dictionary<DataGridViewRow, Specialty> _dataRowToSpecialty;
+        private UpdateLessonsData _updatedLessons;
+        private UpdatedHourPlanData _updatedHourPlanData;
+        private UpdatedPlanInformation _updatedPlanInfo;
 
         public IEnumerable<string> TableNameList
         {
@@ -100,153 +69,161 @@ namespace WindowsFormsUI.AdminMainForm
             get => loadingPanel.Visible;
             set => loadingPanel.Invoke(()=> loadingPanel.Visible = value); 
         }
+        public bool IsSavedSuccesfully { get; set; }
 
         public event Action SaveChanges;
         public event Action LoadData;
-        public event Action TableChanged;
-        public event Action<TeacherSubject> LessonRemoved;
-        public event Action<TeacherSubject> LessonUpdated;
-        public event Action<TeacherSubject> LessonAdded;
-
-        public void SetLessons(ILessonsRepository lessonContext)
-        {
-            ClearDataGrid();
-            updateDataGrid.Invoke(() =>
-            {
-                updateDataGrid.Columns.Add("IDT", "ID");
-                updateDataGrid.Columns.Add("Фамилия", "Фамилия");
-                updateDataGrid.Columns.Add("Инициалы", "Инициалы");
-                updateDataGrid.Columns.Add("Полное имя", "Полное имя");
-                updateDataGrid.Columns.Add("IDS", "ID");
-                updateDataGrid.Columns.Add("Полное наименование предмета", "Полное наименование предмета");
-                updateDataGrid.Columns.Add("Краткое наименование предмета", "Краткое наименование предмета");
-            });
-            
-            foreach (var ts in lessonContext.GetAll())
-            {
-                updateDataGrid.Invoke(g =>
-                {
-                    var i = g.Rows.Add(ts.TeacherId, ts.Teacher.Lastname, ts.Teacher.ShortFirstname, ts.Teacher.FullFirstname,
-                        ts.SubjectId, ts.Subject.FullName, ts.Subject.ShortName);
-                    _lessonsData.DataRowToData.Add(g.Rows[i], ts);
-                });
-            }
-        }
-
-        public void SetPlan(IPlanInformationRepository planContext)
-        {
-            ClearDataGrid();
-            planContext.GetAll();
-        }
-
-        public void SetSpecialty(ISpecialtyRepository specialtyContext)
-        {
-            ClearDataGrid();
-            specialtyContext.GetAll();
-        }
 
         public void SetUpdateEvents()
         {
-            _lessonsData = new UpdatedData<TeacherSubject>();
-
-            _dataRowToPlanInfo = new Dictionary<DataGridViewRow, PlanInformation>();
-            _dataRowToSpecialty = new Dictionary<DataGridViewRow, Specialty>();
-            updateDataGrid.SetDoubleBuffered();
+            _updatedPlanInfo = new UpdatedPlanInformation(updatedMainDataGrid, updatedExtraInfoDataGrid);
+            _updatedLessons = new UpdateLessonsData(updatedMainDataGrid);
+            _updatedHourPlanData = new UpdatedHourPlanData(updatedMainDataGrid, updatedExtraInfoDataGrid);
+            updatedMainDataGrid.SetDoubleBuffered();
 
             btnSaveChanges.Click += async (o, e) =>
             {
-                _lessonsData.Check();
-                foreach (var item in _lessonsData.Added)
-                    LessonAdded(item);
-                foreach (var item in _lessonsData.Removed)
-                    LessonRemoved(item);
-                foreach (var item in _lessonsData.Updated)
-                    LessonUpdated(item);
+                if (!_updatedLessons.Save(_formUpdatedData.TeacherSubject)) return;
+                if (!_updatedHourPlanData.Save(_formUpdatedData.PlansInformation)) return;
+                if (!_updatedPlanInfo.Save(_formUpdatedData.PlansInformation)) return;
                 await _actionProxy?.InvokeAsync(SaveChanges);
+                if (!IsSavedSuccesfully) return;
+                await _actionProxy?.InvokeAsync(TableChanged);
+                _updatedLessons.UpdatedData.Clear();
+                _updatedHourPlanData.UpdatedData.Clear();
+                _updatedPlanInfo.UpdatedData.Clear();
             };
             tableNameList.SelectedIndexChanged += async (o, e) => await _actionProxy?.InvokeAsync(TableChanged);
-            Shown += async (o, e) => await _actionProxy?.InvokeAsync(LoadData);
+            Shown += async (o, e) =>
+            {
+                await _actionProxy?.InvokeAsync(() =>
+                {
+                    LoadData();
+                    TableChanged();
+                });
+            };
 
-            updateDataGrid.KeyDown += UpdateDataGrid_KeyDown;
-            updateDataGrid.UserDeletedRow += UpdateDataGrid_UserDeletedRow;
-            updateDataGrid.CellValueChanged += UpdateDataGrid_CellValueChanged;
-            updateDataGrid.UserAddedRow += UpdateDataGrid_UserAddedRow;
+            updatedMainDataGrid.KeyDown += UpdateDataGrid_KeyDown;
+            updatedMainDataGrid.UserDeletingRow += UpdatedMainDataGrid_UserDeletingRow;
+            updatedMainDataGrid.CellValueChanged += UpdateDataGrid_CellValueChanged;
+            updatedMainDataGrid.UserAddedRow += UpdateDataGrid_UserAddedRow;
+
+            btnRefreshDataGrid.Click += BtnRefreshDataGrid_Click;
         }
+
+        private void UpdatedMainDataGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            try
+            {
+                GetDataModifier().Remove(e.Row);
+            }
+            catch (Exception exc)
+            {
+                if (exc.InnerException != null)
+                    WinFormStaticHelper.ShowErrorMsgBox(exc.InnerException.Message);
+                else WinFormStaticHelper.ShowErrorMsgBox(exc.Message);
+            }
+        }
+
+        private async void BtnRefreshDataGrid_Click(object sender, EventArgs e)
+        {
+            await _actionProxy?.InvokeAsync(TableChanged);
+        }
+
+        private void TableChanged()
+        {
+            try
+            {
+                IsPreLoading = true;
+                updatedMainDataGrid.Clear();
+                updatedExtraInfoDataGrid.Clear();
+                SetLabel(SelectedTable);
+                switch (SelectedIndex)
+                {
+                    case 0:
+                        {
+                            _updatedLessons.SetGrid(_formUpdatedData.TeacherSubject);
+                            break;
+                        }
+                    case 2:
+                        {
+                            _updatedHourPlanData.SetGrid(_formUpdatedData.PlansInformation);
+                            break;
+                        }
+                    case 3:
+                        {
+                            _updatedPlanInfo.SetExtraRepo(_formUpdatedData.Specialties);
+                            _updatedPlanInfo.SetGrid(_formUpdatedData.PlansInformation);
+                            break;
+                        }
+                    default: break;
+                }
+
+                IsPreLoading = false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
 
         private void UpdateDataGrid_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
-            var teacher = new Teacher();
-            var subject = new Subject();
-            teacher.TeacherSubject = new List<TeacherSubject>() {
-                new TeacherSubject
-                {
-                    Subject = subject,
-                    Teacher = teacher
-                }
-            };
-            subject.TeacherSubject = new List<TeacherSubject>() { teacher.TeacherSubject[0] };
-            _lessonsData.Added.Add(teacher.TeacherSubject[0]);
-            foreach (DataGridViewRow row in updateDataGrid.Rows)
+            try
             {
-                if(!_lessonsData.DataRowToData.ContainsKey(row))
-                    _lessonsData.DataRowToData.Add(row, teacher.TeacherSubject[0]);
+                GetDataModifier().Add();
             }
-           
+            catch (Exception exc)
+            {
+                if (exc.InnerException != null)
+                    WinFormStaticHelper.ShowErrorMsgBox(exc.InnerException.Message);
+                else WinFormStaticHelper.ShowErrorMsgBox(exc.Message);
+            }
         }
 
         private void UpdateDataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (UpdateLesson(_lessonsData.DataRowToData[updateDataGrid.Rows[e.RowIndex]], e.RowIndex) &&
-                !_lessonsData.Updated.Contains(_lessonsData.DataRowToData[updateDataGrid.Rows[e.RowIndex]]))
-                _lessonsData.Updated.Add(_lessonsData.DataRowToData[updateDataGrid.Rows[e.RowIndex]]);
-        }
-
-        private void UpdateDataGrid_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            _lessonsData.Removed.Add(_lessonsData.DataRowToData[e.Row]);
+            try
+            {
+                GetDataModifier().Update(e.RowIndex);
+            }
+            catch (Exception exc)
+            {
+                if (exc.InnerException != null)
+                    WinFormStaticHelper.ShowErrorMsgBox(exc.InnerException.Message);
+                else WinFormStaticHelper.ShowErrorMsgBox(exc.Message);
+            }
         }
 
         private void UpdateDataGrid_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Z && e.Modifiers == Keys.Control)
             {
-                updateDataGrid.CancelEdit();
-                updateDataGrid.RefreshEdit();
+                (sender as DataGridView).CancelEdit();
+                (sender as DataGridView).RefreshEdit();
             }
         }
 
-        private void ClearDataGrid()
+        public void SetData(ITimetableViewData data)
         {
-            updateDataGrid.Columns.Clear();
-            updateDataGrid.Rows.Clear();
-            updateDataGrid.Invoke(g => g.Refresh());
+            _formUpdatedData = data;
         }
 
-        private bool UpdateLesson(TeacherSubject ts, int rowIndex)
+        private IModifyGridDbData GetDataModifier()
         {
-            for (int i = 0; i < 6; i++)
+            switch (SelectedIndex)
             {
-                if (updateDataGrid[i, rowIndex].Value is null)
-                    return false;
-                
+                case 0: return _updatedLessons;
+                case 2: return _updatedHourPlanData;
+                case 3: return _updatedPlanInfo;
+                default: return null;
             }
-            if (int.TryParse(updateDataGrid[0, rowIndex].Value?.ToString(), out int tval))
-            {
-                ts.TeacherId = tval;
-                ts.Teacher.Id = tval;
-            }
-            if (int.TryParse(updateDataGrid[4, rowIndex].Value?.ToString(), out int sval))
-            {
-                ts.SubjectId = sval;
-                ts.Subject.Id = sval;
-            }
-            ts.Teacher.Lastname = (string)updateDataGrid[1, rowIndex].Value;
-            ts.Teacher.ShortFirstname = (string)updateDataGrid[2, rowIndex].Value;
-            ts.Teacher.FullFirstname = (string)updateDataGrid[3, rowIndex].Value;
-            ts.Subject.FullName = (string)updateDataGrid[5, rowIndex].Value;
-            ts.Subject.ShortName = (string)updateDataGrid[6, rowIndex].Value;
-            return true;
         }
 
+        private void SetLabel(string name)
+        {
+            lblMainTableName.Invoke(() => lblMainTableName.Text = name);
+        }
     }
 }

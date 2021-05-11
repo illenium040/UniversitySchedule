@@ -86,13 +86,18 @@
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tabUpdateDB = new System.Windows.Forms.TabPage();
+            this.lblExtraInfoToDataGrid = new System.Windows.Forms.Label();
+            this.updatedExtraInfoDataGrid = new System.Windows.Forms.DataGridView();
+            this.lblSubTableName = new System.Windows.Forms.Label();
+            this.lblMainTableName = new System.Windows.Forms.Label();
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.updateDataGrid = new System.Windows.Forms.DataGridView();
+            this.updatedMainDataGrid = new System.Windows.Forms.DataGridView();
             this.isConfirmation = new System.Windows.Forms.CheckBox();
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.tableNameList = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.btnRefreshDataGrid = new System.Windows.Forms.Button();
             this.tabMainControl.SuspendLayout();
             this.databaseTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -115,9 +120,10 @@
             this.panel2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tabUpdateDB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.updatedExtraInfoDataGrid)).BeginInit();
             this.loadingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.updateDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updatedMainDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMainControl
@@ -852,8 +858,13 @@
             // 
             // tabUpdateDB
             // 
+            this.tabUpdateDB.Controls.Add(this.btnRefreshDataGrid);
+            this.tabUpdateDB.Controls.Add(this.lblExtraInfoToDataGrid);
+            this.tabUpdateDB.Controls.Add(this.updatedExtraInfoDataGrid);
+            this.tabUpdateDB.Controls.Add(this.lblSubTableName);
+            this.tabUpdateDB.Controls.Add(this.lblMainTableName);
             this.tabUpdateDB.Controls.Add(this.loadingPanel);
-            this.tabUpdateDB.Controls.Add(this.updateDataGrid);
+            this.tabUpdateDB.Controls.Add(this.updatedMainDataGrid);
             this.tabUpdateDB.Controls.Add(this.isConfirmation);
             this.tabUpdateDB.Controls.Add(this.btnSaveChanges);
             this.tabUpdateDB.Controls.Add(this.tableNameList);
@@ -865,10 +876,51 @@
             this.tabUpdateDB.Text = "Изменить записи в БД";
             this.tabUpdateDB.UseVisualStyleBackColor = true;
             // 
+            // lblExtraInfoToDataGrid
+            // 
+            this.lblExtraInfoToDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExtraInfoToDataGrid.AutoSize = true;
+            this.lblExtraInfoToDataGrid.Location = new System.Drawing.Point(505, 17);
+            this.lblExtraInfoToDataGrid.Name = "lblExtraInfoToDataGrid";
+            this.lblExtraInfoToDataGrid.Size = new System.Drawing.Size(211, 17);
+            this.lblExtraInfoToDataGrid.TabIndex = 12;
+            this.lblExtraInfoToDataGrid.Text = "Дополнительная информация";
+            // 
+            // updatedExtraInfoDataGrid
+            // 
+            this.updatedExtraInfoDataGrid.AllowUserToAddRows = false;
+            this.updatedExtraInfoDataGrid.AllowUserToDeleteRows = false;
+            this.updatedExtraInfoDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.updatedExtraInfoDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.updatedExtraInfoDataGrid.Location = new System.Drawing.Point(505, 37);
+            this.updatedExtraInfoDataGrid.Name = "updatedExtraInfoDataGrid";
+            this.updatedExtraInfoDataGrid.RowTemplate.Height = 25;
+            this.updatedExtraInfoDataGrid.Size = new System.Drawing.Size(432, 433);
+            this.updatedExtraInfoDataGrid.TabIndex = 11;
+            // 
+            // lblSubTableName
+            // 
+            this.lblSubTableName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSubTableName.AutoSize = true;
+            this.lblSubTableName.Location = new System.Drawing.Point(241, 200);
+            this.lblSubTableName.Name = "lblSubTableName";
+            this.lblSubTableName.Size = new System.Drawing.Size(0, 17);
+            this.lblSubTableName.TabIndex = 10;
+            // 
+            // lblMainTableName
+            // 
+            this.lblMainTableName.AutoSize = true;
+            this.lblMainTableName.Location = new System.Drawing.Point(241, 16);
+            this.lblMainTableName.Name = "lblMainTableName";
+            this.lblMainTableName.Size = new System.Drawing.Size(0, 17);
+            this.lblMainTableName.TabIndex = 9;
+            // 
             // loadingPanel
             // 
             this.loadingPanel.Controls.Add(this.pictureBox1);
-            this.loadingPanel.Location = new System.Drawing.Point(4, 136);
+            this.loadingPanel.Location = new System.Drawing.Point(5, 174);
             this.loadingPanel.Name = "loadingPanel";
             this.loadingPanel.Padding = new System.Windows.Forms.Padding(80, 0, 80, 0);
             this.loadingPanel.Size = new System.Drawing.Size(225, 91);
@@ -883,25 +935,25 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // updateDataGrid
+            // updatedMainDataGrid
             // 
-            this.updateDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.updatedMainDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.updateDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.updateDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.updateDataGrid.Location = new System.Drawing.Point(238, 14);
-            this.updateDataGrid.Name = "updateDataGrid";
-            this.updateDataGrid.RowTemplate.Height = 25;
-            this.updateDataGrid.Size = new System.Drawing.Size(688, 445);
-            this.updateDataGrid.TabIndex = 6;
+            this.updatedMainDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.updatedMainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.updatedMainDataGrid.Location = new System.Drawing.Point(241, 37);
+            this.updatedMainDataGrid.Name = "updatedMainDataGrid";
+            this.updatedMainDataGrid.RowTemplate.Height = 25;
+            this.updatedMainDataGrid.Size = new System.Drawing.Size(258, 433);
+            this.updatedMainDataGrid.TabIndex = 6;
             // 
             // isConfirmation
             // 
             this.isConfirmation.AutoSize = true;
             this.isConfirmation.Checked = true;
             this.isConfirmation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.isConfirmation.Location = new System.Drawing.Point(4, 109);
+            this.isConfirmation.Location = new System.Drawing.Point(5, 147);
             this.isConfirmation.Name = "isConfirmation";
             this.isConfirmation.Size = new System.Drawing.Size(228, 21);
             this.isConfirmation.TabIndex = 5;
@@ -936,6 +988,18 @@
             this.label16.Size = new System.Drawing.Size(65, 17);
             this.label16.TabIndex = 0;
             this.label16.Text = "Таблица";
+            // 
+            // btnRefreshDataGrid
+            // 
+            this.btnRefreshDataGrid.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnRefreshDataGrid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefreshDataGrid.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshDataGrid.Location = new System.Drawing.Point(4, 109);
+            this.btnRefreshDataGrid.Name = "btnRefreshDataGrid";
+            this.btnRefreshDataGrid.Size = new System.Drawing.Size(229, 35);
+            this.btnRefreshDataGrid.TabIndex = 13;
+            this.btnRefreshDataGrid.Text = "Обновить";
+            this.btnRefreshDataGrid.UseVisualStyleBackColor = false;
             // 
             // AdminForm
             // 
@@ -975,9 +1039,10 @@
             this.groupBox4.PerformLayout();
             this.tabUpdateDB.ResumeLayout(false);
             this.tabUpdateDB.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.updatedExtraInfoDataGrid)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.updateDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updatedMainDataGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1042,12 +1107,18 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.DataGridView updateDataGrid;
+        private System.Windows.Forms.DataGridView updatedMainDataGrid;
         private System.Windows.Forms.CheckBox isConfirmation;
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.ComboBox tableNameList;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel loadingPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblSubTableName;
+        private System.Windows.Forms.Label lblMainTableName;
+        private System.Windows.Forms.DataGridView updatedExtraInfoDataGrid;
+        private System.Windows.Forms.Label lblExtraInfoToDataGrid;
+        private System.Windows.Forms.DataGridView Inf;
+        private System.Windows.Forms.Button btnRefreshDataGrid;
     }
 }

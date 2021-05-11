@@ -14,7 +14,6 @@ namespace DataAccess.Entities
         public int PlanYear { get; set; }
         public string StudyForm { get; set; }
         public int SpecialtyId { get; set; }
-        public int WeeksId { get; set; }
         public virtual List<HourPlan> HourPlans { get; set; }
         public virtual PlanWeek PlanWeeks { get; set; }
     }

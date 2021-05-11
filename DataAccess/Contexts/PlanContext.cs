@@ -41,7 +41,7 @@ namespace DataAccess.Contexts
             modelBuilder.Entity<PlanWeek>()
                 .HasOne(x => x.PlanInformation)
                 .WithOne(x => x.PlanWeeks)
-                .HasForeignKey<PlanInformation>(x => x.WeeksId);
+                .HasForeignKey<PlanInformation>(x => x.Id);
 
             for (int i = 1; i <= 8; i++)
             {
