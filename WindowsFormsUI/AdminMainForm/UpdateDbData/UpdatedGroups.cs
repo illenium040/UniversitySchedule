@@ -60,7 +60,7 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                     specRepo.AddGroup(item);
                 }
                 foreach (var item in UpdatedData.Removed)
-                    repo.Get(item.SpecialtyId).Groups.Remove(item);
+                    specRepo.RemoveGroup(item);
                 foreach (var item in UpdatedData.Updated)
                 {
                     var k = UpdatedData.DataRowToData.First(x => x.Value.Equals(item)).Key;
@@ -69,9 +69,7 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                         WinFormStaticHelper.ShowErrorMsgBox("Таблица: Группы\r\nНеобходимо заполнить все необходимые поля");
                         return false;
                     }
-                    var spec = repo.Get(item.SpecialtyId);
-                    var index = spec.Groups.IndexOf(item);
-                    spec.Groups[index] = item;
+                    specRepo.UpdateGroup(item.Specialty.Groups.First(x => x.Id == item.Id));
                 }
                 return true;
             }
