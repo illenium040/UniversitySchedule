@@ -43,6 +43,7 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
 
         public void Clear()
         {
+            DataRowToData.Clear();
             Added.Clear();
             Removed.Clear();
             Updated.Clear();

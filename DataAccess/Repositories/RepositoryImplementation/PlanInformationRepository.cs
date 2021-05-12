@@ -22,6 +22,8 @@ namespace DataAccess.Repositories.RepositoryImplementation
         public override void Add(PlanInformation entity)
         {
             PlanContext.PlanInformation.Add(entity);
+            Context.SaveChanges();
+            DetachAll();
         }
 
         public override void Remove(PlanInformation entity)
@@ -33,6 +35,8 @@ namespace DataAccess.Repositories.RepositoryImplementation
         public override void Update(PlanInformation entity)
         {
             PlanContext.PlanInformation.Update(entity);
+            Context.SaveChanges();
+            DetachAll();
         }
 
         public override PlanInformation Get(int id)

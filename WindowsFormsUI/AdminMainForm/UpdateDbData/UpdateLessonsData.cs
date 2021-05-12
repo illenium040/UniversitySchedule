@@ -14,7 +14,6 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
         public UpdatedData<TeacherSubject> UpdatedData { get; }
 
         private DataGridView _grid;
-
         public UpdateLessonsData(DataGridView grid)
         {
             UpdatedData = new UpdatedData<TeacherSubject>();
@@ -23,22 +22,17 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
 
         public void Add()
         {
-            var teacher = new Teacher();
-            var subject = new Subject();
-            teacher.TeacherSubject = new List<TeacherSubject>() {
-                new TeacherSubject
-                {
-                    Subject = subject,
-                    Teacher = teacher
-                }
+            var ts = new TeacherSubject
+            {
+                Subject = new Subject(),
+                Teacher = new Teacher()
             };
-            subject.TeacherSubject = new List<TeacherSubject>() { teacher.TeacherSubject[0] };
-            UpdatedData.Added.Add(teacher.TeacherSubject[0]);
+            UpdatedData.Added.Add(ts);
             foreach (DataGridViewRow row in _grid.Rows)
             {
                 if (!UpdatedData.DataRowToData.ContainsKey(row))
                 {
-                    UpdatedData.DataRowToData.Add(row, teacher.TeacherSubject[0]);
+                    UpdatedData.DataRowToData.Add(row, ts);
                     return;
                 }
             }
@@ -133,21 +127,19 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                 ts.SubjectId = sval;
                 ts.Subject.Id = sval;
             }
-            ts.Teacher.Lastname = (string)_grid[1, rowIndex].Value;
-            ts.Teacher.ShortFirstname = (string)_grid[2, rowIndex].Value;
-            ts.Teacher.FullFirstname = (string)_grid[3, rowIndex].Value;
-            ts.Subject.FullName = (string)_grid[5, rowIndex].Value;
-            ts.Subject.ShortName = (string)_grid[6, rowIndex].Value;
+            ts.Teacher.Lastname = _grid[1, rowIndex].Value?.ToString();
+            ts.Teacher.ShortFirstname = _grid[2, rowIndex].Value?.ToString();
+            ts.Teacher.FullFirstname = _grid[3, rowIndex].Value?.ToString();
+            ts.Subject.FullName = _grid[5, rowIndex].Value?.ToString();
+            ts.Subject.ShortName = _grid[6, rowIndex].Value?.ToString();
             return true;
         }
 
         private bool IsValid(int rowIndex)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                if (_grid[i, rowIndex].Value is null)
-                    return false;
-            }
+            if (_grid[0, rowIndex].Value is null ||
+                _grid[4, rowIndex].Value is null)
+                return false;
             return true;
         }
     }

@@ -10,5 +10,9 @@ namespace DataAccess.Repositories.RepositoryInterfaces
 {
     public interface ISpecialtyRepository : IRepository<Specialty>
     {
+        public void RemoveGroup(Group g);
+        public void AddGroup(Group g);
+        public void UpdateGroup(Group g);
+
     }
 }

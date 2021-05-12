@@ -78,16 +78,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabAddToDB = new System.Windows.Forms.TabPage();
+            this.tabShowDBTables = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tabUpdateDB = new System.Windows.Forms.TabPage();
-            this.lblExtraInfoToDataGrid = new System.Windows.Forms.Label();
+            this.extraGridPanel = new System.Windows.Forms.Panel();
             this.updatedExtraInfoDataGrid = new System.Windows.Forms.DataGridView();
+            this.lblExtraInfoToDataGrid = new System.Windows.Forms.Label();
+            this.btnRefreshDataGrid = new System.Windows.Forms.Button();
             this.lblSubTableName = new System.Windows.Forms.Label();
             this.lblMainTableName = new System.Windows.Forms.Label();
             this.loadingPanel = new System.Windows.Forms.Panel();
@@ -97,7 +94,6 @@
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.tableNameList = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.btnRefreshDataGrid = new System.Windows.Forms.Button();
             this.tabMainControl.SuspendLayout();
             this.databaseTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -116,10 +112,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).BeginInit();
-            this.tabAddToDB.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.tabShowDBTables.SuspendLayout();
             this.tabUpdateDB.SuspendLayout();
+            this.extraGridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updatedExtraInfoDataGrid)).BeginInit();
             this.loadingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -133,13 +128,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMainControl.Controls.Add(this.databaseTab);
             this.tabMainControl.Controls.Add(this.timetableCreationTab);
-            this.tabMainControl.Controls.Add(this.tabAddToDB);
+            this.tabMainControl.Controls.Add(this.tabShowDBTables);
             this.tabMainControl.Controls.Add(this.tabUpdateDB);
             this.tabMainControl.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tabMainControl.Location = new System.Drawing.Point(10, 13);
+            this.tabMainControl.Location = new System.Drawing.Point(10, 12);
             this.tabMainControl.Name = "tabMainControl";
             this.tabMainControl.SelectedIndex = 0;
-            this.tabMainControl.Size = new System.Drawing.Size(948, 503);
+            this.tabMainControl.Size = new System.Drawing.Size(948, 504);
             this.tabMainControl.TabIndex = 0;
             // 
             // databaseTab
@@ -149,7 +144,7 @@
             this.databaseTab.Controls.Add(this.groupBox1);
             this.databaseTab.Location = new System.Drawing.Point(4, 26);
             this.databaseTab.Name = "databaseTab";
-            this.databaseTab.Size = new System.Drawing.Size(940, 473);
+            this.databaseTab.Size = new System.Drawing.Size(940, 474);
             this.databaseTab.TabIndex = 4;
             this.databaseTab.Text = "База данных";
             // 
@@ -349,7 +344,7 @@
             this.timetableCreationTab.Location = new System.Drawing.Point(4, 26);
             this.timetableCreationTab.Name = "timetableCreationTab";
             this.timetableCreationTab.Padding = new System.Windows.Forms.Padding(3);
-            this.timetableCreationTab.Size = new System.Drawing.Size(940, 473);
+            this.timetableCreationTab.Size = new System.Drawing.Size(940, 474);
             this.timetableCreationTab.TabIndex = 0;
             this.timetableCreationTab.Text = "Создание расписания";
             this.timetableCreationTab.UseVisualStyleBackColor = true;
@@ -792,75 +787,27 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Дней в неделю:";
             // 
-            // tabAddToDB
+            // tabShowDBTables
             // 
-            this.tabAddToDB.Controls.Add(this.panel2);
-            this.tabAddToDB.Location = new System.Drawing.Point(4, 26);
-            this.tabAddToDB.Name = "tabAddToDB";
-            this.tabAddToDB.Size = new System.Drawing.Size(940, 473);
-            this.tabAddToDB.TabIndex = 5;
-            this.tabAddToDB.Text = "Добавить в БД";
-            this.tabAddToDB.UseVisualStyleBackColor = true;
+            this.tabShowDBTables.Controls.Add(this.panel2);
+            this.tabShowDBTables.Location = new System.Drawing.Point(4, 26);
+            this.tabShowDBTables.Name = "tabShowDBTables";
+            this.tabShowDBTables.Size = new System.Drawing.Size(940, 474);
+            this.tabShowDBTables.TabIndex = 5;
+            this.tabShowDBTables.Text = "Просмотр таблиц";
+            this.tabShowDBTables.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.groupBox4);
-            this.panel2.Controls.Add(this.groupBox5);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(924, 456);
             this.panel2.TabIndex = 0;
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.textBox1);
-            this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Controls.Add(this.label14);
-            this.groupBox4.Location = new System.Drawing.Point(0, 12);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(408, 274);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Преподаватель-предмет";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 56);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(396, 25);
-            this.textBox1.TabIndex = 2;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(16, 59);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(0, 17);
-            this.label15.TabIndex = 1;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 33);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(154, 17);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "ФИО преподавателя:";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Location = new System.Drawing.Point(414, 12);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 100);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Группа-специальность";
-            // 
             // tabUpdateDB
             // 
+            this.tabUpdateDB.Controls.Add(this.extraGridPanel);
             this.tabUpdateDB.Controls.Add(this.btnRefreshDataGrid);
-            this.tabUpdateDB.Controls.Add(this.lblExtraInfoToDataGrid);
-            this.tabUpdateDB.Controls.Add(this.updatedExtraInfoDataGrid);
             this.tabUpdateDB.Controls.Add(this.lblSubTableName);
             this.tabUpdateDB.Controls.Add(this.lblMainTableName);
             this.tabUpdateDB.Controls.Add(this.loadingPanel);
@@ -871,20 +818,21 @@
             this.tabUpdateDB.Controls.Add(this.label16);
             this.tabUpdateDB.Location = new System.Drawing.Point(4, 26);
             this.tabUpdateDB.Name = "tabUpdateDB";
-            this.tabUpdateDB.Size = new System.Drawing.Size(940, 473);
+            this.tabUpdateDB.Size = new System.Drawing.Size(940, 474);
             this.tabUpdateDB.TabIndex = 6;
             this.tabUpdateDB.Text = "Изменить записи в БД";
             this.tabUpdateDB.UseVisualStyleBackColor = true;
             // 
-            // lblExtraInfoToDataGrid
+            // extraGridPanel
             // 
-            this.lblExtraInfoToDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblExtraInfoToDataGrid.AutoSize = true;
-            this.lblExtraInfoToDataGrid.Location = new System.Drawing.Point(505, 17);
-            this.lblExtraInfoToDataGrid.Name = "lblExtraInfoToDataGrid";
-            this.lblExtraInfoToDataGrid.Size = new System.Drawing.Size(211, 17);
-            this.lblExtraInfoToDataGrid.TabIndex = 12;
-            this.lblExtraInfoToDataGrid.Text = "Дополнительная информация";
+            this.extraGridPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.extraGridPanel.Controls.Add(this.updatedExtraInfoDataGrid);
+            this.extraGridPanel.Controls.Add(this.lblExtraInfoToDataGrid);
+            this.extraGridPanel.Location = new System.Drawing.Point(506, 3);
+            this.extraGridPanel.Name = "extraGridPanel";
+            this.extraGridPanel.Size = new System.Drawing.Size(434, 468);
+            this.extraGridPanel.TabIndex = 14;
             // 
             // updatedExtraInfoDataGrid
             // 
@@ -892,19 +840,43 @@
             this.updatedExtraInfoDataGrid.AllowUserToDeleteRows = false;
             this.updatedExtraInfoDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.updatedExtraInfoDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.updatedExtraInfoDataGrid.BackgroundColor = System.Drawing.Color.White;
             this.updatedExtraInfoDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.updatedExtraInfoDataGrid.Location = new System.Drawing.Point(505, 37);
+            this.updatedExtraInfoDataGrid.Location = new System.Drawing.Point(0, 34);
             this.updatedExtraInfoDataGrid.Name = "updatedExtraInfoDataGrid";
             this.updatedExtraInfoDataGrid.RowTemplate.Height = 25;
-            this.updatedExtraInfoDataGrid.Size = new System.Drawing.Size(432, 433);
-            this.updatedExtraInfoDataGrid.TabIndex = 11;
+            this.updatedExtraInfoDataGrid.Size = new System.Drawing.Size(434, 434);
+            this.updatedExtraInfoDataGrid.TabIndex = 12;
+            // 
+            // lblExtraInfoToDataGrid
+            // 
+            this.lblExtraInfoToDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExtraInfoToDataGrid.AutoSize = true;
+            this.lblExtraInfoToDataGrid.Location = new System.Drawing.Point(17, 3);
+            this.lblExtraInfoToDataGrid.Name = "lblExtraInfoToDataGrid";
+            this.lblExtraInfoToDataGrid.Size = new System.Drawing.Size(211, 17);
+            this.lblExtraInfoToDataGrid.TabIndex = 12;
+            this.lblExtraInfoToDataGrid.Text = "Дополнительная информация";
+            // 
+            // btnRefreshDataGrid
+            // 
+            this.btnRefreshDataGrid.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnRefreshDataGrid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefreshDataGrid.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshDataGrid.Location = new System.Drawing.Point(4, 109);
+            this.btnRefreshDataGrid.Name = "btnRefreshDataGrid";
+            this.btnRefreshDataGrid.Size = new System.Drawing.Size(229, 35);
+            this.btnRefreshDataGrid.TabIndex = 13;
+            this.btnRefreshDataGrid.Text = "Обновить";
+            this.btnRefreshDataGrid.UseVisualStyleBackColor = false;
             // 
             // lblSubTableName
             // 
             this.lblSubTableName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSubTableName.AutoSize = true;
-            this.lblSubTableName.Location = new System.Drawing.Point(241, 200);
+            this.lblSubTableName.Location = new System.Drawing.Point(241, 201);
             this.lblSubTableName.Name = "lblSubTableName";
             this.lblSubTableName.Size = new System.Drawing.Size(0, 17);
             this.lblSubTableName.TabIndex = 10;
@@ -940,12 +912,13 @@
             this.updatedMainDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.updatedMainDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.updatedMainDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.updatedMainDataGrid.BackgroundColor = System.Drawing.Color.White;
             this.updatedMainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.updatedMainDataGrid.Location = new System.Drawing.Point(241, 37);
             this.updatedMainDataGrid.Name = "updatedMainDataGrid";
             this.updatedMainDataGrid.RowTemplate.Height = 25;
-            this.updatedMainDataGrid.Size = new System.Drawing.Size(258, 433);
+            this.updatedMainDataGrid.Size = new System.Drawing.Size(258, 434);
             this.updatedMainDataGrid.TabIndex = 6;
             // 
             // isConfirmation
@@ -989,18 +962,6 @@
             this.label16.TabIndex = 0;
             this.label16.Text = "Таблица";
             // 
-            // btnRefreshDataGrid
-            // 
-            this.btnRefreshDataGrid.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnRefreshDataGrid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefreshDataGrid.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshDataGrid.Location = new System.Drawing.Point(4, 109);
-            this.btnRefreshDataGrid.Name = "btnRefreshDataGrid";
-            this.btnRefreshDataGrid.Size = new System.Drawing.Size(229, 35);
-            this.btnRefreshDataGrid.TabIndex = 13;
-            this.btnRefreshDataGrid.Text = "Обновить";
-            this.btnRefreshDataGrid.UseVisualStyleBackColor = false;
-            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1033,12 +994,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).EndInit();
-            this.tabAddToDB.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.tabShowDBTables.ResumeLayout(false);
             this.tabUpdateDB.ResumeLayout(false);
             this.tabUpdateDB.PerformLayout();
+            this.extraGridPanel.ResumeLayout(false);
+            this.extraGridPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updatedExtraInfoDataGrid)).EndInit();
             this.loadingPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1100,13 +1060,8 @@
         private System.Windows.Forms.TabPage tabUpdateDB;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnTimetableTrain;
-        private System.Windows.Forms.TabPage tabAddToDB;
+        private System.Windows.Forms.TabPage tabShowDBTables;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.DataGridView updatedMainDataGrid;
         private System.Windows.Forms.CheckBox isConfirmation;
         private System.Windows.Forms.Button btnSaveChanges;
@@ -1116,9 +1071,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblSubTableName;
         private System.Windows.Forms.Label lblMainTableName;
-        private System.Windows.Forms.DataGridView updatedExtraInfoDataGrid;
         private System.Windows.Forms.Label lblExtraInfoToDataGrid;
         private System.Windows.Forms.DataGridView Inf;
         private System.Windows.Forms.Button btnRefreshDataGrid;
+        private System.Windows.Forms.Panel extraGridPanel;
+        private System.Windows.Forms.DataGridView updatedExtraInfoDataGrid;
     }
 }

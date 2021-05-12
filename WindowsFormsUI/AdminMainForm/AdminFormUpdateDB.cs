@@ -27,7 +27,8 @@ namespace WindowsFormsUI.AdminMainForm
         private UpdateLessonsData _updatedLessons;
         private UpdatedHourPlanData _updatedHourPlanData;
         private UpdatedPlanInformation _updatedPlanInfo;
-
+        private UpdatedSpecialty _updatedSpecialty;
+        private UpdatedGroups _updatedGroups;
         public IEnumerable<string> TableNameList
         {
             get
@@ -79,6 +80,8 @@ namespace WindowsFormsUI.AdminMainForm
             _updatedPlanInfo = new UpdatedPlanInformation(updatedMainDataGrid, updatedExtraInfoDataGrid);
             _updatedLessons = new UpdateLessonsData(updatedMainDataGrid);
             _updatedHourPlanData = new UpdatedHourPlanData(updatedMainDataGrid, updatedExtraInfoDataGrid);
+            _updatedSpecialty = new UpdatedSpecialty(updatedMainDataGrid, updatedExtraInfoDataGrid);
+            _updatedGroups = new UpdatedGroups(updatedMainDataGrid, updatedExtraInfoDataGrid);
             updatedMainDataGrid.SetDoubleBuffered();
 
             btnSaveChanges.Click += async (o, e) =>
@@ -86,12 +89,11 @@ namespace WindowsFormsUI.AdminMainForm
                 if (!_updatedLessons.Save(_formUpdatedData.TeacherSubject)) return;
                 if (!_updatedHourPlanData.Save(_formUpdatedData.PlansInformation)) return;
                 if (!_updatedPlanInfo.Save(_formUpdatedData.PlansInformation)) return;
+                if (!_updatedSpecialty.Save(_formUpdatedData.Specialties)) return;
+                if (!_updatedGroups.Save(_formUpdatedData.Specialties)) return;
                 await _actionProxy?.InvokeAsync(SaveChanges);
                 if (!IsSavedSuccesfully) return;
                 await _actionProxy?.InvokeAsync(TableChanged);
-                _updatedLessons.UpdatedData.Clear();
-                _updatedHourPlanData.UpdatedData.Clear();
-                _updatedPlanInfo.UpdatedData.Clear();
             };
             tableNameList.SelectedIndexChanged += async (o, e) => await _actionProxy?.InvokeAsync(TableChanged);
             Shown += async (o, e) =>
@@ -130,6 +132,7 @@ namespace WindowsFormsUI.AdminMainForm
             await _actionProxy?.InvokeAsync(TableChanged);
         }
 
+        private int _prevIndex = -1;
         private void TableChanged()
         {
             try
@@ -142,23 +145,53 @@ namespace WindowsFormsUI.AdminMainForm
                 {
                     case 0:
                         {
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = false);
+                            if (_prevIndex != 0)
+                                updatedMainDataGrid.Invoke(g => g.Width += 430);
+                            _updatedLessons.UpdatedData.Clear();
                             _updatedLessons.SetGrid(_formUpdatedData.TeacherSubject);
+                            break;
+                        }
+                    case 1:
+                        {
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
+                            if(_prevIndex == 0)
+                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            _updatedSpecialty.UpdatedData.Clear();
+                            _updatedSpecialty.SetGrid(_formUpdatedData.Specialties);
                             break;
                         }
                     case 2:
                         {
-                            _updatedHourPlanData.SetGrid(_formUpdatedData.PlansInformation);
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
+                            if (_prevIndex == 0)
+                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            _updatedGroups.UpdatedData.Clear();
+                            _updatedGroups.SetGrid(_formUpdatedData.Specialties);
                             break;
                         }
                     case 3:
                         {
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
+                            if (_prevIndex == 0)
+                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            _updatedHourPlanData.UpdatedData.Clear();
+                            _updatedHourPlanData.SetGrid(_formUpdatedData.PlansInformation);
+                            break;
+                        }
+                    case 4:
+                        {
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
+                            if (_prevIndex == 0)
+                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            _updatedPlanInfo.UpdatedData.Clear();
                             _updatedPlanInfo.SetExtraRepo(_formUpdatedData.Specialties);
                             _updatedPlanInfo.SetGrid(_formUpdatedData.PlansInformation);
                             break;
                         }
                     default: break;
                 }
-
+                _prevIndex = SelectedIndex;
                 IsPreLoading = false;
             }
             catch (Exception e)
@@ -215,8 +248,10 @@ namespace WindowsFormsUI.AdminMainForm
             switch (SelectedIndex)
             {
                 case 0: return _updatedLessons;
-                case 2: return _updatedHourPlanData;
-                case 3: return _updatedPlanInfo;
+                case 1: return _updatedSpecialty;
+                case 2: return _updatedGroups;
+                case 3: return _updatedHourPlanData;
+                case 4: return _updatedPlanInfo;
                 default: return null;
             }
         }

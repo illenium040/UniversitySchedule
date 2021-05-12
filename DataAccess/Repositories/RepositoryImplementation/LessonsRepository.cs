@@ -3,6 +3,7 @@ using DataAccess.Entities;
 using DataAccess.Repositories.RepositoryInterfaces;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 using System;
 using System.Collections.Generic;
@@ -20,18 +21,34 @@ namespace DataAccess.Repositories.RepositoryImplementation
 
         public override void Add(TeacherSubject entity)
         {
-            LessonContext.Teachers.Add(entity.Teacher);
+            var teacher = LessonContext.Teachers.AsNoTracking().FirstOrDefault(x => entity.TeacherId == x.Id);
+            var subject = LessonContext.Subjects.AsNoTracking().FirstOrDefault(x => entity.SubjectId == x.Id);
+            if (teacher == default) LessonContext.Teachers.Add(entity.Teacher);
+            if (subject == default) LessonContext.Subjects.Add(entity.Subject);
+            LessonContext.TeacherSubjects.Add(new TeacherSubject
+            {
+                SubjectId = entity.SubjectId,
+                TeacherId = entity.TeacherId
+            });
+            Context.SaveChanges();
+            DetachAll();
         }
 
         public override void Update(TeacherSubject entity)
         {
             LessonContext.Teachers.Update(entity.Teacher);
+            LessonContext.Subjects.Update(entity.Subject);
+            LessonContext.TeacherSubjects.Update(entity);
+            Context.SaveChanges();
+            DetachAll();
+            
         }
 
         public override void Remove(TeacherSubject entity)
         {
-            LessonContext.Teachers.Remove(entity.Teacher);
-            LessonContext.Subjects.Remove(entity.Subject);
+            LessonContext.TeacherSubjects.Remove(
+                LessonContext.TeacherSubjects.First(x => x.SubjectId == entity.SubjectId &&
+                x.TeacherId == entity.TeacherId));
         }
 
         public IEnumerable<TeacherSubject> GetBySubject(int id)

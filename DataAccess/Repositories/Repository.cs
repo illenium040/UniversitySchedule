@@ -57,5 +57,11 @@ namespace DataAccess.Repositories
         {
             Context.Set<TEntity>().Update(entity);
         }
+
+        protected void DetachAll()
+        {
+            foreach (var item in Context.ChangeTracker.Entries())
+                item.State = EntityState.Detached;
+        }
     }
 }

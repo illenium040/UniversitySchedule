@@ -30,7 +30,8 @@ namespace WindowsFormsUI.MVP.Presenters
             _tableNames = new List<string>
             {
                 "Преподаватель-предмет",
-                "Специальность-группа",
+                "Специальность",
+                "Группа",
                 "Учебный план",
                 "Информация о плане"
             };
