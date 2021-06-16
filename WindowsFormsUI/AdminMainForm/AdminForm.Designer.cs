@@ -50,6 +50,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.timetableCreationTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.saveAsPDF = new System.Windows.Forms.Button();
             this.btnCreateTimetable = new System.Windows.Forms.Button();
             this.btnSaveToDatabase = new System.Windows.Forms.Button();
             this.btnTimetableTrain = new System.Windows.Forms.Button();
@@ -78,8 +79,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabShowDBTables = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.tabUpdateDB = new System.Windows.Forms.TabPage();
             this.extraGridPanel = new System.Windows.Forms.Panel();
             this.updatedExtraInfoDataGrid = new System.Windows.Forms.DataGridView();
@@ -112,7 +111,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).BeginInit();
-            this.tabShowDBTables.SuspendLayout();
             this.tabUpdateDB.SuspendLayout();
             this.extraGridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updatedExtraInfoDataGrid)).BeginInit();
@@ -128,7 +126,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMainControl.Controls.Add(this.databaseTab);
             this.tabMainControl.Controls.Add(this.timetableCreationTab);
-            this.tabMainControl.Controls.Add(this.tabShowDBTables);
             this.tabMainControl.Controls.Add(this.tabUpdateDB);
             this.tabMainControl.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tabMainControl.Location = new System.Drawing.Point(10, 12);
@@ -162,7 +159,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.Location = new System.Drawing.Point(511, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(239, 211);
+            this.groupBox3.Size = new System.Drawing.Size(239, 207);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Бэкап";
@@ -271,7 +268,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(502, 196);
+            this.groupBox1.Size = new System.Drawing.Size(502, 207);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Строки подключения";
@@ -353,6 +350,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.saveAsPDF);
             this.panel1.Controls.Add(this.btnCreateTimetable);
             this.panel1.Controls.Add(this.btnSaveToDatabase);
             this.panel1.Controls.Add(this.btnTimetableTrain);
@@ -361,6 +359,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(145, 441);
             this.panel1.TabIndex = 14;
+            // 
+            // saveAsPDF
+            // 
+            this.saveAsPDF.BackColor = System.Drawing.Color.DodgerBlue;
+            this.saveAsPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveAsPDF.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.saveAsPDF.ForeColor = System.Drawing.Color.White;
+            this.saveAsPDF.Location = new System.Drawing.Point(10, 198);
+            this.saveAsPDF.Name = "saveAsPDF";
+            this.saveAsPDF.Size = new System.Drawing.Size(125, 45);
+            this.saveAsPDF.TabIndex = 10;
+            this.saveAsPDF.Text = "Сохранить как PDF";
+            this.saveAsPDF.UseVisualStyleBackColor = false;
             // 
             // btnCreateTimetable
             // 
@@ -787,23 +798,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Дней в неделю:";
             // 
-            // tabShowDBTables
-            // 
-            this.tabShowDBTables.Controls.Add(this.panel2);
-            this.tabShowDBTables.Location = new System.Drawing.Point(4, 26);
-            this.tabShowDBTables.Name = "tabShowDBTables";
-            this.tabShowDBTables.Size = new System.Drawing.Size(940, 474);
-            this.tabShowDBTables.TabIndex = 5;
-            this.tabShowDBTables.Text = "Просмотр таблиц";
-            this.tabShowDBTables.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(924, 456);
-            this.panel2.TabIndex = 0;
-            // 
             // tabUpdateDB
             // 
             this.tabUpdateDB.Controls.Add(this.extraGridPanel);
@@ -825,35 +819,35 @@
             // 
             // extraGridPanel
             // 
-            this.extraGridPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.extraGridPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.extraGridPanel.Controls.Add(this.updatedExtraInfoDataGrid);
             this.extraGridPanel.Controls.Add(this.lblExtraInfoToDataGrid);
-            this.extraGridPanel.Location = new System.Drawing.Point(506, 3);
+            this.extraGridPanel.Location = new System.Drawing.Point(236, 271);
             this.extraGridPanel.Name = "extraGridPanel";
-            this.extraGridPanel.Size = new System.Drawing.Size(434, 468);
+            this.extraGridPanel.Size = new System.Drawing.Size(704, 200);
             this.extraGridPanel.TabIndex = 14;
             // 
             // updatedExtraInfoDataGrid
             // 
             this.updatedExtraInfoDataGrid.AllowUserToAddRows = false;
             this.updatedExtraInfoDataGrid.AllowUserToDeleteRows = false;
-            this.updatedExtraInfoDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.updatedExtraInfoDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.updatedExtraInfoDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.updatedExtraInfoDataGrid.BackgroundColor = System.Drawing.Color.White;
             this.updatedExtraInfoDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.updatedExtraInfoDataGrid.Location = new System.Drawing.Point(0, 34);
+            this.updatedExtraInfoDataGrid.Location = new System.Drawing.Point(5, 24);
             this.updatedExtraInfoDataGrid.Name = "updatedExtraInfoDataGrid";
             this.updatedExtraInfoDataGrid.RowTemplate.Height = 25;
-            this.updatedExtraInfoDataGrid.Size = new System.Drawing.Size(434, 434);
+            this.updatedExtraInfoDataGrid.Size = new System.Drawing.Size(696, 175);
             this.updatedExtraInfoDataGrid.TabIndex = 12;
             // 
             // lblExtraInfoToDataGrid
             // 
-            this.lblExtraInfoToDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblExtraInfoToDataGrid.AutoSize = true;
-            this.lblExtraInfoToDataGrid.Location = new System.Drawing.Point(17, 3);
+            this.lblExtraInfoToDataGrid.Location = new System.Drawing.Point(5, 4);
             this.lblExtraInfoToDataGrid.Name = "lblExtraInfoToDataGrid";
             this.lblExtraInfoToDataGrid.Size = new System.Drawing.Size(211, 17);
             this.lblExtraInfoToDataGrid.TabIndex = 12;
@@ -909,16 +903,16 @@
             // 
             // updatedMainDataGrid
             // 
-            this.updatedMainDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.updatedMainDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.updatedMainDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.updatedMainDataGrid.BackgroundColor = System.Drawing.Color.White;
             this.updatedMainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.updatedMainDataGrid.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.updatedMainDataGrid.Location = new System.Drawing.Point(241, 37);
             this.updatedMainDataGrid.Name = "updatedMainDataGrid";
             this.updatedMainDataGrid.RowTemplate.Height = 25;
-            this.updatedMainDataGrid.Size = new System.Drawing.Size(258, 434);
+            this.updatedMainDataGrid.Size = new System.Drawing.Size(694, 228);
             this.updatedMainDataGrid.TabIndex = 6;
             // 
             // isConfirmation
@@ -971,6 +965,7 @@
             this.Controls.Add(this.tabMainControl);
             this.DoubleBuffered = true;
             this.Name = "AdminForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminForm";
             this.tabMainControl.ResumeLayout(false);
             this.databaseTab.ResumeLayout(false);
@@ -994,7 +989,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSemesterPart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHoursDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericDaysWeek)).EndInit();
-            this.tabShowDBTables.ResumeLayout(false);
             this.tabUpdateDB.ResumeLayout(false);
             this.tabUpdateDB.PerformLayout();
             this.extraGridPanel.ResumeLayout(false);
@@ -1060,8 +1054,6 @@
         private System.Windows.Forms.TabPage tabUpdateDB;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnTimetableTrain;
-        private System.Windows.Forms.TabPage tabShowDBTables;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView updatedMainDataGrid;
         private System.Windows.Forms.CheckBox isConfirmation;
         private System.Windows.Forms.Button btnSaveChanges;
@@ -1076,5 +1068,6 @@
         private System.Windows.Forms.Button btnRefreshDataGrid;
         private System.Windows.Forms.Panel extraGridPanel;
         private System.Windows.Forms.DataGridView updatedExtraInfoDataGrid;
+        private System.Windows.Forms.Button saveAsPDF;
     }
 }

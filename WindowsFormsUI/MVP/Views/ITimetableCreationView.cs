@@ -25,6 +25,7 @@ namespace WindowsFormsUI.MVP.Views
         int TrainCount { get; }
 
         Stack<TimetableHandler> History { get; }
+        bool IsTrainCancelRequired { get; }
 
         event Action DefaultTimetableSettingsChecked;
         event Action CreateTimetable;
@@ -34,7 +35,7 @@ namespace WindowsFormsUI.MVP.Views
         event Action CancelTimetableProcessing;
         event Action SaveTimetableSettings;
         event Action LoadTimetableData;
-
+        event Action SaveAsPDF;
         void SetTimetableSettings(TimetableSettings settings, bool isDefault);
         void LogProccessing(string message);
     }

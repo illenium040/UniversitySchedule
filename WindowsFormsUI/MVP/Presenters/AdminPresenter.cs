@@ -26,6 +26,7 @@ namespace WindowsFormsUI.MVP.Presenters
         public override void Run(User argument)
         {
             _user = argument;
+            View.Title = $"Администратор - {_user.Login}";
             foreach (var presenter in _partialViews)
                 presenter.Run(_user);
             View.Show();

@@ -17,13 +17,20 @@ namespace WindowsFormsUI.FormCommands
         protected void AppendDaysOfWeek(TimetableViewInfo view)
         {
             for (int i = view.Days * view.Hours - view.Hours, j = view.Days; i >= 0; i -= view.Hours, j--)
-                Receiver.GridView.Invoke((grid) =>
-                {
-                    grid.Rows.Insert(i, 1);
-                    for (int col = 0; col < grid.Columns.Count; col++)
-                        grid[col, i].Value = WinFormStaticHelper.GetRuDayOfWeek(j - 1);
-                });
+            {
+                if (Receiver.GridView.InvokeRequired)
+                    Receiver.GridView.Invoke((grid) => Invoke(grid, i, j));
+                else Invoke(Receiver.GridView, i, j);
+            }
         }
+
+        private void Invoke(DataGridView grid, int i, int j)
+        {
+            grid.Rows.Insert(i, 1);
+            for (int col = 0; col < grid.Columns.Count; col++)
+                grid[col, i].Value = WinFormStaticHelper.GetRuDayOfWeek(j - 1);
+        }
+
         public abstract void Execute();
         public virtual DataGridViewCommand AddReceiver(DataGridViewCommandReceiver receiver)
         {

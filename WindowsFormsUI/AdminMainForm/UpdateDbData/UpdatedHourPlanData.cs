@@ -153,6 +153,8 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                     if (int.TryParse(_mainGrid[i, rowIndex].Value.ToString(), out int val))
                         hPlan[i - 3] = val;
                 }
+                if (!UpdatedData.Updated.Contains(hPlan))
+                    UpdatedData.Updated.Add(hPlan);
             }
                 
         }

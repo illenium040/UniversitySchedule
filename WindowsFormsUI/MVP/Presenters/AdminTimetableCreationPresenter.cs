@@ -18,6 +18,9 @@ using WindowsFormsUI.AdminMainForm;
 using WindowsFormsUI.MVP.Views;
 using WindowsFormsUI.UserMainForm;
 using System.Threading;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace WindowsFormsUI.MVP.Presenters
 {
@@ -38,7 +41,20 @@ namespace WindowsFormsUI.MVP.Presenters
             View.DefaultTimetableSettingsChecked += () => SetDefaultSettings();
             View.CancelTimetableProcessing += () => Cancel();
             View.LoadTimetableData += () => View.SetTimetableSettings(TimetableDefaultSettings.Settings, true);
+            View.SaveAsPDF += () => WinFormStaticHelper.SaveAsPDF(new TimetableViewInfo
+            {
+                DateTime = DateTime.Now,
+                Days = View.DaysWeek,
+                Hours = View.HourDay,
+                Id = 0,
+                TimetableView = View.History.Count > 0 ?
+                        View.History.Peek().GetNormalized()
+                        .AsJoinedTimetableView()
+                        .ToList() :
+                        throw new InvalidOperationException("Необходимо создать хотя бы одно расписание")
+            });
         }
+
 
         private void Cancel()
         {
@@ -87,7 +103,9 @@ namespace WindowsFormsUI.MVP.Presenters
             }
             catch (Exception e)
             {
-                WinFormStaticHelper.ShowErrorMsgBox(e.Message);
+                if(e.InnerException != null)
+                    WinFormStaticHelper.ShowErrorMsgBox(e.InnerException.Message);
+                else WinFormStaticHelper.ShowErrorMsgBox(e.Message);
             }
         }
 
@@ -166,6 +184,7 @@ namespace WindowsFormsUI.MVP.Presenters
                 View.LogProccessing("Необходимо создать расписание");
                 throw new Exception("Stack is empty");
             }
+            View.LogProccessing("Начинаем тренировку");
             var tmpTable = View.History.Peek();
             try
             {
@@ -177,6 +196,8 @@ namespace WindowsFormsUI.MVP.Presenters
                 var trainCount = View.TrainCount;
                 for (int i = 0; i < trainCount; i++)
                 {
+                    if (View.IsTrainCancelRequired)
+                        throw new OperationCanceledException();
                     tmpTable = await _solverService.TrainAsync(tmpTable?.RawTimetable);
                     View.LogProccessing($"Тренировка №{i+1} завершена");
                 }

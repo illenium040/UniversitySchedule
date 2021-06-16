@@ -164,6 +164,8 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                     if (int.TryParse(_mainGrid[i, rowIndex].Value.ToString(), out int val))
                         plan.PlanWeeks[i - 4] = val;
                 }
+                if (!UpdatedData.Updated.Contains(plan))
+                    UpdatedData.Updated.Add(plan);
             }
         }
 

@@ -49,6 +49,7 @@
             this.loadingPictureBox = new System.Windows.Forms.PictureBox();
             this.dataLoadStateText = new System.Windows.Forms.Label();
             this.timetableGridView = new System.Windows.Forms.DataGridView();
+            this.btnSaveAsPdf = new System.Windows.Forms.Button();
             this.settingsPanel.SuspendLayout();
             this.preDataLoaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.preDataLoaderPictureBox)).BeginInit();
@@ -62,7 +63,7 @@
             // 
             this.settingsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.settingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.settingsPanel.Controls.Add(this.btnSaveAsPdf);
             this.settingsPanel.Controls.Add(this.btnTimetableTeacher);
             this.settingsPanel.Controls.Add(this.timetableTeacherList);
             this.settingsPanel.Controls.Add(this.label4);
@@ -76,7 +77,7 @@
             this.settingsPanel.Controls.Add(this.btnShowView);
             this.settingsPanel.Controls.Add(this.label1);
             this.settingsPanel.Controls.Add(this.groupsList);
-            this.settingsPanel.Location = new System.Drawing.Point(15, 15);
+            this.settingsPanel.Location = new System.Drawing.Point(20, 15);
             this.settingsPanel.Margin = new System.Windows.Forms.Padding(11);
             this.settingsPanel.Name = "settingsPanel";
             this.settingsPanel.Padding = new System.Windows.Forms.Padding(11);
@@ -91,7 +92,7 @@
             this.btnTimetableTeacher.ForeColor = System.Drawing.Color.White;
             this.btnTimetableTeacher.Location = new System.Drawing.Point(7, 433);
             this.btnTimetableTeacher.Name = "btnTimetableTeacher";
-            this.btnTimetableTeacher.Size = new System.Drawing.Size(180, 44);
+            this.btnTimetableTeacher.Size = new System.Drawing.Size(175, 44);
             this.btnTimetableTeacher.TabIndex = 12;
             this.btnTimetableTeacher.Text = "Вывести расписание преподавателя";
             this.btnTimetableTeacher.UseVisualStyleBackColor = false;
@@ -181,7 +182,7 @@
             this.preDataLoaderPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.preDataLoaderPanel.Controls.Add(this.preDataLoadStateText);
             this.preDataLoaderPanel.Controls.Add(this.preDataLoaderPictureBox);
-            this.preDataLoaderPanel.Location = new System.Drawing.Point(11, 483);
+            this.preDataLoaderPanel.Location = new System.Drawing.Point(7, 565);
             this.preDataLoaderPanel.Name = "preDataLoaderPanel";
             this.preDataLoaderPanel.Size = new System.Drawing.Size(176, 108);
             this.preDataLoaderPanel.TabIndex = 5;
@@ -296,6 +297,19 @@
             this.timetableGridView.Text = "dataGridView1";
             this.timetableGridView.Visible = false;
             // 
+            // btnSaveAsPdf
+            // 
+            this.btnSaveAsPdf.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnSaveAsPdf.Enabled = false;
+            this.btnSaveAsPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveAsPdf.ForeColor = System.Drawing.Color.White;
+            this.btnSaveAsPdf.Location = new System.Drawing.Point(8, 497);
+            this.btnSaveAsPdf.Name = "btnSaveAsPdf";
+            this.btnSaveAsPdf.Size = new System.Drawing.Size(175, 44);
+            this.btnSaveAsPdf.TabIndex = 13;
+            this.btnSaveAsPdf.Text = "Сохранить таблицу в PDF";
+            this.btnSaveAsPdf.UseVisualStyleBackColor = false;
+            // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -343,5 +357,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnTimetableTeacher;
         private System.Windows.Forms.ComboBox timetableTeacherList;
+        private System.Windows.Forms.Button btnSaveAsPdf;
     }
 }

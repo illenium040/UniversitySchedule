@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WindowsFormsUI.MVP.Controllers
+﻿namespace WindowsFormsUI.MVP.Controllers
 {
     public class ApplicationController : IApplicationController
     {

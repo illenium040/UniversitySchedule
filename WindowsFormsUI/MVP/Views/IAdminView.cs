@@ -6,5 +6,6 @@ namespace WindowsFormsUI.MVP.Views
 {
     public interface IAdminView : IView
     {
+        public string Title { get; set; }
     }
 }

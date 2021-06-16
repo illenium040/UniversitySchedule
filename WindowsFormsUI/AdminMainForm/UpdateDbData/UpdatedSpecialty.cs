@@ -127,7 +127,7 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                 {
                     var strb = new StringBuilder();
                     for (int i = 0; i < spec.Groups.Count; i++)
-                        strb.Append($"{spec.Groups[i]};");
+                        strb.Append($"{spec.Groups[i].Id};");
                     var index = g.Rows.Add(spec.Id, spec.Index, spec.Name, spec.Code, 
                         strb.ToString());
                     UpdatedData.DataRowToData.Add(g.Rows[index], spec);
@@ -145,7 +145,8 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                 spec.Index = _mainGrid[1, rowIndex].Value?.ToString();
                 spec.Name = _mainGrid[2, rowIndex].Value?.ToString();
                 spec.Code = _mainGrid[3, rowIndex].Value?.ToString();
-                UpdatedData.Updated.Add(spec);
+                if(!UpdatedData.Updated.Contains(spec))
+                    UpdatedData.Updated.Add(spec);
             }
             
         }

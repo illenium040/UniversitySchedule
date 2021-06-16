@@ -49,6 +49,7 @@ namespace API.TimetableCreation
                     DateTime = DateTime.Now,
                     Days = normalized.DaysWeek,
                     Hours = normalized.HoursDay,
+                    Mark = RawTimetable.FitnessValue,
                     IsVerified = false
                 }, normalized.AsTimetableView());
                 _data.SaveChanges();

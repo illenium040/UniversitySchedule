@@ -1,6 +1,8 @@
 ﻿using DataAccess;
 using DataAccess.Entities;
 
+using IniParser;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,12 +33,15 @@ namespace WindowsFormsUI.MVP.Presenters
         {
 
             if (View.IsDefaultConnectionStrings)
-                View.SetDatabaseSettings( new DatabaseSettings
+            {
+                
+                View.SetDatabaseSettings(new DatabaseSettings
                 {
-                    AdminConnectionString = Properties.Settings.Default.DefaultConString,
-                    UserConnectionString = Properties.Settings.Default.DefaultConString
+                    AdminConnectionString = ConfigIni.GetConnectionString(),
+                    UserConnectionString = ConfigIni.GetConnectionString()
                 }, true);
-            else 
+            }
+            else
                 View.SetDatabaseSettings(new DatabaseSettings
                 {
                     AdminConnectionString = Properties.Settings.Default.DatabaseAdminConString,

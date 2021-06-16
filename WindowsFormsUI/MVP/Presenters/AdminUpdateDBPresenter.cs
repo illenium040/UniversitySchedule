@@ -33,7 +33,8 @@ namespace WindowsFormsUI.MVP.Presenters
                 "Специальность",
                 "Группа",
                 "Учебный план",
-                "Информация о плане"
+                "Информация о плане",
+                "Расписание"
             };
 
             View.SetUpdateEvents();
@@ -86,7 +87,6 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             _user = argument;
         }
-
-        
+       
     }
 }

@@ -144,18 +144,5 @@ namespace WindowsFormsUI.Properties {
                 this["DatabaseBackupsPath"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\illenium\\Desktop\\Диплом\\Sc" +
-            "heduleProject\\UniversitySchedule.accdb;")]
-        public string DefaultConString {
-            get {
-                return ((string)(this["DefaultConString"]));
-            }
-            set {
-                this["DefaultConString"] = value;
-            }
-        }
     }
 }

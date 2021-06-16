@@ -10,5 +10,8 @@ namespace WindowsFormsUI.Services
     public interface IAuthService
     {
         Task<User> Auth(string login, string password);
+        Task<User> FindUser(string login);
+        Task<User> RegisterUser(string login, string password);
+        Task<User> RegisterAdmin(string login, string password);
     }
 }

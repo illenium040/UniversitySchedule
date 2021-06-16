@@ -7,6 +7,7 @@ namespace WindowsFormsUI.MVP.Views
         string UserName { get; }
         string UserPassword { get; }
         event Action UserAuth;
+        event Action<IRegisterView> ShowRegisterView;
         void ShowError(string message);
         void ShowAuthState(string message);
         void SetControlsTurnState(bool state);

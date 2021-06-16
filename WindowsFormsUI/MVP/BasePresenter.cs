@@ -20,6 +20,11 @@ namespace WindowsFormsUI.MVP
         {
             View.Show();
         }
+
+        public void RunAsDialog()
+        {
+            View.ShowDialog();
+        }
     }
 
     public abstract class BasePresenter<TView, TArg> : IPresenter<TArg>

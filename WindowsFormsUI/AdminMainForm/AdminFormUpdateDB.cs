@@ -29,6 +29,7 @@ namespace WindowsFormsUI.AdminMainForm
         private UpdatedPlanInformation _updatedPlanInfo;
         private UpdatedSpecialty _updatedSpecialty;
         private UpdatedGroups _updatedGroups;
+        private UpdatedTimetable _updatedTimetableInfo;
         public IEnumerable<string> TableNameList
         {
             get
@@ -82,6 +83,7 @@ namespace WindowsFormsUI.AdminMainForm
             _updatedHourPlanData = new UpdatedHourPlanData(updatedMainDataGrid, updatedExtraInfoDataGrid);
             _updatedSpecialty = new UpdatedSpecialty(updatedMainDataGrid, updatedExtraInfoDataGrid);
             _updatedGroups = new UpdatedGroups(updatedMainDataGrid, updatedExtraInfoDataGrid);
+            _updatedTimetableInfo = new UpdatedTimetable(updatedMainDataGrid);
             updatedMainDataGrid.SetDoubleBuffered();
 
             btnSaveChanges.Click += async (o, e) =>
@@ -91,6 +93,7 @@ namespace WindowsFormsUI.AdminMainForm
                 if (!_updatedPlanInfo.Save(_formUpdatedData.PlansInformation)) return;
                 if (!_updatedSpecialty.Save(_formUpdatedData.Specialties)) return;
                 if (!_updatedGroups.Save(_formUpdatedData.Specialties)) return;
+                if (!_updatedTimetableInfo.Save(_formUpdatedData.TimetableView)) return;
                 await _actionProxy?.InvokeAsync(SaveChanges);
                 if (!IsSavedSuccesfully) return;
                 await _actionProxy?.InvokeAsync(TableChanged);
@@ -146,8 +149,8 @@ namespace WindowsFormsUI.AdminMainForm
                     case 0:
                         {
                             extraGridPanel.Invoke(() => extraGridPanel.Visible = false);
-                            if (_prevIndex != 0)
-                                updatedMainDataGrid.Invoke(g => g.Width += 430);
+                            if (_prevIndex != 0 && _prevIndex != 5)
+                                updatedMainDataGrid.Invoke(g => g.Height += 210);
                             _updatedLessons.UpdatedData.Clear();
                             _updatedLessons.SetGrid(_formUpdatedData.TeacherSubject);
                             break;
@@ -155,8 +158,8 @@ namespace WindowsFormsUI.AdminMainForm
                     case 1:
                         {
                             extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
-                            if(_prevIndex == 0)
-                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            if(_prevIndex == 0 && _prevIndex == 5)
+                                updatedMainDataGrid.Invoke(g => g.Height -= 210);
                             _updatedSpecialty.UpdatedData.Clear();
                             _updatedSpecialty.SetGrid(_formUpdatedData.Specialties);
                             break;
@@ -164,8 +167,8 @@ namespace WindowsFormsUI.AdminMainForm
                     case 2:
                         {
                             extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
-                            if (_prevIndex == 0)
-                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            if (_prevIndex == 0 && _prevIndex == 5) 
+                                updatedMainDataGrid.Invoke(g => g.Height -= 210);
                             _updatedGroups.UpdatedData.Clear();
                             _updatedGroups.SetGrid(_formUpdatedData.Specialties);
                             break;
@@ -173,8 +176,8 @@ namespace WindowsFormsUI.AdminMainForm
                     case 3:
                         {
                             extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
-                            if (_prevIndex == 0)
-                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            if (_prevIndex == 0 && _prevIndex == 5)
+                                updatedMainDataGrid.Invoke(g => g.Height -= 210);
                             _updatedHourPlanData.UpdatedData.Clear();
                             _updatedHourPlanData.SetGrid(_formUpdatedData.PlansInformation);
                             break;
@@ -182,16 +185,26 @@ namespace WindowsFormsUI.AdminMainForm
                     case 4:
                         {
                             extraGridPanel.Invoke(() => extraGridPanel.Visible = true);
-                            if (_prevIndex == 0)
-                                updatedMainDataGrid.Invoke(g => g.Width -= 430);
+                            if (_prevIndex == 0 && _prevIndex == 5)
+                                updatedMainDataGrid.Invoke(g => g.Height -= 210);
                             _updatedPlanInfo.UpdatedData.Clear();
                             _updatedPlanInfo.SetExtraRepo(_formUpdatedData.Specialties);
                             _updatedPlanInfo.SetGrid(_formUpdatedData.PlansInformation);
                             break;
                         }
+                    case 5:
+                        {
+                            extraGridPanel.Invoke(() => extraGridPanel.Visible = false);
+                            if (_prevIndex != 0 && _prevIndex != 5)
+                                updatedMainDataGrid.Invoke(g => g.Height += 210);
+                            _updatedTimetableInfo.UpdatedData.Clear();
+                            _updatedTimetableInfo.SetGrid(_formUpdatedData.TimetableView);
+                            break;
+                        }
                     default: break;
                 }
                 _prevIndex = SelectedIndex;
+                OnResize();
                 IsPreLoading = false;
             }
             catch (Exception e)
@@ -252,6 +265,7 @@ namespace WindowsFormsUI.AdminMainForm
                 case 2: return _updatedGroups;
                 case 3: return _updatedHourPlanData;
                 case 4: return _updatedPlanInfo;
+                case 5: return _updatedTimetableInfo;
                 default: return null;
             }
         }

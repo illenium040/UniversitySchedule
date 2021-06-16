@@ -20,11 +20,17 @@ namespace WindowsFormsUI.AdminMainForm
         private Size[] _tabPagesSize = new Size[5]
         {
             new Size(805, 317),
-            new Size(968, 555),
+            new Size(978, 565),
             new Size(938, 492),
             new Size(938, 492),
             new Size(938, 492)
         };
+
+        public string Title 
+        { 
+            get => Text;
+            set => Text = value;
+        }
 
         public AdminForm(ApplicationContext context)
         {
@@ -42,6 +48,23 @@ namespace WindowsFormsUI.AdminMainForm
             tabMainControl.SelectedIndexChanged += SelectedIndexChanged;
             this.MinimumSize = _tabPagesSize[0];
             this.Size = _tabPagesSize[0];
+            Resize += AdminForm_Resize;
+        }
+
+        private void AdminForm_Resize(object sender, EventArgs e)
+        {
+            OnResize();
+        }
+
+        private void OnResize()
+        {
+            if (SelectedIndex != 0 && SelectedIndex != 5)
+            {
+                extraGridPanel.Height = (tabMainControl.SelectedTab.Height) / 2;
+                updatedMainDataGrid.Height = (tabMainControl.SelectedTab.Height - 100) / 2;
+                extraGridPanel.Location = new Point(updatedMainDataGrid.Location.X,
+                    updatedMainDataGrid.Location.Y + updatedMainDataGrid.Height);
+            }
         }
 
         private void SelectedIndexChanged(object sender, EventArgs e)
@@ -49,6 +72,7 @@ namespace WindowsFormsUI.AdminMainForm
             SuspendLayout();
             this.MinimumSize = _tabPagesSize[tabMainControl.SelectedIndex];
             this.Size = _tabPagesSize[tabMainControl.SelectedIndex];
+            OnResize();
             ResumeLayout();
         }
 

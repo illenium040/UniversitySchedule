@@ -15,9 +15,8 @@ using System.Windows.Forms;
 
 using TimetableAlgorithm;
 
+using WindowsFormsUI.AuthMainForm;
 using WindowsFormsUI.MVP.Views;
-
-using static WindowsFormsUI.MVP.Views.IAuthView;
 
 namespace WindowsFormsUI
 {
@@ -27,16 +26,16 @@ namespace WindowsFormsUI
         public string UserName { get { return tbxLogin.Text; } }
         public string UserPassword { get { return tbxPassword.Text; } }
         public event Action UserAuth;
+        public event Action<IRegisterView> ShowRegisterView;
 
         private ActionProxy _actionProxy;
-
         public AuthForm(ApplicationContext context)
         {
             _actionProxy = new ActionProxy();
             _applicationContext = context;
             InitializeComponent();
             authBtn.Click += async (sender, e) => await _actionProxy.InvokeAsync(UserAuth);
-            
+            registerBtn.Click += (sender, e) => ShowRegisterView(new RegisterForm(context));
         }
 
         public void ShowError(string message)

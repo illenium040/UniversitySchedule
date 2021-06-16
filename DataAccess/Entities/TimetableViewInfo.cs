@@ -14,5 +14,6 @@ namespace DataAccess.Entities
         public bool IsVerified { get; set; }
         public int Days { get; set; }
         public int Hours { get; set; }
+        public int Mark { get; set; }
     }
 }

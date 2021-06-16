@@ -18,7 +18,9 @@ namespace WindowsFormsUI.MVP.Presenters
         {
             _authService = authService;
             View.UserAuth += () => Login();
+            View.ShowRegisterView += (view) => Controller.GetPresenter<RegisterPresenter>().RunAsDialog();
         }
+
 
         private void Login()
         {

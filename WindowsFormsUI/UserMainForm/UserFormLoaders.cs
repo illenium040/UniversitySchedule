@@ -48,6 +48,7 @@ namespace WindowsFormsUI.UserMainForm
             specialtyList.Invoke(() => specialtyList.Update());
             btnShowView.Invoke(() => btnShowView.Enabled = true);
             btnShowPlan.Invoke(() => btnShowPlan.Enabled = true);
+            btnSaveAsPdf.Invoke(() => btnSaveAsPdf.Enabled = true);
         }
 
         private void InitTeachers(IEnumerable<Teacher> namedTeachers)

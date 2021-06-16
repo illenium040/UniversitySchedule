@@ -26,6 +26,13 @@ namespace DataAccess.Repositories.RepositoryImplementation
             return this;
         }
 
+        public override void Update(TimetableViewInfo entity)
+        {
+            TimetableViewContext.TimetablesInfo.Update(entity);
+            Context.SaveChanges();
+            DetachAll();
+        }
+
         public override TimetableViewInfo Get(int id)
         {
             return TimetableViewContext.TimetablesInfo
@@ -38,12 +45,14 @@ namespace DataAccess.Repositories.RepositoryImplementation
 
         public TimetableViewInfo GetLastUpdated()
         {
-            return TimetableViewContext.TimetablesInfo
+            var verifed = TimetableViewContext.TimetablesInfo
                 .Include(x => x.TimetableView).ThenInclude(x => x.Group)
                 .Include(x => x.TimetableView).ThenInclude(x => x.Subject)
                 .Include(x => x.TimetableView).ThenInclude(x => x.Teacher)
                 .AsNoTracking()
-                .First(x => x.DateTime == TimetableViewContext.TimetablesInfo.Max(x => x.DateTime));
+                .Where(x => x.IsVerified);
+            return verifed.First(x => x.DateTime == verifed.Max(x => x.DateTime));
+
         }
     }
 }

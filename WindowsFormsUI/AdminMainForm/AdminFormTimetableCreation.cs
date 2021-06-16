@@ -32,6 +32,7 @@ namespace WindowsFormsUI.AdminMainForm
         public event Action CancelTimetableProcessing;
         public event Action SaveTimetableSettings;
         public event Action LoadTimetableData;
+        public event Action SaveAsPDF;
 
         public bool IsDefaultTimetableSettings { get { return checkBoxDefaultSettings.Checked; } }
         public Stack<TimetableHandler> History { get; private set; }
@@ -51,6 +52,8 @@ namespace WindowsFormsUI.AdminMainForm
         public int HourDay { get { return (int)numericHoursDay.Value; } }
         public SemestersParts SemestersPart { get { return (SemestersParts)numericSemesterPart.Value - 1; } }
         public int TrainCount { get { return (int)numericTrainCount.Value; } }
+
+        public bool IsTrainCancelRequired { get; private set; }
 
         public void SetTimetableSettings(TimetableSettings settings, bool isDefault)
         {
@@ -108,7 +111,11 @@ namespace WindowsFormsUI.AdminMainForm
                     TurnButtons(btnTimetableTrain, true);
                 }
             };
-            _trainTimetableBtn.OnCancel += () => CancelTimetableProcessing();
+            _trainTimetableBtn.OnCancel += () =>
+            {
+                IsTrainCancelRequired = true;
+                CancelTimetableProcessing();
+            };
 
             btnShowUserForm.Click += async (sender, e)
                 => await _actionProxy.InvokeAsync(ShowInUserForm);
@@ -120,6 +127,9 @@ namespace WindowsFormsUI.AdminMainForm
 
             btnSaveSettings.Click += (sender, e)
                 => _actionProxy.Invoke(SaveTimetableSettings);
+
+            saveAsPDF.Click += (sender, e) =>
+                _actionProxy.Invoke(SaveAsPDF);
 
             Load += (sender, e) => LoadTimetableData?.Invoke();
         }

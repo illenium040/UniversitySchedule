@@ -27,11 +27,20 @@ namespace WindowsFormsUI.UserMainForm
         private CommandInvoker<DataGridViewCommand> _gridCommandInvoker;
         private DataGridViewCommandReceiver _gridCommandReceiver;
 
+        public string Title
+        { 
+            get => Text; 
+            set => Text = value; 
+        }
+
+        public DataTable GridTable => timetableGridView.ToDataTable();
+
         public event Action ShowTimetable;
         public event Action ShowTimetablePlan;
         public event Action ShowTeachers;
         public event Action ShowTeachersTimetable;
         public event Action LoadData;
+        public event Action SaveAsPdf;
 
         public UserForm(ApplicationContext context)
         {
@@ -44,6 +53,7 @@ namespace WindowsFormsUI.UserMainForm
             btnShowTeachers.Click += async (sender, e) => await _actionProxy.InvokeAsync(ShowTeachers);
             btnTimetableTeacher.Click += async (sender, e) => await _actionProxy.InvokeAsync(ShowTeachersTimetable);
             Load += async (sender, e) => await _actionProxy.InvokeAsync(LoadData);
+            btnSaveAsPdf.Click += (sender, e) => _actionProxy.Invoke(SaveAsPdf);
 
             AddPictureBoxSettings();
             AddGridViewSettings();

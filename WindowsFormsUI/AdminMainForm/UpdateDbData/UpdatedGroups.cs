@@ -147,7 +147,8 @@ namespace WindowsFormsUI.AdminMainForm.UpdateDbData
                 if(int.TryParse(_mainGrid[1, rowIndex].Value?.ToString(), out int shift))
                     g.CurrentShift = shift;
                 g.SpecialtyId = sId;
-                UpdatedData.Updated.Add(g);
+                if (!UpdatedData.Updated.Contains(g))
+                    UpdatedData.Updated.Add(g);
             }
             
         }
